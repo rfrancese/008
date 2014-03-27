@@ -1,7 +1,6 @@
 package it.unisa.dodgeholes;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+
 import android.support.v4.app.Fragment;
 import android.app.Activity;
 import android.os.Bundle;
