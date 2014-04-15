@@ -17,6 +17,10 @@ public class Assets {
     public static Texture myitem; 
     
     public static TextureRegion play;
+    public static TextureRegion level;
+    public static TextureRegion scores;
+    public static TextureRegion setting;
+    public static TextureRegion register;
    
     public static TextureRegion resume;
     public static TextureRegion quit;
@@ -46,6 +50,10 @@ public class Assets {
         
        
         play=new TextureRegion(myitem,109,32,109,38);
+        scores=new TextureRegion(myitem,327,32,109,38);
+        level=new TextureRegion(myitem,0,32,109,38);
+        setting=new TextureRegion(myitem,0,70,109,38);
+        register=new TextureRegion(myitem,218,32,109,38);
         
         resume=new TextureRegion(myitem, 329, 0, 110, 27);
         quit=new TextureRegion(myitem, 160, 0, 61, 27);
