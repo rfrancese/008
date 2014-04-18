@@ -45,12 +45,8 @@ public class Assets {
     	
         background = new Texture(game, "background.png");
         backgroundRegion = new TextureRegion(background, 0, 0, 480, 320);
-      //  myitem=new Texture(game, "myitem.png");
-        
         myitem=new Texture(game, "myitem.png");
-        
-        
-        
+     
        
         play=new TextureRegion(myitem,109,32,109,38);
         scores=new TextureRegion(myitem,327,32,109,38);
