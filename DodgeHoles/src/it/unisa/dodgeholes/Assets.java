@@ -42,8 +42,11 @@ public class Assets {
     
     
     public static void load(GLGame game) {
+    	
         background = new Texture(game, "background.png");
         backgroundRegion = new TextureRegion(background, 0, 0, 480, 320);
+      //  myitem=new Texture(game, "myitem.png");
+        
         myitem=new Texture(game, "myitem.png");
         
         
