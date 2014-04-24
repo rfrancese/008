@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                
+    <TextView android:id="@+id/labelMusic" 
+        	  android:layout_width="wrap_content"
+              android:layout_height="wrap_content" 
+              android:text="Music" />
+    <ToggleButton
+        android:id="@+id/buttMsc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+       />
+    <TextView android:id="@+id/labelSound" 
+        	  android:layout_width="wrap_content"
+              android:layout_height="wrap_content" 
+              android:text="Sound"
+              android:layout_below="@id/labelMusic" 
+              android:layout_marginTop="25dip"/>
+    <ToggleButton
+        android:id="@+id/buttSnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+       	android:layout_below="@id/buttMsc"/>
+    
+                
+    
+</RelativeLayout>

@@ -10,11 +10,16 @@ import it.unisa.dodgeholes.framework.impl.GLGame;
 
 
 public class Assets {
-    public static Texture background;
-    public static TextureRegion backgroundRegion;
+	
+	public static Texture backgroundMenu;
+    public static TextureRegion backgroundMenuRegion;
+    public static Texture backgroundGame;
+    public static TextureRegion backgroundGameRegion;
     
     
-    public static Texture myitem; 
+    public static Texture myitem;
+    
+    public static TextureRegion life;
     
     public static TextureRegion play;
     public static TextureRegion level;
@@ -27,70 +32,97 @@ public class Assets {
     public static TextureRegion ready;
     
     public static TextureRegion logo;
-    public static TextureRegion soundOn;
-    public static TextureRegion soundOff;
+    //public static TextureRegion soundOn;
+    //public static TextureRegion soundOff;
     
     public static TextureRegion pause;   
    
     public static TextureRegion ball;
     public static TextureRegion hole;
     public static TextureRegion endHole;
-    public static TextureRegion obstacle;
+    public static TextureRegion obstacleH;
+    public static TextureRegion obstacleV;
     
     
     public static Music music;
+    public static Sound hitHoleSound;
+    public static Sound hitEndSound;
+    
+    public static Font font;
+    
+    public static boolean musicActive;
+    public static boolean soundActive;
     
     
     public static void load(GLGame game) {
+    	//Leggi dal database e imposta il valore a musicActive e soundActive
+    	musicActive=true;
+    	soundActive=true;
     	
-        background = new Texture(game, "background.png");
-        backgroundRegion = new TextureRegion(background, 0, 0, 480, 320);
+        backgroundMenu = new Texture(game, "backgroundMenu.png");
+        backgroundMenuRegion = new TextureRegion(backgroundMenu, 0, 0, 480, 320);
+        backgroundGame = new Texture(game, "backgroundGame.png");
+        backgroundGameRegion = new TextureRegion(backgroundGame, 0, 0, 480, 320);
         myitem=new Texture(game, "myitem.png");
-     
+        
+        
+        
+        life=new TextureRegion(myitem,96,0,32,32);
+        
+        play=new TextureRegion(myitem,125,32,109,38);
+        scores=new TextureRegion(myitem,343,32,109,38);
+        level=new TextureRegion(myitem,17,32,109,38);
+        setting=new TextureRegion(myitem,17,70,109,38);
+        register=new TextureRegion(myitem,234,32,109,38);
+        
+        resume=new TextureRegion(myitem, 361, 0, 110, 27);
+        quit=new TextureRegion(myitem, 192, 0, 61, 27);
+        
+        ready = new TextureRegion(myitem, 253, 0, 108, 32);//
+        
+        logo = new TextureRegion(myitem, 16, 236, 300, 135);//
+        //soundOff = new TextureRegion(myitem, 312, 108, 64, 64);//
+        //soundOn = new TextureRegion(myitem, 312, 172, 64, 64);//
        
-        play=new TextureRegion(myitem,109,32,109,38);
-        scores=new TextureRegion(myitem,327,32,109,38);
-        level=new TextureRegion(myitem,0,32,109,38);
-        setting=new TextureRegion(myitem,0,70,109,38);
-        register=new TextureRegion(myitem,218,32,109,38);
-        
-        resume=new TextureRegion(myitem, 329, 0, 110, 27);
-        quit=new TextureRegion(myitem, 160, 0, 61, 27);
-        
-        ready = new TextureRegion(myitem, 221, 0, 108, 32);//
-        
-        logo = new TextureRegion(myitem, 0, 108, 300, 135);//
-        soundOff = new TextureRegion(myitem, 300, 172, 64, 64);//
-        soundOn = new TextureRegion(myitem, 364, 108, 64, 64);//
-       
-        pause = new TextureRegion(myitem, 300, 108, 64, 64);//
+        pause = new TextureRegion(myitem, 272, 108, 40, 40);//
         
        
         ball = new TextureRegion(myitem, 0, 0, 32, 32);
-        hole = new TextureRegion(myitem, 64, 0, 32, 32);
-        endHole = new TextureRegion(myitem, 32, 0, 32, 32);
-        obstacle=new TextureRegion(myitem, 96, 0, 64, 16);
+        hole = new TextureRegion(myitem, 160, 0, 32, 32);
+        endHole = new TextureRegion(myitem, 128, 0, 32, 32);
+        obstacleH=new TextureRegion(myitem, 32, 0, 64, 16);
+        obstacleV=new TextureRegion(myitem, 0, 32, 16, 64);
         
         
+        font = new Font(myitem, 16, 108, 16, 16, 20);
         
         music = game.getAudio().newMusic("music.mp3");
         music.setLooping(true);
         music.setVolume(0.5f);
-        if(Settings.soundEnabled)
+        //if(Save.soundEnabled)
+        if(musicActive)
             music.play();
+        
+        hitHoleSound = game.getAudio().newSound("ballHoles.mp3");
+        hitEndSound = game.getAudio().newSound("ballEndHole.mp3");
+        
              
     }       
     
     public static void reload() {
-        background.reload();
+        backgroundMenu.reload();
+        backgroundGame.reload();
         
         myitem.reload();
-        if(Settings.soundEnabled)
+        //if(Save.soundEnabled)
+        if(musicActive)
             music.play();
     }
     
     public static void playSound(Sound sound) {
-        if(Settings.soundEnabled)
+        //if(Save.soundEnabled)
+    	if(soundActive)
             sound.play(1);
+    	
     }
 }

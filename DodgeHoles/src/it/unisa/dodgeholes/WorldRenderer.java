@@ -1,5 +1,7 @@
 package it.unisa.dodgeholes;
 
+import java.util.ArrayList;
+
 import it.unisa.dodgeholes.framework.gl.Animation;
 import it.unisa.dodgeholes.framework.gl.Camera2D;
 import it.unisa.dodgeholes.framework.gl.SpriteBatcher;
@@ -32,10 +34,10 @@ public class WorldRenderer {
     }
     
     public void renderBackground() {
-        batcher.beginBatch(Assets.background);
+        batcher.beginBatch(Assets.backgroundGame);
         batcher.drawSprite(cam.position.x, cam.position.y,
                            FRUSTUM_WIDTH, FRUSTUM_HEIGHT, 
-                           Assets.backgroundRegion);
+                           Assets.backgroundGameRegion);
         batcher.endBatch();
     }
     
@@ -46,15 +48,16 @@ public class WorldRenderer {
         
         batcher.beginBatch(Assets.myitem);
         renderHole();
-        renderBob();
+        renderEndHole();
+        renderBall();
         renderObstacle();
-        
+        renderLifes();
        
         batcher.endBatch();
         gl.glDisable(GL10.GL_BLEND);
     }
     
-    private void renderBob() {
+    private void renderBall() {
         
         
         float side = world.ball.velocity.x < 0? -1: 1;        
@@ -63,13 +66,34 @@ public class WorldRenderer {
         
     }
     private void renderHole() {
-        Hole hole =world.hole;
-        batcher.drawSprite(hole.position.x, hole.position.y, 1f, 1f, Assets.hole);
+        ArrayList<Hole> holes =world.holes;
+        for (int i=0;i<holes.size();i++)
+        {
+        	batcher.drawSprite(holes.get(i).position.x, holes.get(i).position.y, 1f, 1f, Assets.hole);
+        }
     }
     private void renderObstacle() 
     {
-        Obstacle obstacle =world.obstacle;
-        batcher.drawSprite(obstacle.position.x, obstacle.position.y, 2f, 0.5f, Assets.obstacle);
+        ArrayList<ObstacleH> obstacles =world.obstacles;
+        for(int i=0;i<obstacles.size();i++)
+        {
+        	batcher.drawSprite(obstacles.get(i).position.x, obstacles.get(i).position.y, 2f, 0.5f, Assets.obstacleH);
+        }
+    }
+    
+    private void renderEndHole()
+    {
+    	EndHole endHole=world.endHole;
+    	batcher.drawSprite(endHole.position.x, endHole.position.y, 1f, 1f, Assets.endHole);
+    	
+    }
+    private void renderLifes()
+    {
+    	ArrayList<Life> lifes=world.lifes;
+    	for(int i=0;i<lifes.size();i++)
+    	{
+    		batcher.drawSprite(lifes.get(i).position.x, lifes.get(i).position.y, 0.8f, 0.8f, Assets.life);
+    	}
     }
     
    

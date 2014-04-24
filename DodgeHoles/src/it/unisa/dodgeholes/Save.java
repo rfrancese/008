@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 
-public class Settings {
+public class Save {
     public static boolean soundEnabled = true;
    
     public final static String file = ".superjumper";

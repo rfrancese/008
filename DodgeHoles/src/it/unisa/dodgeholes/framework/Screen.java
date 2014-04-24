@@ -1,5 +1,6 @@
 package it.unisa.dodgeholes.framework;
 
+
 public abstract class Screen {
     protected final Game game;
 
@@ -16,4 +17,5 @@ public abstract class Screen {
     public abstract void resume();
 
     public abstract void dispose();
+    
 }

@@ -19,7 +19,8 @@ public class StartGame extends GLGame {
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {         
         super.onSurfaceCreated(gl, config);
         if(firstTimeCreate) {
-            Settings.load(getFileIO());
+        	//Invece di salvare sul file,salva sul database
+            //Save.load(getFileIO());
             Assets.load(this);
             firstTimeCreate = false;            
         } else {
@@ -30,7 +31,7 @@ public class StartGame extends GLGame {
     @Override
     public void onPause() {
         super.onPause();
-        if(Settings.soundEnabled)
-            Assets.music.pause();
+        /*if(Save.soundEnabled)
+            Assets.music.pause();*/
     }
 }

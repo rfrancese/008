@@ -13,20 +13,31 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 
 public class MainMenuScreen extends GLScreen {
     Camera2D guiCam;
     SpriteBatcher batcher;
-    Rectangle soundBounds;
+    //Rectangle soundBounds;
     Rectangle playBounds;
+    Rectangle levelBounds;
+    Rectangle settingBounds;
+    Rectangle registerBounds;
     Vector2 touchPoint;
+    
+    
 
     public MainMenuScreen(Game game) {
         super(game);
         guiCam = new Camera2D(glGraphics, 480, 320);
         batcher = new SpriteBatcher(glGraphics, 100);
-        soundBounds = new Rectangle(0, 0, 64, 64);
+        //soundBounds = new Rectangle(0, 0, 64, 64);
         playBounds = new Rectangle(240-54, 150-38-19, 109, 38);
+        levelBounds = new Rectangle(240-109-54, 150-19, 109, 38);
+        settingBounds = new Rectangle(240-109-54, 150-76-19, 109, 38);
+        registerBounds = new Rectangle(240+109-54, 150-76-19, 109, 38);
         
         
         touchPoint = new Vector2();               
@@ -46,18 +57,42 @@ public class MainMenuScreen extends GLScreen {
                 
                 if(OverlapTester.pointInRectangle(playBounds, touchPoint)) {
                     
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game,1));
+                    
                     return;
                 }
                 
-                if(OverlapTester.pointInRectangle(soundBounds, touchPoint)) {
+                if(OverlapTester.pointInRectangle(levelBounds, touchPoint)) {
+                    
+                	Intent myIntent = new Intent(this.glGame, ChooseLevel.class);
+                	SingletonParametersBridge.getInstance().addParameter("game",game);
+                	this.glGame.startActivity(myIntent);
+                	
+                    return;
+                }
+                
+                if(OverlapTester.pointInRectangle(settingBounds, touchPoint)) {
+                	Intent myIntent = new Intent(this.glGame, Setting.class);
+                	this.glGame.startActivity(myIntent);
+                	
+                    return;
+                }
+                
+                if(OverlapTester.pointInRectangle(registerBounds, touchPoint)) {
+                	Intent myIntent = new Intent(this.glGame, Register.class);
+                	this.glGame.startActivity(myIntent);
+                	
+                    return;
+                }
+                
+                /*if(OverlapTester.pointInRectangle(soundBounds, touchPoint)) {
                    
-                    Settings.soundEnabled = !Settings.soundEnabled;
-                    if(Settings.soundEnabled) 
+                    Save.soundEnabled = !Save.soundEnabled;
+                    if(Save.soundEnabled) 
                         Assets.music.play();
                     else
                         Assets.music.pause();
-                }
+                }*/
             }
         }
     }
@@ -70,8 +105,8 @@ public class MainMenuScreen extends GLScreen {
         
         gl.glEnable(GL10.GL_TEXTURE_2D);
         
-        batcher.beginBatch(Assets.background);
-        batcher.drawSprite(240, 160, 480, 320, Assets.backgroundRegion);
+        batcher.beginBatch(Assets.backgroundMenu);
+        batcher.drawSprite(240, 160, 480, 320, Assets.backgroundMenuRegion);
         batcher.endBatch();
         
         gl.glEnable(GL10.GL_BLEND);
@@ -87,7 +122,7 @@ public class MainMenuScreen extends GLScreen {
         batcher.drawSprite(240-109, 150-76, 109, 38, Assets.setting);
         batcher.drawSprite(240+109, 150-76, 109, 38, Assets.register);
         
-        batcher.drawSprite(32, 32, 64, 64, Settings.soundEnabled?Assets.soundOn:Assets.soundOff);
+        //batcher.drawSprite(32, 32, 64, 64, Save.soundEnabled?Assets.soundOn:Assets.soundOff);
                 
         batcher.endBatch();
         
@@ -96,11 +131,15 @@ public class MainMenuScreen extends GLScreen {
     
     @Override
     public void pause() {        
-        Settings.save(game.getFileIO());
+        //Save.save(game.getFileIO());
+    	if(Assets.musicActive)
+    		Assets.music.stop();
     }
 
     @Override
-    public void resume() {        
+    public void resume() {
+    	if(Assets.musicActive)
+    		Assets.music.play();
     }       
 
     @Override

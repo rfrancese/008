@@ -1,5 +1,6 @@
 package it.unisa.dodgeholes;
 
+import it.unisa.dodgeholes.World.WorldListener;
 import it.unisa.dodgeholes.framework.Game;
 import it.unisa.dodgeholes.framework.Input.TouchEvent;
 import it.unisa.dodgeholes.framework.gl.Camera2D;
@@ -13,6 +14,10 @@ import it.unisa.dodgeholes.framework.math.Vector2;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import android.util.Log;
+import android.view.KeyEvent;
+
 
 
 
@@ -28,7 +33,7 @@ public class GameScreen extends GLScreen {
     Vector2 touchPoint;
     SpriteBatcher batcher;    
     World world;
-    
+    WorldListener worldListener;
     WorldRenderer renderer;    
     Rectangle pauseBounds;
     Rectangle resumeBounds;
@@ -36,26 +41,57 @@ public class GameScreen extends GLScreen {
       
     FPSCounter fpsCounter;
     
-    public GameScreen(Game game) {
+    float counter, timeCounter;
+    private int numLevel;
+    
+    public GameScreen(Game game, int numLevel) {
         super(game);
         state = GAME_READY;
+        this.numLevel=numLevel;
         guiCam = new Camera2D(glGraphics, 480, 320);
         touchPoint = new Vector2();
         batcher = new SpriteBatcher(glGraphics, 1000);
-        
-        world = new World();
+        worldListener = new WorldListener() {
+            
+            public void hitHole() 
+            {            
+                Assets.playSound(Assets.hitHoleSound);
+            }
+            
+            public void hitEndHole() 
+            {            
+                Assets.playSound(Assets.hitEndSound);
+            }
+              
+        };
+        world = new World(worldListener, this.numLevel);
         renderer = new WorldRenderer(glGraphics, batcher, world);
-        pauseBounds = new Rectangle(480- 64, 320- 64, 64, 64);
+        pauseBounds = new Rectangle(480- 52, 320- 18-20, 40, 40);
         resumeBounds = new Rectangle(240-55, 160-13, 110, 27);
         quitBounds = new Rectangle(240-30, 160-27-13, 61, 27);
         
         fpsCounter = new FPSCounter();
+        
+        timeCounter=0;
+        counter=0;
     }
 
 	@Override
 	public void update(float deltaTime) {
+		
+		timeCounter+=deltaTime;
+		if(timeCounter >= 1.0f && this.state==GAME_RUNNING)
+		{
+			timeCounter =0;
+			counter++;
+			//Log.d("timer: ", ""+counter);
+		}
+		
+		
 	    if(deltaTime > 0.1f)
 	        deltaTime = 0.1f;
+	    
+	    
 	    
 	    switch(state) {
 	    case GAME_READY:
@@ -144,7 +180,8 @@ public class GameScreen extends GLScreen {
 	        TouchEvent event = touchEvents.get(i);
 	        if(event.type != TouchEvent.TOUCH_UP)
 	            continue;
-	        world = new World();
+	        this.counter=0;
+	        world = new World(worldListener,world.getNumLevel()+1);
 	        renderer = new WorldRenderer(glGraphics, batcher, world);
 	        
 	        state = GAME_READY;
@@ -184,41 +221,78 @@ public class GameScreen extends GLScreen {
 	    case GAME_PAUSED:
 	        presentPaused();
 	        break;
+	    case GAME_LEVEL_END:
+	    	presentLevelEnd();
+	    	break;
+	    case GAME_OVER:
+	        presentGameOver();
+	        break;
 	    
 	    }
 	    batcher.endBatch();
 	    gl.glDisable(GL10.GL_BLEND);
-	    fpsCounter.logFrame();
-	}
-	
-	private void presentReady() {
-	    batcher.drawSprite(240, 160, 108, 32, Assets.ready);
-	}
-	
-	private void presentRunning() {
-	    batcher.drawSprite(480 - 32, 320 - 32, 64, 64, Assets.pause);
+	    //fpsCounter.logFrame();
 	    
 	}
 	
-	private void presentPaused() {        
+	private void presentReady() 
+	{
+	    batcher.drawSprite(240, 160, 108, 32, Assets.ready);
+	    
+	    Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
+	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
+	}
+	
+	private void presentRunning() 
+	{
+	    batcher.drawSprite(480 - 32, 320 - 18, 40, 40, Assets.pause);
+	    
+	    Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
+	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
+	}
+	
+	private void presentPaused() 
+	{ 
+		Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
+	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
+		
 	    batcher.drawSprite(240, 160, 110, 27, Assets.resume);
 	    batcher.drawSprite(240, 160-27, 61, 27, Assets.quit);
 	    
 	}
 	
+	private void presentLevelEnd()
+	{
+		Assets.font.drawText(batcher, "CLICK TO NEXT LEVEL", 200, 160);
+		//se il nickname e'z registrato sul db locale allora faccio questo altrimenti
+		//non faccio nnt !
+		//scrivi sul database Nickname recuperato dal db locale se registrato!
+		//scrivi punteggio preso da counter con casting a int e numLevel 
+		//Concatena Livello+numLevel
+	}
 	
-
+	private void presentGameOver() 
+	{
+		Assets.font.drawText(batcher, "GAME OVER", 240, 160);
+	}
+	
+	
     @Override
     public void pause() {
         if(state == GAME_RUNNING)
             state = GAME_PAUSED;
+        if(Assets.musicActive)
+        	Assets.music.stop();
     }
 
     @Override
-    public void resume() {        
+    public void resume() {
+    	if(Assets.musicActive)
+    		Assets.music.play();
     }
 
     @Override
     public void dispose() {       
     }
+    
 }
