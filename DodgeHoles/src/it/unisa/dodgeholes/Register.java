@@ -63,12 +63,38 @@ public class Register extends Activity implements View.OnClickListener {
 				/*
 				 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
 				 */
+				
+				//Carico il database 
 				ContentValues valori = new ContentValues();
 				 
-				valori.put("nickname", nick.getText().toString()); //Inserisco il nome
-				valori.put("punteggio",0);  //Inserisco il cognome
-				valori.put("livello", "");     //Inserisco l'email
+				valori.put("nickname", nick.getText().toString()); 
+				valori.put("punteggio",0); 
+				valori.put("livello", "Livello1");     
 				 
+				ContentValues valori1 = new ContentValues();
+				 
+				valori1.put("nickname", nick.getText().toString()); 
+				valori1.put("punteggio",0); 
+				valori1.put("livello", "Livello2");  
+				
+				ContentValues valori2 = new ContentValues();
+				 
+				valori2.put("nickname", nick.getText().toString()); 
+				valori2.put("punteggio",0); 
+				valori2.put("livello", "Livello3");  
+				
+				ContentValues valori3 = new ContentValues();
+				 
+				valori3.put("nickname", nick.getText().toString()); 
+				valori3.put("punteggio",0); 
+				valori3.put("livello", "Livello4");  
+				
+				
+				ContentValues valori4 = new ContentValues();
+				 
+				valori4.put("nickname", nick.getText().toString()); 
+				valori4.put("punteggio",0); 
+				valori4.put("livello", "Livello5");  
 				/*
 				 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
 				 * altrimenti restituisce -1
@@ -78,6 +104,11 @@ public class Register extends Activity implements View.OnClickListener {
 				 * terzo parametro,la mappa dei valori da inserire
 				 */
 				long id = db.insert("access", null, valori);
+				id = db.insert("access", null, valori1);
+				id = db.insert("access", null, valori2);
+				id = db.insert("access", null, valori3);
+				id = db.insert("access", null, valori4);
+				
 				db.close();
 			}
 			else
@@ -120,7 +151,7 @@ public class Register extends Activity implements View.OnClickListener {
 	public boolean leggiDati()
 	{
 		SQLiteDatabase db = this.database.getReadableDatabase();
-		final String sql = "SELECT * FROM access where nickname is not null";
+		final String sql = "SELECT * FROM access";
 		 
 		 Cursor c = db.rawQuery(sql, null);
 		 
