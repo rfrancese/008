@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.KeyEvent;
 
@@ -27,6 +29,7 @@ public class GameScreen extends GLScreen {
     static final int GAME_PAUSED = 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
+    private DbLocale database = null;
   
     int state;
     Camera2D guiCam;
@@ -264,6 +267,23 @@ public class GameScreen extends GLScreen {
 	private void presentLevelEnd()
 	{
 		Assets.font.drawText(batcher, "CLICK TO NEXT LEVEL", 200, 160);
+		
+		SQLiteDatabase db = this.database.getReadableDatabase();
+		final String sql = "SELECT * FROM access where nickname is not null";
+		Cursor c = db.rawQuery(sql, null);
+		int numeroRighe = c.getCount();
+		if(numeroRighe!=0)
+		{
+			//Aggiorno il punteggio migliore sul db locale
+			if(c.moveToFirst())
+			{
+				
+			}
+			
+		}
+		db.close();
+		
+		
 		//se il nickname e'z registrato sul db locale allora faccio questo altrimenti
 		//non faccio nnt !
 		//scrivi sul database Nickname recuperato dal db locale se registrato!

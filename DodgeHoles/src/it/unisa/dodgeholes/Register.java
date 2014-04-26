@@ -66,14 +66,14 @@ public class Register extends Activity implements View.OnClickListener {
 				ContentValues valori = new ContentValues();
 				 
 				valori.put("nickname", nick.getText().toString()); //Inserisco il nome
-				valori.put("punteggio", "");  //Inserisco il cognome
+				valori.put("punteggio",0);  //Inserisco il cognome
 				valori.put("livello", "");     //Inserisco l'email
 				 
 				/*
 				 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
 				 * altrimenti restituisce -1
 				 * primo parametro nome della tabella in cui fare l'inserimento
-				 * secondo parametro (NULL) perche' utile quando si vuole inserire un record con 
+				 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
 				 * valori tutti null
 				 * terzo parametro,la mappa dei valori da inserire
 				 */
