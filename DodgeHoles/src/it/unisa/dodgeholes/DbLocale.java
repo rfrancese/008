@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Uso questa classe per creare un database locale sul telefonino del
  * cliente. Quando l'utente si registra,il suo nickname viene scritto
  * nel database access,in modo da non permettere di effettuare 
- * più registrazioni da un singolo telefonino
+ * piu' registrazioni da un singolo telefonino
  * @author Antonio De Piano & Giuseppe Sabato
  *
  */
@@ -21,7 +21,7 @@ public class DbLocale extends SQLiteOpenHelper {
 	 * Numero della versione del database.
 	 * 
 	 * La numerazione della vesione del database deve iniziare dal numero 1.
-	 * Quando viene specificata una nuova versione android useguirà la funzione onUpgrade.
+	 * Quando viene specificata una nuova versione android eseguira' la funzione onUpgrade.
 	 */
 	private static final int DB_VERSIONE = 1;
 
