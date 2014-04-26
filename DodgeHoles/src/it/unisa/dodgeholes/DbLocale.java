@@ -38,7 +38,8 @@ public class DbLocale extends SQLiteOpenHelper {
 		 */
 		String sql = "CREATE TABLE access "; 
 		sql += "(nickname TEXT DEFAULT NULL,";
-		sql+="punteggio_migliore int);";
+		sql+="punteggio_migliore int,";
+		sql+="livello TEXT);";
 
 		//Eseguiamo la query
 		db.execSQL(sql);
