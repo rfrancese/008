@@ -37,7 +37,7 @@ public class Register extends Activity implements View.OnClickListener {
 		database = new DbLocale(getApplicationContext());
 
 	}
-	@Override
+	
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if(nick.getText().toString().matches(""))
@@ -55,7 +55,7 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 		else
 		{
-			//Controllo se l'utente si è registrato precedentemente
+			//Controllo se l'utente si e' registrato precedentemente
 			if(leggiDati())
 			{
 				SQLiteDatabase db = this.database.getWritableDatabase();
@@ -85,7 +85,7 @@ public class Register extends Activity implements View.OnClickListener {
 				//Messaggio d'errore
 				new AlertDialog.Builder(this)
 				.setTitle("Attenzione")
-				.setMessage("Dal seguente dispositivo,ci risulta già una registrazione!")
+				.setMessage("Dal seguente dispositivo,ci risulta gia' una registrazione!")
 				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dlg, int sumthin) {
 						
@@ -116,7 +116,7 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 	}
 	
-	//Controllo se è presente un nickname nel database
+	//Controllo se e' presente un nickname nel database
 	public boolean leggiDati()
 	{
 		SQLiteDatabase db = this.database.getReadableDatabase();
