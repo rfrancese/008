@@ -68,32 +68,32 @@ public class Register extends Activity implements View.OnClickListener {
 				ContentValues valori = new ContentValues();
 				 
 				valori.put("nickname", nick.getText().toString()); 
-				valori.put("punteggio",0); 
+				valori.put("punteggio_migliore",0); 
 				valori.put("livello", "Livello1");     
 				 
 				ContentValues valori1 = new ContentValues();
 				 
 				valori1.put("nickname", nick.getText().toString()); 
-				valori1.put("punteggio",0); 
+				valori1.put("punteggio_migliore",0); 
 				valori1.put("livello", "Livello2");  
 				
 				ContentValues valori2 = new ContentValues();
 				 
 				valori2.put("nickname", nick.getText().toString()); 
-				valori2.put("punteggio",0); 
+				valori2.put("punteggio_migliore",0); 
 				valori2.put("livello", "Livello3");  
 				
 				ContentValues valori3 = new ContentValues();
 				 
 				valori3.put("nickname", nick.getText().toString()); 
-				valori3.put("punteggio",0); 
+				valori3.put("punteggio_migliore",0); 
 				valori3.put("livello", "Livello4");  
 				
 				
 				ContentValues valori4 = new ContentValues();
 				 
 				valori4.put("nickname", nick.getText().toString()); 
-				valori4.put("punteggio",0); 
+				valori4.put("punteggio_migliore",0); 
 				valori4.put("livello", "Livello5");  
 				/*
 				 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,

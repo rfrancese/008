@@ -40,7 +40,7 @@ public class DbLocale extends SQLiteOpenHelper {
 		sql += "(nickname VARCHAR(20),";
 		sql+="punteggio_migliore int DEFAULT 0,";
 		sql+="livello VARCHAR(20),";
-		sql+="primary key(nickname,livello);";
+		sql+="primary key(nickname,livello)";
 
 		//Eseguiamo la query
 		db.execSQL(sql);
