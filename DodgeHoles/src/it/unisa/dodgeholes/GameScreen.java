@@ -269,7 +269,7 @@ public class GameScreen extends GLScreen {
 		Assets.font.drawText(batcher, "CLICK TO NEXT LEVEL", 200, 160);
 		
 		SQLiteDatabase db = this.database.getReadableDatabase();
-		final String sql = "SELECT * FROM access where nickname is not null";
+		String sql = "SELECT * FROM access where livello=\"Livello"+numLevel+"\"";
 		Cursor c = db.rawQuery(sql, null);
 		int numeroRighe = c.getCount();
 		if(numeroRighe!=0)
@@ -277,7 +277,12 @@ public class GameScreen extends GLScreen {
 			//Aggiorno il punteggio migliore sul db locale
 			if(c.moveToFirst())
 			{
-				
+				int punteggio_salvato=c.getInt(1);
+				int punteggio_attuale=(int)this.counter;
+				if(punteggio_attuale<punteggio_salvato)
+				{
+					sql="UPDATE access set punteggio="+punteggio_attuale+" where livello=\"Livello"+numLevel+"\"";
+				}
 			}
 			
 		}
