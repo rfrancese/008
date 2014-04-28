@@ -37,11 +37,16 @@ public class DbLocale extends SQLiteOpenHelper {
 		 * creazione della tabella ACCESS
 		 */
 		String sql = "CREATE TABLE access "; 
-		sql += "(nickname VARCHAR(20),";
-		sql+="punteggio_migliore int DEFAULT 0,";
-		sql+="livello VARCHAR(20),";
-		sql+="primary key(nickname,livello)";
-
+		sql += "(nickname VARCHAR(20) primary key)";
+		db.execSQL(sql);
+		
+		sql=null;
+		sql="CREATE TABLE punteggi ";
+		sql+="(nickname VARCHAR(20),";
+		sql+="punteggio int,";
+		sql+="livello varchar(20),";
+		sql+="foreign key(nickname) references access(nickname),";
+		sql+="primary key(nickname,livello))";
 		//Eseguiamo la query
 		db.execSQL(sql);
 	}

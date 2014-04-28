@@ -2,13 +2,34 @@ package it.unisa.dodgeholes;
 
 
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -55,80 +76,203 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 		else
 		{
-			//Controllo se l'utente si e' registrato precedentemente
-			if(leggiDati())
+			//Determino se e' attiva la connessione a internet
+			ConnectivityManager cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+			boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+			//se e' attiva la connessione
+			if(isConnected)
 			{
-				SQLiteDatabase db = this.database.getWritableDatabase();
-				
-				/*
-				 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
-				 */
-				
-				//Carico il database 
-				ContentValues valori = new ContentValues();
-				 
-				valori.put("nickname", nick.getText().toString()); 
-				valori.put("punteggio_migliore",0); 
-				valori.put("livello", "Livello1");     
-				 
-				ContentValues valori1 = new ContentValues();
-				 
-				valori1.put("nickname", nick.getText().toString()); 
-				valori1.put("punteggio_migliore",0); 
-				valori1.put("livello", "Livello2");  
-				
-				ContentValues valori2 = new ContentValues();
-				 
-				valori2.put("nickname", nick.getText().toString()); 
-				valori2.put("punteggio_migliore",0); 
-				valori2.put("livello", "Livello3");  
-				
-				ContentValues valori3 = new ContentValues();
-				 
-				valori3.put("nickname", nick.getText().toString()); 
-				valori3.put("punteggio_migliore",0); 
-				valori3.put("livello", "Livello4");  
-				
-				
-				ContentValues valori4 = new ContentValues();
-				 
-				valori4.put("nickname", nick.getText().toString()); 
-				valori4.put("punteggio_migliore",0); 
-				valori4.put("livello", "Livello5");  
-				/*
-				 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
-				 * altrimenti restituisce -1
-				 * primo parametro nome della tabella in cui fare l'inserimento
-				 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
-				 * valori tutti null
-				 * terzo parametro,la mappa dei valori da inserire
-				 */
-				long id = db.insert("access", null, valori);
-				id = db.insert("access", null, valori1);
-				id = db.insert("access", null, valori2);
-				id = db.insert("access", null, valori3);
-				id = db.insert("access", null, valori4);
-				
-				db.close();
+				//Se nickname gia' presente
+				if(nicknameRegistrato())
+				{
+						new AlertDialog.Builder(this)
+						.setTitle("Errore")
+						.setMessage("Nickname non disponibile!")
+						.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
+							public void onClick(DialogInterface dlg, int sumthin) {
+							}
+						})
+						.show();
+				}
+				else
+				{
+					this.registraUtenteInLocale();
+					this.registraUtenteSulServer();
+				}
 			}
 			else
 			{
-				//Messaggio d'errore
-				new AlertDialog.Builder(this)
-				.setTitle("Attenzione")
-				.setMessage("Dal seguente dispositivo,ci risulta gia' una registrazione!")
-				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dlg, int sumthin) {
-						
+				if(leggiDati())
+				{
+					this.registraUtenteInLocale();
+				}
+				else
+				{
+					//Messaggio d'errore
+					new AlertDialog.Builder(this)
+					.setTitle("Attenzione")
+					.setMessage("Dal seguente dispositivo,ci risulta gia' una registrazione!")
+					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dlg, int sumthin) {
 							
-					}
-				})
-				.show();
+								
+						}
+					})
+					.show();
+				}
 			}
-			
-			
 		}
+	}
+		 
+	private void registraUtenteSulServer()
+	{
+		 String result = "";
+	        String stringaFinale = "";
+	        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	        nameValuePairs.add(new BasicNameValuePair("nickname",nick.getText().toString()));
+	        InputStream is = null;
+	 
+	        //http post
+	        try
+	        {
+	                HttpClient httpclient = new DefaultHttpClient();
+	                HttpPost httppost = new HttpPost("http://10.0.2.2:8080/helloHttp/richiestaInfo.php");
+	                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	                HttpResponse response = httpclient.execute(httppost);
+	                HttpEntity entity = response.getEntity();
+	                is = entity.getContent();
+	        }
+	        catch(Exception e)
+	        {
+	                Log.e("TEST", "Errore nella connessione http "+e.toString());
+	        }
+	        if(is != null)
+	        {
+	            //converto la risposta in stringa
+	            try
+	            {
+	                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+	                    StringBuilder sb = new StringBuilder();
+	                    String line = null;
+	                    while ((line = reader.readLine()) != null) {
+	                            sb.append(line + "\n");
+	                    }
+	                    is.close();
+	 
+	                    result=sb.toString();
+	            }
+	            catch(Exception e)
+	            {
+	                    Log.e("TEST", "Errore nel convertire il risultato "+e.toString());
+	            }
+	 
+	            //parsing dei dati arrivati in formato json
+	            try
+	            {
+	                    JSONArray jArray = new JSONArray(result);
+	                    for(int i=0;i<jArray.length();i++){
+	                            JSONObject json_data = jArray.getJSONObject(i);
+	                            Log.i("TEST","id: "+json_data.getInt("id")+
+	                                    ", cognome: "+json_data.getString("cognome")+
+	                                    ", nascita: "+json_data.getInt("anno")
+	                            );
+	                            stringaFinale = json_data.getInt("id") + " " + json_data.getString("cognome") + " " + json_data.getInt("anno") + "\n\n";
+	                    }
+	            }
+	            catch(JSONException e){
+	                    Log.e("log_tag", "Error parsing data "+e.toString());
+	            }
+	        }
+	        else
+	        {//is è null e non ho avuto risposta
+	 
+	        }
 		
+	}
+
+	private void registraUtenteInLocale()
+	{
+		SQLiteDatabase db = this.database.getWritableDatabase();
+		
+		/*
+		 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
+		 */
+		
+		//Carico il database 
+		ContentValues valori = new ContentValues();
+		 
+		valori.put("nickname", nick.getText().toString()); 
+		
+		/*
+		 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
+		 * altrimenti restituisce -1
+		 * primo parametro nome della tabella in cui fare l'inserimento
+		 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+		 * valori tutti null
+		 * terzo parametro,la mappa dei valori da inserire
+		 */
+		long id = db.insert("access", null, valori);
+		
+		db.close();
+	}
+
+	public boolean nicknameRegistrato()
+	{
+		String result = "";
+        String stringaFinale = "";
+        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+        nameValuePairs.add(new BasicNameValuePair("idnomerichiesto","1"));
+        InputStream is = null;
+ 
+        //http post
+        try{
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpPost httppost = new HttpPost("http://10.0.2.2:8080/helloHttp/richiestaInfo.php");
+                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                HttpResponse response = httpclient.execute(httppost);
+                HttpEntity entity = response.getEntity();
+                is = entity.getContent();
+        }catch(Exception e){
+                Log.e("TEST", "Errore nella connessione http "+e.toString());
+        }
+        if(is != null){
+            //converto la risposta in stringa
+            try{
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                            sb.append(line + "\n");
+                    }
+                    is.close();
+ 
+                    result=sb.toString();
+            }catch(Exception e){
+                    Log.e("TEST", "Errore nel convertire il risultato "+e.toString());
+            }
+ 
+            //parsing dei dati arrivati in formato json
+            try{
+                    JSONArray jArray = new JSONArray(result);
+                    for(int i=0;i<jArray.length();i++){
+                            JSONObject json_data = jArray.getJSONObject(i);
+                            Log.i("TEST","id: "+json_data.getInt("id")+
+                                    ", cognome: "+json_data.getString("cognome")+
+                                    ", nascita: "+json_data.getInt("anno")
+                            );
+                            stringaFinale = json_data.getInt("id") + " " + json_data.getString("cognome") + " " + json_data.getInt("anno") + "\n\n";
+                    }
+            }
+            catch(JSONException e){
+                    Log.e("log_tag", "Error parsing data "+e.toString());
+            }
+        }
+        else{//is è null e non ho avuto risposta
+ 
+        }
+	
+		return false;
 	}
 	
 	public void onPause()
@@ -147,7 +291,7 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 	}
 	
-	//Controllo se e' presente un nickname nel database
+	//Controllo se e' presente un record nella tabella access
 	public boolean leggiDati()
 	{
 		SQLiteDatabase db = this.database.getReadableDatabase();
@@ -161,7 +305,6 @@ public class Register extends Activity implements View.OnClickListener {
 			 return true;
 		return false;
 	}
-	
 	
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event)
