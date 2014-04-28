@@ -267,7 +267,7 @@ public class GameScreen extends GLScreen {
 	private void presentLevelEnd()
 	{
 		Assets.font.drawText(batcher, "CLICK TO NEXT LEVEL", 200, 160);
-		
+		/*Ho commentato per poter gestire i messaggi di fine livello
 		SQLiteDatabase db = this.database.getReadableDatabase();
 		String sql = "SELECT * FROM access where livello=\"Livello"+numLevel+"\"";
 		Cursor c = db.rawQuery(sql, null);
@@ -286,7 +286,7 @@ public class GameScreen extends GLScreen {
 			}
 			
 		}
-		db.close();
+		db.close();*/
 		
 		
 		//se il nickname e'z registrato sul db locale allora faccio questo altrimenti
