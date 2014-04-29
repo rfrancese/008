@@ -104,7 +104,7 @@ private void updateBall(float deltaTime, float accelX, float accelY) {
     }
     else
     {
-    	ball.velocity.x = -accelX /7*Ball.BALL_MOVE_VELOCITY;
+    	ball.velocity.x = (-accelX /7*Ball.BALL_MOVE_VELOCITY)%7;//Mantengo la velocita' verticale sotto una certa soglia
         ball.velocity.y=(-accelY/5*Ball.BALL_MOVE_VELOCITY)%5;//Mantengo la velocita' sotto una certa soglia per evitare che superi l'ostacolo
     }
     
