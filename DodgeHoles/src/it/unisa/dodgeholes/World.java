@@ -100,17 +100,34 @@ private void updateBall(float deltaTime, float accelX, float accelY) {
     {
 		ball.velocity.x = -accelX /7*Ball.BALL_MOVE_VELOCITY;
         ball.velocity.y=-accelY/5*Ball.BALL_MOVE_VELOCITY;
-        //Log.d("vely", ""+ball.velocity.y);
     }
     else
     {
-    	ball.velocity.x = (-accelX /7*Ball.BALL_MOVE_VELOCITY)%7;//Mantengo la velocita' verticale sotto una certa soglia
-        ball.velocity.y=(-accelY/5*Ball.BALL_MOVE_VELOCITY)%5;//Mantengo la velocita' sotto una certa soglia per evitare che superi l'ostacolo
+    	//Controllo velocita' in modo che si mantenga sotto una certa soglia 
+    	
+    	if((-accelX /7*Ball.BALL_MOVE_VELOCITY)<-7)
+    		ball.velocity.x=-7;
+    	else
+    	{
+    		if((-accelX /7*Ball.BALL_MOVE_VELOCITY)>7)
+    			ball.velocity.x=7;
+    		else
+    			ball.velocity.x=-accelX /7*Ball.BALL_MOVE_VELOCITY;
+    	}
+    	
+    	if((-accelY/5*Ball.BALL_MOVE_VELOCITY)<-7)
+    		ball.velocity.y=-7;
+    	else
+    	{
+    		if((-accelY/5*Ball.BALL_MOVE_VELOCITY)>7)
+    			ball.velocity.y=7;
+    		else
+    			ball.velocity.y=(-accelY/5*Ball.BALL_MOVE_VELOCITY);
+    	}
     }
     
     ball.update(deltaTime);
-    
-    
+ 
 }
 
 

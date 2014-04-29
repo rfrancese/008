@@ -19,36 +19,30 @@ public class Level1 implements Level {
 		obstaclesH=generateObstaclesH();
 		obstaclesV=generateObstaclesV();
 		lifes=generateLifes();
-		endHole=new EndHole(13.9f,2f);
+		endHole=new EndHole(13.9f,8f);
 	}
 	
 	private ArrayList<Hole> generateHoles()
 	{
 		ArrayList<Hole> h=new ArrayList<Hole>();
-		Hole h1=new Hole(3.6f,7.4f);
-		Hole h2=new Hole(5.1f,6.5f);
-		Hole h3=new Hole(8f,5.1f);
-		Hole h4=new Hole(13.5f,3.2f);
+		Hole h1=new Hole(1f,6f);
+		Hole h2=new Hole(3f,1.9f);
+		Hole h3=new Hole(7.5f,7.5f);
+		Hole h4=new Hole(12f,1.9f);
+		
 		
 		h.add(h1);
 		h.add(h2);
 		h.add(h3);
 		h.add(h4);
+		
 		return h;
 	}
 	
 	private ArrayList<ObstacleH> generateObstaclesH()
 	{
 		ArrayList<ObstacleH> o=new ArrayList<ObstacleH>();
-		ObstacleH o1=new ObstacleH(1.4f,7.5f);
-		ObstacleH o2=new ObstacleH(2.4f,5f);
-		ObstacleH o3=new ObstacleH(5.2f,5.3f);
-		ObstacleH o4=new ObstacleH(10.1f,4.1f);
 		
-		o.add(o1);
-		o.add(o2);
-		o.add(o3);
-		o.add(o4);
 		
 		return o;
 	}
@@ -56,10 +50,25 @@ public class Level1 implements Level {
 	private ArrayList<ObstacleV> generateObstaclesV()
 	{
 		ArrayList<ObstacleV> o=new ArrayList<ObstacleV>();
-		ObstacleV o1=new ObstacleV(3f,2.5f);
-		
+		ObstacleV o1=new ObstacleV(3f,7.9f);
+		ObstacleV o2=new ObstacleV(3f,5.8f);
+		ObstacleV o3=new ObstacleV(3f,3.7f);
+		ObstacleV o4=new ObstacleV(7.5f,1.5f);
+		ObstacleV o5=new ObstacleV(7.5f,3.6f);
+		ObstacleV o6=new ObstacleV(7.5f,5.7f);
+		ObstacleV o7=new ObstacleV(12f,7.9f);
+		ObstacleV o8=new ObstacleV(12f,5.8f);
+		ObstacleV o9=new ObstacleV(12f,3.7f);
 		
 		o.add(o1);
+		o.add(o2);
+		o.add(o3);
+		o.add(o4);
+		o.add(o5);
+		o.add(o6);
+		o.add(o7);
+		o.add(o8);
+		o.add(o9);
 		
 		return o;
 	}

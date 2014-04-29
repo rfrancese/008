@@ -41,6 +41,8 @@ public class GameScreen extends GLScreen {
     Rectangle pauseBounds;
     Rectangle resumeBounds;
     Rectangle quitBounds;
+    Rectangle nextLevelBounds;
+    Rectangle tryAgainBounds;
       
     FPSCounter fpsCounter;
     
@@ -70,8 +72,11 @@ public class GameScreen extends GLScreen {
         world = new World(worldListener, this.numLevel);
         renderer = new WorldRenderer(glGraphics, batcher, world);
         pauseBounds = new Rectangle(480- 52, 320- 18-20, 40, 40);
-        resumeBounds = new Rectangle(240-55, 160-13, 110, 27);
-        quitBounds = new Rectangle(240-30, 160-27-13, 61, 27);
+        resumeBounds = new Rectangle(240-54, 160-19, 109, 38);
+        quitBounds = new Rectangle(240-54, 160-45-19, 109, 38);
+        nextLevelBounds = new Rectangle(240-54, 160-19, 109, 38);
+        tryAgainBounds = new Rectangle(240-54, 160-19, 109, 38);
+        
         
         fpsCounter = new FPSCounter();
         
@@ -183,11 +188,25 @@ public class GameScreen extends GLScreen {
 	        TouchEvent event = touchEvents.get(i);
 	        if(event.type != TouchEvent.TOUCH_UP)
 	            continue;
-	        this.counter=0;
-	        world = new World(worldListener,world.getNumLevel()+1);
-	        renderer = new WorldRenderer(glGraphics, batcher, world);
 	        
-	        state = GAME_READY;
+	        touchPoint.set(event.x, event.y);
+	        guiCam.touchToWorld(touchPoint);
+	        
+	        if(OverlapTester.pointInRectangle(nextLevelBounds, touchPoint)) {
+	            
+	        	this.counter=0;
+		        world = new World(worldListener,world.getNumLevel()+1);
+		        renderer = new WorldRenderer(glGraphics, batcher, world);
+		        state = GAME_READY;
+	            return;
+	        }
+	        
+	        if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+	            
+	            game.setScreen(new MainMenuScreen(game));
+	            return;
+	        }
+	        
 	    }
 	}
 	
@@ -198,7 +217,24 @@ public class GameScreen extends GLScreen {
 	        TouchEvent event = touchEvents.get(i);
 	        if(event.type != TouchEvent.TOUCH_UP)
 	            continue;
-	        game.setScreen(new MainMenuScreen(game));
+	        
+	        touchPoint.set(event.x, event.y);
+	        guiCam.touchToWorld(touchPoint);
+	        
+	        if(OverlapTester.pointInRectangle(tryAgainBounds, touchPoint)) {
+	            
+	        	this.counter=0;
+		        world = new World(worldListener,world.getNumLevel());
+		        renderer = new WorldRenderer(glGraphics, batcher, world);
+		        state = GAME_READY;
+	            return;
+	        }
+	        
+	        if(OverlapTester.pointInRectangle(quitBounds, touchPoint)) {
+	            
+	            game.setScreen(new MainMenuScreen(game));
+	            return;
+	        }
 	    }
 	}
 
@@ -240,33 +276,43 @@ public class GameScreen extends GLScreen {
 	
 	private void presentReady() 
 	{
-	    batcher.drawSprite(240, 160, 108, 32, Assets.ready);
-	    
-	    Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
-	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
+		batcher.drawSprite(35, 320 - 18, 53, 25, Assets.lifeWrite);
+	    batcher.drawSprite(260, 320 - 18, 71, 25, Assets.timeWrite);
+	    Assets.font.drawText(batcher,(int)counter+"s", 311, 320 - 18);
+		
+	    batcher.drawSprite(240, 160, 208, 38, Assets.ready);
 	}
 	
 	private void presentRunning() 
 	{
 	    batcher.drawSprite(480 - 32, 320 - 18, 40, 40, Assets.pause);
 	    
-	    Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
-	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
+	    batcher.drawSprite(35, 320 - 18, 53, 25, Assets.lifeWrite);
+	    batcher.drawSprite(260, 320 - 18, 71, 25, Assets.timeWrite);
+	    Assets.font.drawText(batcher,(int)counter+"s", 311, 320 - 18);
 	}
 	
 	private void presentPaused() 
 	{ 
-		Assets.font.drawText(batcher, "Life:", 14, 320 - 18);
-	    Assets.font.drawText(batcher, "Time:"+(int)counter+"s", 240, 320 - 18);
 		
-	    batcher.drawSprite(240, 160, 110, 27, Assets.resume);
-	    batcher.drawSprite(240, 160-27, 61, 27, Assets.quit);
+		batcher.drawSprite(35, 320 - 18, 53, 25, Assets.lifeWrite);
+	    batcher.drawSprite(260, 320 - 18, 71, 25, Assets.timeWrite);
+	    Assets.font.drawText(batcher,(int)counter+"s", 311, 320 - 18);
+	    
+	    batcher.drawSprite(240, 160, 109, 38, Assets.resume);
+	    batcher.drawSprite(240, 160-45, 109, 38, Assets.quit);
 	    
 	}
 	
 	private void presentLevelEnd()
 	{
-		Assets.font.drawText(batcher, "CLICK TO NEXT LEVEL", 200, 160);
+		batcher.drawSprite(35, 320 - 18, 53, 25, Assets.lifeWrite);
+	    batcher.drawSprite(260, 320 - 18, 71, 25, Assets.timeWrite);
+	    Assets.font.drawText(batcher,(int)counter+"s", 311, 320 - 18);
+		
+		batcher.drawSprite(240, 200, 92, 38, Assets.win);
+		batcher.drawSprite(240, 160, 109, 38, Assets.nextLevel);
+		batcher.drawSprite(240, 160-45, 109, 38, Assets.quit);
 		/*Ho commentato per poter gestire i messaggi di fine livello
 		SQLiteDatabase db = this.database.getReadableDatabase();
 		String sql = "SELECT * FROM access where livello=\"Livello"+numLevel+"\"";
@@ -298,7 +344,13 @@ public class GameScreen extends GLScreen {
 	
 	private void presentGameOver() 
 	{
-		Assets.font.drawText(batcher, "GAME OVER", 240, 160);
+		batcher.drawSprite(35, 320 - 18, 53, 25, Assets.lifeWrite);
+	    batcher.drawSprite(260, 320 - 18, 71, 25, Assets.timeWrite);
+	    Assets.font.drawText(batcher,(int)counter+"s", 311, 320 - 18);
+		
+		 batcher.drawSprite(240, 200, 256, 38, Assets.gameOver);
+		 batcher.drawSprite(240, 160, 109, 38, Assets.tryAgain);
+		 batcher.drawSprite(240, 160-45, 109, 38, Assets.quit);
 	}
 	
 	

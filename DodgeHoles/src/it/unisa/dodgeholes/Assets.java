@@ -20,6 +20,8 @@ public class Assets {
     public static Texture myitem;
     
     public static TextureRegion life;
+    public static TextureRegion lifeWrite;
+    public static TextureRegion timeWrite;
     
     public static TextureRegion play;
     public static TextureRegion level;
@@ -30,10 +32,10 @@ public class Assets {
     public static TextureRegion resume;
     public static TextureRegion quit;
     public static TextureRegion ready;
+    public static TextureRegion nextLevel;
+    public static TextureRegion tryAgain;
     
     public static TextureRegion logo;
-    //public static TextureRegion soundOn;
-    //public static TextureRegion soundOff;
     
     public static TextureRegion pause;   
    
@@ -42,6 +44,9 @@ public class Assets {
     public static TextureRegion endHole;
     public static TextureRegion obstacleH;
     public static TextureRegion obstacleV;
+    
+    public static TextureRegion gameOver;
+    public static TextureRegion win;
     
     
     public static Music music;
@@ -67,7 +72,9 @@ public class Assets {
         
         
         
-        life=new TextureRegion(myitem,96,0,32,32);
+        life=new TextureRegion(myitem,0,0,32,32);
+        lifeWrite=new TextureRegion(myitem,160,0,53,25);
+        timeWrite=new TextureRegion(myitem,213,0,71,25);
         
         play=new TextureRegion(myitem,125,32,109,38);
         scores=new TextureRegion(myitem,343,32,109,38);
@@ -75,23 +82,26 @@ public class Assets {
         setting=new TextureRegion(myitem,17,70,109,38);
         register=new TextureRegion(myitem,234,32,109,38);
         
-        resume=new TextureRegion(myitem, 361, 0, 110, 27);
-        quit=new TextureRegion(myitem, 192, 0, 61, 27);
+        resume=new TextureRegion(myitem, 312, 146, 109, 38);
+        quit=new TextureRegion(myitem, 312, 108, 109, 38);
+        nextLevel=new TextureRegion(myitem, 381, 70, 109, 38);
+        tryAgain=new TextureRegion(myitem, 312, 184, 109, 38);
         
-        ready = new TextureRegion(myitem, 253, 0, 108, 32);//
+        ready = new TextureRegion(myitem, 16, 371, 208, 38);//
         
         logo = new TextureRegion(myitem, 16, 236, 300, 135);//
-        //soundOff = new TextureRegion(myitem, 312, 108, 64, 64);//
-        //soundOn = new TextureRegion(myitem, 312, 172, 64, 64);//
-       
+        
         pause = new TextureRegion(myitem, 272, 108, 40, 40);//
         
        
         ball = new TextureRegion(myitem, 0, 0, 32, 32);
-        hole = new TextureRegion(myitem, 160, 0, 32, 32);
-        endHole = new TextureRegion(myitem, 128, 0, 32, 32);
+        hole = new TextureRegion(myitem, 128, 0, 32, 32);
+        endHole = new TextureRegion(myitem, 96, 0, 32, 32);
         obstacleH=new TextureRegion(myitem, 32, 0, 64, 16);
         obstacleV=new TextureRegion(myitem, 0, 32, 16, 64);
+        
+        gameOver=new TextureRegion(myitem, 125, 70, 256, 38);
+        win=new TextureRegion(myitem, 224, 371, 92, 38);
         
         
         font = new Font(myitem, 16, 108, 16, 16, 20);
