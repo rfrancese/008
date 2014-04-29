@@ -8,7 +8,9 @@ public interface Level {
 	
 	public ArrayList<Hole> getHoles();
 
-	public ArrayList<ObstacleH> getObstacles();
+	public ArrayList<ObstacleH> getObstaclesH();
+	
+	public ArrayList<ObstacleV> getObstaclesV();
 
 	public ArrayList<Life> getLifes();
 	

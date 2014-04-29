@@ -27,7 +27,8 @@ public class World {
 
     public final Ball ball;
     public final ArrayList<Hole> holes;
-    public final ArrayList<ObstacleH> obstacles;
+    public final ArrayList<ObstacleH> obstaclesH;
+    public final ArrayList<ObstacleV> obstaclesV;
     public final ArrayList<Life> lifes;
     public final EndHole endHole;
     public final WorldListener listener;
@@ -46,7 +47,8 @@ public class World {
         level=getCurrentLevel();
         this.ball=level.getBall();
         this.holes=level.getHoles();
-        this.obstacles=level.getObstacles();
+        this.obstaclesH=level.getObstaclesH();
+        this.obstaclesV=level.getObstaclesV();
         this.endHole=level.getEndHole();
         this.lifes=level.getLifes();
         
@@ -84,7 +86,8 @@ public class World {
 public void update(float deltaTime, float accelX, float accelY) {
     updateBall(deltaTime, -accelY,accelX);
     
-    checkObstacleCollisions();
+    checkObstacleHCollisions();
+    checkObstacleVCollisions();
     checkHolesCollisions();
     checkEndHoleCollisions();
     
@@ -111,26 +114,26 @@ private void updateBall(float deltaTime, float accelX, float accelY) {
 }
 
 
-private void checkObstacleCollisions() 
+private void checkObstacleHCollisions() 
 {
-	for (int i=0;i<obstacles.size();i++)
+	for (int i=0;i<obstaclesH.size();i++)
 	{
-		if (OverlapTester.overlapRectangles(obstacles.get(i).bounds,ball.bounds)) 
+		if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
 		{
 			Log.d("coll", "collisione");
 			
-			if(ball.position.y>obstacles.get(i).position.y)
+			if(ball.position.y>obstaclesH.get(i).position.y)
 			{
 				ball.hitObstacle();
-				ball.position.y=obstacles.get(i).position.y+0.6f;
+				ball.position.y=obstaclesH.get(i).position.y+0.6f;
 				break;
 				
 			}
 				
-			if(ball.position.y<obstacles.get(i).position.y)
+			if(ball.position.y<obstaclesH.get(i).position.y)
 			{
 				ball.hitObstacle();
-				ball.position.y=obstacles.get(i).position.y-0.6f;
+				ball.position.y=obstaclesH.get(i).position.y-0.6f;
 				break;
 			}
 		}
@@ -138,6 +141,35 @@ private void checkObstacleCollisions()
 			ball.state=ball.BALL_STATE_MOVING;
 	}
 }
+
+private void checkObstacleVCollisions() 
+{
+	for (int i=0;i<obstaclesV.size();i++)
+	{
+		if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds)) 
+		{
+			Log.d("coll", "collisioneV");
+			
+			if(ball.position.x>obstaclesV.get(i).position.x)
+			{
+				ball.hitObstacle();
+				ball.position.x=obstaclesV.get(i).position.x+0.6f;
+				break;
+				
+			}
+				
+			if(ball.position.x<obstaclesV.get(i).position.x)
+			{
+				ball.hitObstacle();
+				ball.position.x=obstaclesV.get(i).position.x-0.6f;
+				break;
+			}
+		}
+		else
+			ball.state=ball.BALL_STATE_MOVING;
+	}
+}
+
 private void checkHolesCollisions()
 {
 	for(int i=0;i<holes.size();i++)

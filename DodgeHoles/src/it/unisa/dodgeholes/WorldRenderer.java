@@ -50,7 +50,8 @@ public class WorldRenderer {
         renderHole();
         renderEndHole();
         renderBall();
-        renderObstacle();
+        renderObstacleH();
+        renderObstacleV();
         renderLifes();
        
         batcher.endBatch();
@@ -72,12 +73,21 @@ public class WorldRenderer {
         	batcher.drawSprite(holes.get(i).position.x, holes.get(i).position.y, 1f, 1f, Assets.hole);
         }
     }
-    private void renderObstacle() 
+    private void renderObstacleH() 
     {
-        ArrayList<ObstacleH> obstacles =world.obstacles;
+        ArrayList<ObstacleH> obstacles =world.obstaclesH;
         for(int i=0;i<obstacles.size();i++)
         {
         	batcher.drawSprite(obstacles.get(i).position.x, obstacles.get(i).position.y, 2f, 0.5f, Assets.obstacleH);
+        }
+    }
+    
+    private void renderObstacleV() 
+    {
+        ArrayList<ObstacleV> obstaclesV =world.obstaclesV;
+        for(int i=0;i<obstaclesV.size();i++)
+        {
+        	batcher.drawSprite(obstaclesV.get(i).position.x, obstaclesV.get(i).position.y, 0.5f, 2f, Assets.obstacleV);
         }
     }
     

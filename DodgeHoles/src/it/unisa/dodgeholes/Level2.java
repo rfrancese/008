@@ -2,12 +2,11 @@ package it.unisa.dodgeholes;
 
 import java.util.ArrayList;
 
-import java.util.ArrayList;
-
 public class Level2 implements Level {
 	
 	private ArrayList<Hole> holes;
-	private ArrayList<ObstacleH> obstacles;
+	private ArrayList<ObstacleH> obstaclesH;
+	private ArrayList<ObstacleV> obstaclesV;
 	private ArrayList<Life> lifes;
 	private Ball ball;
 	private EndHole endHole;
@@ -17,7 +16,8 @@ public class Level2 implements Level {
 	{
 		ball=new Ball(0.95f, 10-1.5f);
 		holes=generateHoles();
-		obstacles=generateObstacles();
+		obstaclesH=generateObstaclesH();
+		obstaclesV=generateObstaclesV();
 		lifes=generateLifes();
 		endHole=new EndHole(13.9f,2f);
 	}
@@ -34,12 +34,20 @@ public class Level2 implements Level {
 		return h;
 	}
 	
-	private ArrayList<ObstacleH> generateObstacles()
+	private ArrayList<ObstacleH> generateObstaclesH()
 	{
 		ArrayList<ObstacleH> o=new ArrayList<ObstacleH>();
 		ObstacleH o1=new ObstacleH(2.3f,3.3f);
 		
 		o.add(o1);
+		
+		return o;
+	}
+	
+	private ArrayList<ObstacleV> generateObstaclesV()
+	{
+		ArrayList<ObstacleV> o=new ArrayList<ObstacleV>();
+		
 		
 		return o;
 	}
@@ -66,9 +74,14 @@ public class Level2 implements Level {
 		return this.holes;
 	}
 	
-	public ArrayList<ObstacleH> getObstacles()
+	public ArrayList<ObstacleH> getObstaclesH()
 	{
-		return this.obstacles;
+		return this.obstaclesH;
+	}
+	
+	public ArrayList<ObstacleV> getObstaclesV()
+	{
+		return this.obstaclesV;
 	}
 	
 	public ArrayList<Life> getLifes()
