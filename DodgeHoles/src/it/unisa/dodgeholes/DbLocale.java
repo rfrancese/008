@@ -49,6 +49,12 @@ public class DbLocale extends SQLiteOpenHelper {
 		sql+="primary key(nickname,livello))";
 		//Eseguiamo la query
 		db.execSQL(sql);
+		
+		sql=null;
+		sql="CREATE TABLE setting ";
+		sql+="(audio boolean default true,";
+		sql+="sound boolean default true)";
+		db.execSQL(sql);
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)

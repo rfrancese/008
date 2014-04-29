@@ -101,27 +101,6 @@ public class Register extends Activity implements View.OnClickListener {
 					this.registraUtenteSulServer();
 				}
 			}
-			else
-			{
-				if(leggiDati())
-				{
-					this.registraUtenteInLocale();
-				}
-				else
-				{
-					//Messaggio d'errore
-					new AlertDialog.Builder(this)
-					.setTitle("Attenzione")
-					.setMessage("Dal seguente dispositivo,ci risulta gia' una registrazione!")
-					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dlg, int sumthin) {
-							
-								
-						}
-					})
-					.show();
-				}
-			}
 		}
 	}
 		 
@@ -137,7 +116,7 @@ public class Register extends Activity implements View.OnClickListener {
 	        try
 	        {
 	                HttpClient httpclient = new DefaultHttpClient();
-	                HttpPost httppost = new HttpPost("http://10.0.2.2:8080/helloHttp/richiestaInfo.php");
+	                HttpPost httppost = new HttpPost("http://www.depiano.it/registraUtente.php");
 	                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	                HttpResponse response = httpclient.execute(httppost);
 	                HttpEntity entity = response.getEntity();
@@ -146,49 +125,7 @@ public class Register extends Activity implements View.OnClickListener {
 	        catch(Exception e)
 	        {
 	                Log.e("TEST", "Errore nella connessione http "+e.toString());
-	        }
-	        if(is != null)
-	        {
-	            //converto la risposta in stringa
-	            try
-	            {
-	                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-	                    StringBuilder sb = new StringBuilder();
-	                    String line = null;
-	                    while ((line = reader.readLine()) != null) {
-	                            sb.append(line + "\n");
-	                    }
-	                    is.close();
-	 
-	                    result=sb.toString();
-	            }
-	            catch(Exception e)
-	            {
-	                    Log.e("TEST", "Errore nel convertire il risultato "+e.toString());
-	            }
-	 
-	            //parsing dei dati arrivati in formato json
-	            try
-	            {
-	                    JSONArray jArray = new JSONArray(result);
-	                    for(int i=0;i<jArray.length();i++){
-	                            JSONObject json_data = jArray.getJSONObject(i);
-	                            Log.i("TEST","id: "+json_data.getInt("id")+
-	                                    ", cognome: "+json_data.getString("cognome")+
-	                                    ", nascita: "+json_data.getInt("anno")
-	                            );
-	                            stringaFinale = json_data.getInt("id") + " " + json_data.getString("cognome") + " " + json_data.getInt("anno") + "\n\n";
-	                    }
-	            }
-	            catch(JSONException e){
-	                    Log.e("log_tag", "Error parsing data "+e.toString());
-	            }
-	        }
-	        else
-	        {//is è null e non ho avuto risposta
-	 
-	        }
-		
+	        }		
 	}
 
 	private void registraUtenteInLocale()
@@ -217,28 +154,34 @@ public class Register extends Activity implements View.OnClickListener {
 		db.close();
 	}
 
+	//Controlla che il nickname scelto dall'utente sia disponibile
 	public boolean nicknameRegistrato()
 	{
 		String result = "";
         String stringaFinale = "";
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("idnomerichiesto","1"));
+        nameValuePairs.add(new BasicNameValuePair("nickname",nick.getText().toString()));
         InputStream is = null;
  
         //http post
-        try{
+        try
+        {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://10.0.2.2:8080/helloHttp/richiestaInfo.php");
+                HttpPost httppost = new HttpPost("http://www.depiano.it/controllaUtente.php");
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpclient.execute(httppost);
                 HttpEntity entity = response.getEntity();
                 is = entity.getContent();
-        }catch(Exception e){
+        }
+        catch(Exception e)
+        {
                 Log.e("TEST", "Errore nella connessione http "+e.toString());
         }
-        if(is != null){
+        if(is != null)
+        {
             //converto la risposta in stringa
-            try{
+            try
+            {
                     BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
                     StringBuilder sb = new StringBuilder();
                     String line = null;
@@ -248,31 +191,28 @@ public class Register extends Activity implements View.OnClickListener {
                     is.close();
  
                     result=sb.toString();
-            }catch(Exception e){
+            }catch(Exception e)
+            {
                     Log.e("TEST", "Errore nel convertire il risultato "+e.toString());
             }
  
             //parsing dei dati arrivati in formato json
-            try{
+            try
+            {
+            		
                     JSONArray jArray = new JSONArray(result);
-                    for(int i=0;i<jArray.length();i++){
-                            JSONObject json_data = jArray.getJSONObject(i);
-                            Log.i("TEST","id: "+json_data.getInt("id")+
-                                    ", cognome: "+json_data.getString("cognome")+
-                                    ", nascita: "+json_data.getInt("anno")
-                            );
-                            stringaFinale = json_data.getInt("id") + " " + json_data.getString("cognome") + " " + json_data.getInt("anno") + "\n\n";
-                    }
+                    JSONObject json_data = jArray.getJSONObject(0);
+                    stringaFinale=json_data.getString("messaggio");
+                    if(stringaFinale.equals("nickname in uso"))
+                    	return true;
             }
-            catch(JSONException e){
+            catch(JSONException e)
+            {
                     Log.e("log_tag", "Error parsing data "+e.toString());
             }
         }
-        else{//is è null e non ho avuto risposta
- 
-        }
-	
-		return false;
+        return false;
+       
 	}
 	
 	public void onPause()
@@ -292,6 +232,7 @@ public class Register extends Activity implements View.OnClickListener {
 	}
 	
 	//Controllo se e' presente un record nella tabella access
+	/*
 	public boolean leggiDati()
 	{
 		SQLiteDatabase db = this.database.getReadableDatabase();
@@ -305,7 +246,7 @@ public class Register extends Activity implements View.OnClickListener {
 			 return true;
 		return false;
 	}
-	
+	*/
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
