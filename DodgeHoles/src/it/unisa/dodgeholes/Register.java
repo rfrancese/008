@@ -116,7 +116,7 @@ public class Register extends Activity implements View.OnClickListener {
 	        try
 	        {
 	                HttpClient httpclient = new DefaultHttpClient();
-	                HttpPost httppost = new HttpPost("http://127.0.0.1:8080/Project/DodgeHoles/registraUtente.php");
+	                HttpPost httppost = new HttpPost("http://www.depiano.it/registraUtente.php");
 	                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	                HttpResponse response = httpclient.execute(httppost);
 	                HttpEntity entity = response.getEntity();
@@ -167,7 +167,7 @@ public class Register extends Activity implements View.OnClickListener {
         try
         {
                 HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://127.0.0.1:8080/Project/DodgeHoles/controllaUtente.php");
+                HttpPost httppost = new HttpPost("http://www.depiano.it/controllaUtente.php");
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                 HttpResponse response = httpclient.execute(httppost);
                 HttpEntity entity = response.getEntity();
