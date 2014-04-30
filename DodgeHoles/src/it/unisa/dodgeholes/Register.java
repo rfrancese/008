@@ -95,10 +95,21 @@ public class Register extends Activity implements View.OnClickListener {
 						})
 						.show();
 				}
-				else
+				else if(leggiDati())
 				{
 					this.registraUtenteInLocale();
 					this.registraUtenteSulServer();
+				}
+				else
+				{
+					new AlertDialog.Builder(this)
+					.setTitle("Attenzione")
+					.setMessage("Ci risulta gia' una registrazione da questo device")
+					.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
+						public void onClick(DialogInterface dlg, int sumthin) {
+						}
+					})
+					.show();
 				}
 			}
 			else
@@ -243,7 +254,6 @@ public class Register extends Activity implements View.OnClickListener {
 	}
 	
 	//Controllo se e' presente un record nella tabella access
-	/*
 	public boolean leggiDati()
 	{
 		SQLiteDatabase db = this.database.getReadableDatabase();
@@ -257,7 +267,6 @@ public class Register extends Activity implements View.OnClickListener {
 			 return true;
 		return false;
 	}
-	*/
 	
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
