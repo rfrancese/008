@@ -101,6 +101,17 @@ public class Register extends Activity implements View.OnClickListener {
 					this.registraUtenteSulServer();
 				}
 			}
+			else
+			{
+				new AlertDialog.Builder(this)
+				.setTitle("Attenzione")
+				.setMessage("Rete non disponibile !")
+				.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
+					public void onClick(DialogInterface dlg, int sumthin) {
+					}
+				})
+				.show();
+			}
 		}
 	}
 		 
