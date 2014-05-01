@@ -77,7 +77,7 @@ public class Register extends Activity implements View.OnClickListener {
 		buttReg=(Button)findViewById(R.id.buttReg);
 		buttReg.setOnClickListener(this);
 		nick=(EditText)findViewById(R.id.nickname);
-		//registerErrorMsg=(TextView)findViewById(R.id)
+		registerErrorMsg=(TextView)findViewById(R.id.msgerror);
 		
 		database = new DbLocale(getApplicationContext());
 
