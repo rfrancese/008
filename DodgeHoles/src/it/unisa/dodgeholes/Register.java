@@ -3,8 +3,12 @@ package it.unisa.dodgeholes;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -21,13 +25,16 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,6 +42,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Register extends Activity implements View.OnClickListener {
@@ -43,6 +51,20 @@ public class Register extends Activity implements View.OnClickListener {
 	private EditText nick;
 	private String sv="";
 	private DbLocale database = null;
+	private TextView registerErrorMsg;
+	
+	
+
+
+    private static String KEY_SUCCESS = "success";
+    private static String KEY_UID = "uid";
+    private static String KEY_FIRSTNAME = "fname";
+    private static String KEY_LASTNAME = "lname";
+    private static String KEY_USERNAME = "uname";
+    private static String KEY_EMAIL = "email";
+    private static String KEY_CREATED_AT = "created_at";
+    private static String KEY_ERROR = "error";
+
 	
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -55,6 +77,8 @@ public class Register extends Activity implements View.OnClickListener {
 		buttReg=(Button)findViewById(R.id.buttReg);
 		buttReg.setOnClickListener(this);
 		nick=(EditText)findViewById(R.id.nickname);
+		//registerErrorMsg=(TextView)findViewById(R.id)
+		
 		database = new DbLocale(getApplicationContext());
 
 	}
@@ -76,80 +100,164 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 		else
 		{
-			//Determino se e' attiva la connessione a internet
-			ConnectivityManager cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-			boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-			//se e' attiva la connessione
-			if(isConnected)
-			{
-				//Se nickname gia' presente
-				if(nicknameRegistrato())
-				{
-						new AlertDialog.Builder(this)
-						.setTitle("Errore")
-						.setMessage("Nickname non disponibile!")
-						.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
-							public void onClick(DialogInterface dlg, int sumthin) {
-							}
-						})
-						.show();
-				}
-				else if(leggiDati())
-				{
-					this.registraUtenteInLocale();
-					this.registraUtenteSulServer();
-				}
-				else
-				{
-					new AlertDialog.Builder(this)
-					.setTitle("Attenzione")
-					.setMessage("Ci risulta gia' una registrazione da questo device")
-					.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
-						public void onClick(DialogInterface dlg, int sumthin) {
-						}
-					})
-					.show();
-				}
-			}
-			else
-			{
-				new AlertDialog.Builder(this)
-				.setTitle("Attenzione")
-				.setMessage("Rete non disponibile !")
-				.setNeutralButton("Ok", new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dlg, int sumthin) {
-					}
-				})
-				.show();
-			}
+			NetAsync(v);
 		}
 	}
-		 
-	private void registraUtenteSulServer()
-	{
-		 String result = "";
-	        String stringaFinale = "";
-	        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-	        nameValuePairs.add(new BasicNameValuePair("nickname",nick.getText().toString()));
-	        InputStream is = null;
-	 
-	        //http post
-	        try
-	        {
-	                HttpClient httpclient = new DefaultHttpClient();
-	                HttpPost httppost = new HttpPost("http://www.depiano.it/registraUtente.php");
-	                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-	                HttpResponse response = httpclient.execute(httppost);
-	                HttpEntity entity = response.getEntity();
-	                is = entity.getContent();
-	        }
-	        catch(Exception e)
-	        {
-	                Log.e("TEST", "Errore nella connessione http "+e.toString());
-	        }		
-	}
+	
+	 public void NetAsync(View view)
+	 {
+         new NetCheck().execute();
+     }
+	
+	    /**
+	     * Async Task to check whether internet connection is working
+	     **/
+	 private class NetCheck extends AsyncTask<String,String,Boolean>
+	    {
+	        private ProgressDialog nDialog;
 
+	        @Override
+	        protected void onPreExecute(){
+	            super.onPreExecute();
+	            nDialog = new ProgressDialog(Register.this);
+	            nDialog.setMessage("Loading..");
+	            nDialog.setTitle("Checking Network");
+	            nDialog.setIndeterminate(false);
+	            nDialog.setCancelable(true);
+	            nDialog.show();
+	        }
+
+	        @Override
+	        protected Boolean doInBackground(String... args)
+	        {
+	/**
+	 * Gets current device state and checks for working internet connection by trying Google.
+	 **/
+	            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	            if (netInfo != null && netInfo.isConnected()) {
+	                try {
+	                    URL url = new URL("http://www.google.com");
+	                    HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+	                    urlc.setConnectTimeout(3000);
+	                    urlc.connect();
+	                    if (urlc.getResponseCode() == 200) {
+	                        return true;
+	                    }
+	                } catch (MalformedURLException e1) {
+	                    // TODO Auto-generated catch block
+	                    e1.printStackTrace();
+	                } catch (IOException e) {
+	                    // TODO Auto-generated catch block
+	                    e.printStackTrace();
+	                }
+	            }
+	            return false;
+
+	        }
+	        
+	        protected void onPostExecute(Boolean th)
+	        {
+	            if(th == true)
+	            {
+	                nDialog.dismiss();
+	                new ProcessRegister().execute();
+	            }
+	            else
+	            {
+	                nDialog.dismiss();
+					registerErrorMsg.setText("Error in Network Connection");
+	            }
+	        }
+	    }
+	 
+	 
+	 
+	 private class ProcessRegister extends AsyncTask<String, String, JSONObject> {
+
+		 /**
+		  * Defining Process dialog
+		  **/
+		         private ProgressDialog pDialog;
+
+		         String nickname;
+		         
+		         protected void onPreExecute()
+		         {
+		             super.onPreExecute();
+		             nick = (EditText) findViewById(R.id.nickname);
+		             nickname=nick.getText().toString();
+		             
+		             pDialog = new ProgressDialog(Register.this);
+		             pDialog.setTitle("Contacting Servers");
+		             pDialog.setMessage("Registering ...");
+		             pDialog.setIndeterminate(false);
+		             pDialog.setCancelable(true);
+		             pDialog.show();
+		         }
+
+		         @Override
+		         protected JSONObject doInBackground(String... args)
+		         {
+			         UserFunctions userFunction = new UserFunctions();
+			         JSONObject json = userFunction.registerUser(nickname);
+			         return json;
+		         }
+
+		         protected void onPostExecute(JSONObject json)
+		         {
+		        /**
+		         * Checks for success message.
+		         **/
+		                 try
+		                 {
+		                     if (json.getString(KEY_SUCCESS) != null)
+		                     {
+		                         registerErrorMsg.setText("");
+		                         String res = json.getString(KEY_SUCCESS);
+
+		                         String red = json.getString(KEY_ERROR);
+
+		                         if(Integer.parseInt(res) == 1)
+		                         {
+		                            // pDialog.setTitle("Getting Data");
+		                            // pDialog.setMessage("Loading Info");
+
+		                             registerErrorMsg.setText("Successfully Registered");
+		                             
+		                             registraUtenteInLocale();
+		                            
+		                             //Intent registered = new Intent(getApplicationContext(), GameScreen.class);
+
+		                             /**
+		                              * Close all views before launching Registered screen
+		                             **/
+		                            /* registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                             pDialog.dismiss();
+		                             startActivity(registered);
+
+
+		                               finish();*/
+		                         }
+
+		                         else if (Integer.parseInt(red) ==2)
+		                         {
+		                             pDialog.dismiss();
+		                             registerErrorMsg.setText("User already exists");
+		                         }
+		                     }
+		                     else
+		                     {
+		                         pDialog.dismiss();
+		                         registerErrorMsg.setText("Error occured in registration");
+		                     }
+
+		                 } catch (JSONException e)
+		                 {
+		                     e.printStackTrace();
+		                 }
+		             }}
+	 
 	private void registraUtenteInLocale()
 	{
 		SQLiteDatabase db = this.database.getWritableDatabase();
@@ -176,67 +284,6 @@ public class Register extends Activity implements View.OnClickListener {
 		db.close();
 	}
 
-	//Controlla che il nickname scelto dall'utente sia disponibile
-	public boolean nicknameRegistrato()
-	{
-		String result = "";
-        String stringaFinale = "";
-        ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-        nameValuePairs.add(new BasicNameValuePair("nickname",nick.getText().toString()));
-        InputStream is = null;
- 
-        //http post
-        try
-        {
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpPost httppost = new HttpPost("http://www.depiano.it/controllaUtente.php");
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                HttpResponse response = httpclient.execute(httppost);
-                HttpEntity entity = response.getEntity();
-                is = entity.getContent();
-        }
-        catch(Exception e)
-        {
-                Log.e("TEST", "Errore nella connessione http "+e.toString());
-        }
-        if(is != null)
-        {
-            //converto la risposta in stringa
-            try
-            {
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-                    StringBuilder sb = new StringBuilder();
-                    String line = null;
-                    while ((line = reader.readLine()) != null) {
-                            sb.append(line + "\n");
-                    }
-                    is.close();
- 
-                    result=sb.toString();
-            }catch(Exception e)
-            {
-                    Log.e("TEST", "Errore nel convertire il risultato "+e.toString());
-            }
- 
-            //parsing dei dati arrivati in formato json
-            try
-            {
-            		
-                    JSONArray jArray = new JSONArray(result);
-                    JSONObject json_data = jArray.getJSONObject(0);
-                    stringaFinale=json_data.getString("messaggio");
-                    if(stringaFinale.equals("nickname in uso"))
-                    	return true;
-            }
-            catch(JSONException e)
-            {
-                    Log.e("log_tag", "Error parsing data "+e.toString());
-            }
-        }
-        return false;
-       
-	}
-	
 	public void onPause()
 	{
 		super.onPause();
