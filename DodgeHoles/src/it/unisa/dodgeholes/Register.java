@@ -57,12 +57,6 @@ public class Register extends Activity implements View.OnClickListener {
 
 
     private static String KEY_SUCCESS = "success";
-    private static String KEY_UID = "uid";
-    private static String KEY_FIRSTNAME = "fname";
-    private static String KEY_LASTNAME = "lname";
-    private static String KEY_USERNAME = "uname";
-    private static String KEY_EMAIL = "email";
-    private static String KEY_CREATED_AT = "created_at";
     private static String KEY_ERROR = "error";
 
 	
@@ -83,7 +77,8 @@ public class Register extends Activity implements View.OnClickListener {
 
 	}
 	
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		// TODO Auto-generated method stub
 		if(nick.getText().toString().matches(""))
 		{
@@ -106,7 +101,23 @@ public class Register extends Activity implements View.OnClickListener {
 	
 	 public void NetAsync(View view)
 	 {
-         new NetCheck().execute();
+		 if(leggiDati())
+		 {
+			 new NetCheck().execute();
+		 }
+		 else
+		 {
+			 new AlertDialog.Builder(this)
+				.setTitle("Notice")
+				.setMessage("You're already registered with this application")
+				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dlg, int sumthin) {
+						
+							
+					}
+				})
+				.show();
+		 }
      }
 	
 	    /**
@@ -117,7 +128,8 @@ public class Register extends Activity implements View.OnClickListener {
 	        private ProgressDialog nDialog;
 
 	        @Override
-	        protected void onPreExecute(){
+	        protected void onPreExecute()
+	        {
 	            super.onPreExecute();
 	            nDialog = new ProgressDialog(Register.this);
 	            nDialog.setMessage("Loading..");
@@ -135,20 +147,25 @@ public class Register extends Activity implements View.OnClickListener {
 	 **/
 	            ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 	            NetworkInfo netInfo = cm.getActiveNetworkInfo();
-	            if (netInfo != null && netInfo.isConnected()) {
-	                try {
+	            if (netInfo != null && netInfo.isConnected())
+	            {
+	                try
+	                {
 	                    URL url = new URL("http://www.google.com");
 	                    HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
 	                    urlc.setConnectTimeout(3000);
 	                    urlc.connect();
-	                    if (urlc.getResponseCode() == 200) {
+	                    if (urlc.getResponseCode() == 200)
+	                    {
 	                        return true;
 	                    }
-	                } catch (MalformedURLException e1) {
-	                    // TODO Auto-generated catch block
+	                }
+	                catch (MalformedURLException e1)
+	                {
 	                    e1.printStackTrace();
-	                } catch (IOException e) {
-	                    // TODO Auto-generated catch block
+	                }
+	                catch (IOException e)
+	                {
 	                    e.printStackTrace();
 	                }
 	            }
@@ -173,14 +190,15 @@ public class Register extends Activity implements View.OnClickListener {
 	 
 	 
 	 
-	 private class ProcessRegister extends AsyncTask<String, String, JSONObject> {
+	 private class ProcessRegister extends AsyncTask<String, String, JSONObject>
+	 {
 
 		 /**
 		  * Defining Process dialog
 		  **/
 		         private ProgressDialog pDialog;
 
-		         String nickname;
+		         private String nickname;
 		         
 		         protected void onPreExecute()
 		         {
@@ -199,6 +217,7 @@ public class Register extends Activity implements View.OnClickListener {
 		         @Override
 		         protected JSONObject doInBackground(String... args)
 		         {
+		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
 			         UserFunctions userFunction = new UserFunctions();
 			         JSONObject json = userFunction.registerUser(nickname);
 			         return json;
@@ -227,17 +246,15 @@ public class Register extends Activity implements View.OnClickListener {
 		                             
 		                             registraUtenteInLocale();
 		                            
-		                             //Intent registered = new Intent(getApplicationContext(), GameScreen.class);
+		                             Intent registered = new Intent(getApplicationContext(), Register.class);
 
 		                             /**
 		                              * Close all views before launching Registered screen
 		                             **/
-		                            /* registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                             registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                             pDialog.dismiss();
 		                             startActivity(registered);
-
-
-		                               finish();*/
+		                             finish();
 		                         }
 
 		                         else if (Integer.parseInt(red) ==2)
