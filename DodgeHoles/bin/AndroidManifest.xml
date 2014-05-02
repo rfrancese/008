@@ -32,6 +32,12 @@
             android:screenOrientation="landscape">
             
 		</activity>
+		
+        <activity android:name=".Scores"
+            android:label="@string/label_scores"
+            android:screenOrientation="landscape">
+            
+		</activity>
 
     </application>
     <uses-permission android:name="android.permission.WAKE_LOCK" />

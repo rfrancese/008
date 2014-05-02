@@ -26,9 +26,9 @@ public class Ball extends DynamicGameObject{
         
        
         
-        if(position.x < 0.95f) //0.4f
+        if(position.x < 0.97f)
         {
-            position.x =0.95f;
+            position.x =0.97f;
         }
         if(position.y < 0.87f)
             position.y =0.87f;

@@ -25,6 +25,7 @@ public class MainMenuScreen extends GLScreen {
     Rectangle levelBounds;
     Rectangle settingBounds;
     Rectangle registerBounds;
+    Rectangle scoresBounds;
     Vector2 touchPoint;
     
     
@@ -38,6 +39,7 @@ public class MainMenuScreen extends GLScreen {
         levelBounds = new Rectangle(240-109-54, 150-19, 109, 38);
         settingBounds = new Rectangle(240-109-54, 150-76-19, 109, 38);
         registerBounds = new Rectangle(240+109-54, 150-76-19, 109, 38);
+        scoresBounds = new Rectangle(240+109-54, 150-19, 109, 38);
         
         
         touchPoint = new Vector2();               
@@ -80,6 +82,13 @@ public class MainMenuScreen extends GLScreen {
                 
                 if(OverlapTester.pointInRectangle(registerBounds, touchPoint)) {
                 	Intent myIntent = new Intent(this.glGame, Register.class);
+                	this.glGame.startActivity(myIntent);
+                	
+                    return;
+                }
+                
+                if(OverlapTester.pointInRectangle(scoresBounds, touchPoint)) {
+                	Intent myIntent = new Intent(this.glGame, Scores.class);
                 	this.glGame.startActivity(myIntent);
                 	
                     return;

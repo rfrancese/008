@@ -142,7 +142,7 @@ private void checkObstacleHCollisions()
 			if(ball.position.y>obstaclesH.get(i).position.y)
 			{
 				ball.hitObstacle();
-				ball.position.y=obstaclesH.get(i).position.y+0.6f;
+				ball.position.y=obstaclesH.get(i).position.y+0.64f;
 				break;
 				
 			}
@@ -150,7 +150,7 @@ private void checkObstacleHCollisions()
 			if(ball.position.y<obstaclesH.get(i).position.y)
 			{
 				ball.hitObstacle();
-				ball.position.y=obstaclesH.get(i).position.y-0.6f;
+				ball.position.y=obstaclesH.get(i).position.y-0.64f;
 				break;
 			}
 		}
@@ -170,7 +170,7 @@ private void checkObstacleVCollisions()
 			if(ball.position.x>obstaclesV.get(i).position.x)
 			{
 				ball.hitObstacle();
-				ball.position.x=obstaclesV.get(i).position.x+0.6f;
+				ball.position.x=obstaclesV.get(i).position.x+0.64f;
 				break;
 				
 			}
@@ -178,7 +178,7 @@ private void checkObstacleVCollisions()
 			if(ball.position.x<obstaclesV.get(i).position.x)
 			{
 				ball.hitObstacle();
-				ball.position.x=obstaclesV.get(i).position.x-0.6f;
+				ball.position.x=obstaclesV.get(i).position.x-0.64f;
 				break;
 			}
 		}

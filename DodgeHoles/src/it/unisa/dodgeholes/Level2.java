@@ -25,11 +25,11 @@ public class Level2 implements Level {
 	private ArrayList<Hole> generateHoles()
 	{
 		ArrayList<Hole> h=new ArrayList<Hole>();
-		Hole h1=new Hole(4.5f,3.6f);
+		/*Hole h1=new Hole(4.5f,3.6f);
 		Hole h2=new Hole(8.2f,6f);
 	
 		h.add(h1);
-		h.add(h2);
+		h.add(h2);*/
 		
 		return h;
 	}
@@ -37,7 +37,7 @@ public class Level2 implements Level {
 	private ArrayList<ObstacleH> generateObstaclesH()
 	{
 		ArrayList<ObstacleH> o=new ArrayList<ObstacleH>();
-		ObstacleH o1=new ObstacleH(2.3f,3.3f);
+		ObstacleH o1=new ObstacleH(2f,7.5f);
 		
 		o.add(o1);
 		
