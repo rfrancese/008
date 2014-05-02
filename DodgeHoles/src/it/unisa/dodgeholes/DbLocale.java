@@ -1,6 +1,7 @@
 package it.unisa.dodgeholes;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -51,14 +52,15 @@ public class DbLocale extends SQLiteOpenHelper {
 		db.execSQL(sql);
 		
 		sql=null;
+		//audio è la musica del gioco
+		//sound è il suono di arrivo nella buca di destinazione
 		sql="CREATE TABLE setting ";
-		sql+="(audio boolean default true,";
-		sql+="sound boolean default true)";
+		sql+="(audio int default 1,";
+		sql+="sound int default 1)";
 		db.execSQL(sql);
 	}
 
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 	}
-
 }

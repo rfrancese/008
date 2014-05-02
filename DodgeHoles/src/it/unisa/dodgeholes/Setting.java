@@ -16,6 +16,8 @@ import android.widget.ToggleButton;
 public class Setting extends Activity {
 	
 	private ToggleButton bM,bS;
+	private DbLocale database=null;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -24,13 +26,15 @@ public class Setting extends Activity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.setting);
+		database=new DbLocale(getApplicationContext());
 		
 		bM = (ToggleButton) findViewById(R.id.buttMsc);
 		
-		//bM.setChecked(Assets.musicActive);
+		bM.setChecked(Assets.musicActive);
+		/*
 		if(Assets.musicActive && !bM.isChecked())
 			bM.setChecked(true);
-		
+		*/
 		 bM.setOnClickListener(new OnClickListener()
 		 {
 		 public void onClick(View v)
@@ -43,20 +47,26 @@ public class Setting extends Activity {
 			 {
 				 Assets.music.play();
 				 //scrivo sul database e modifico Assets.musicActive
-				 Assets.musicActive=true;
+				 ComodoSettings.setAudio(1, database);
+				 Assets.musicActive=ComodoSettings.getAudio(database);
+				 
 			 }
 			 else
 			 {
 				 Assets.music.stop();
 				 //Scrivo sul database e modifico il valore di Assets.musicActive
-				 Assets.musicActive=false; 
+				 ComodoSettings.setAudio(0, database);
+				 Assets.musicActive=ComodoSettings.getAudio(database); 
 			 }
 		 }
 		                                 });
 		 bS = (ToggleButton) findViewById(R.id.buttSnd);
+		 
+		 bS.setChecked(Assets.musicActive);
+		 /*
 		if(Assets.soundActive && !bS.isChecked())
 			bS.setChecked(true);
-		 
+		 */
 		 bS.setOnClickListener(new OnClickListener()
 		 {
 		 public void onClick(View v)
@@ -67,11 +77,14 @@ public class Setting extends Activity {
 			 
 			 if(checked)
 			 {
-				 Assets.soundActive=true;
+				 ComodoSettings.setSound(1, database);
+				 Assets.soundActive=ComodoSettings.getSound(database);
+				 
 			 }
 			 else
 			 {
-				 Assets.soundActive=false; 
+				 ComodoSettings.setSound(0, database);
+				 Assets.soundActive=ComodoSettings.getSound(database);
 			 }
 		 }
 		                                 });

@@ -1,5 +1,6 @@
 package it.unisa.dodgeholes;
 
+import android.database.sqlite.SQLiteDatabase;
 import it.unisa.dodgeholes.framework.Music;
 import it.unisa.dodgeholes.framework.Sound;
 import it.unisa.dodgeholes.framework.gl.Animation;
@@ -58,11 +59,15 @@ public class Assets {
     public static boolean musicActive;
     public static boolean soundActive;
     
+    private static ComodoSettings settaggi;
     
-    public static void load(GLGame game) {
+    public static void load(GLGame game)
+    {
     	//Leggi dal database e imposta il valore a musicActive e soundActive
-    	musicActive=true;
-    	soundActive=true;
+    	settaggi=new ComodoSettings();
+    	
+    	musicActive=ComodoSettings.getAudio(new DbLocale(settaggi));;
+    	soundActive=ComodoSettings.getSound(new DbLocale(settaggi));;
     	
         backgroundMenu = new Texture(game, "backgroundMenu.png");
         backgroundMenuRegion = new TextureRegion(backgroundMenu, 0, 0, 480, 320);
@@ -119,7 +124,8 @@ public class Assets {
              
     }       
     
-    public static void reload() {
+    public static void reload()
+    {
         backgroundMenu.reload();
         backgroundGame.reload();
         
@@ -129,7 +135,8 @@ public class Assets {
             music.play();
     }
     
-    public static void playSound(Sound sound) {
+    public static void playSound(Sound sound)
+    {
         //if(Save.soundEnabled)
     	if(soundActive)
             sound.play(1);
