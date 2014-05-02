@@ -236,7 +236,8 @@ public class Register extends Activity implements View.OnClickListener {
 		                         String res = json.getString(KEY_SUCCESS);
 
 		                         String red = json.getString(KEY_ERROR);
-
+		                         
+		                         Log.d("Successo :",""+Integer.parseInt(res));
 		                         if(Integer.parseInt(res) == 1)
 		                         {
 		                            // pDialog.setTitle("Getting Data");
@@ -246,15 +247,17 @@ public class Register extends Activity implements View.OnClickListener {
 		                             
 		                             registraUtenteInLocale();
 		                            
-		                             Intent registered = new Intent(getApplicationContext(), Register.class);
+		                            // Intent registered = new Intent(getApplicationContext(), Register.class);
 
 		                             /**
 		                              * Close all views before launching Registered screen
 		                             **/
-		                             registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		                            // registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                             pDialog.dismiss();
-		                             startActivity(registered);
-		                             finish();
+		                             registerErrorMsg.setText("Successfully Registered");
+		                            // startActivity(registered);
+		                             //Forse questo va tolto
+		                            // finish();
 		                         }
 
 		                         else if (Integer.parseInt(red) ==2)
@@ -327,6 +330,7 @@ public class Register extends Activity implements View.OnClickListener {
 		 
 		 int numeroRighe = c.getCount();
 		 db.close();
+		 Log.d("DB LOCALE",""+numeroRighe);
 		 if(numeroRighe==0)
 			 return true;
 		return false;
