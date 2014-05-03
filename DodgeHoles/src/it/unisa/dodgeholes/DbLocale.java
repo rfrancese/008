@@ -1,5 +1,6 @@
 package it.unisa.dodgeholes;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -58,8 +59,37 @@ public class DbLocale extends SQLiteOpenHelper {
 		sql+="(audio int default 1,";
 		sql+="sound int default 1)";
 		db.execSQL(sql);
+		
+		addSetting();
 	}
 
+	private void addSetting()
+	{
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		/*
+		 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
+		 */
+		
+		//Carico il database 
+		ContentValues valori = new ContentValues();
+		 
+		valori.put("audio",1); 
+		valori.put("sound",1);
+		
+		/*
+		 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
+		 * altrimenti restituisce -1
+		 * primo parametro nome della tabella in cui fare l'inserimento
+		 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+		 * valori tutti null
+		 * terzo parametro,la mappa dei valori da inserire
+		 */
+		long id = db.insert("setting", null, valori);
+		
+		db.close();
+	}
+	
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
 	{
 	}
