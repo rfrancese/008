@@ -2,6 +2,7 @@ package it.unisa.dodgeholes;
 
 import it.unisa.dodgeholes.framework.math.Circle;
 import it.unisa.dodgeholes.framework.math.OverlapTester;
+import it.unisa.dodgeholes.framework.math.Rectangle;
 import it.unisa.dodgeholes.framework.math.Vector2;
 
 import java.util.ArrayList;
@@ -133,11 +134,10 @@ private void updateBall(float deltaTime, float accelX, float accelY) {
 
 private void checkObstacleHCollisions() 
 {
-	Circle cb=new Circle(ball.position.x,ball.position.y,0.4f);
+	
 	for (int i=0;i<obstaclesH.size();i++)
 	{
-		//if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
-		if(OverlapTester.overlapCircleRectangle(cb, obstaclesH.get(i).bounds))
+		if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
 		{
 			Log.d("coll", "collisione");
 			
@@ -146,9 +146,8 @@ private void checkObstacleHCollisions()
 				ball.hitObstacleH();
 				ball.position.y=obstaclesH.get(i).position.y+0.64f;
 				break;
-				
 			}
-				
+			
 			if(ball.position.y<obstaclesH.get(i).position.y)
 			{
 				ball.hitObstacleH();
@@ -166,11 +165,11 @@ private void checkObstacleHCollisions()
 
 private void checkObstacleVCollisions() 
 {
-	Circle cb=new Circle(ball.position.x,ball.position.y,0.4f);
+	//Circle cb=new Circle(ball.position.x,ball.position.y,0.4f);
 	for (int i=0;i<obstaclesV.size();i++)
 	{
-		//if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds))
-		if(OverlapTester.overlapCircleRectangle(cb, obstaclesV.get(i).bounds))
+		if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds))
+		//if(OverlapTester.overlapCircleRectangle(cb, obstaclesV.get(i).bounds))
 		{
 			Log.d("coll", "collisioneV");
 			
