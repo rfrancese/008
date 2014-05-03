@@ -47,16 +47,16 @@ public class Setting extends Activity {
 			 {
 				 Assets.music.play();
 				 //scrivo sul database e modifico Assets.musicActive
-				 ComodoSettings.setAudio(1, database);
-				 Assets.musicActive=ComodoSettings.getAudio(database);
+				 Assets.setAudio(1, database);
+				 Assets.musicActive=Assets.getAudio(database);
 				 
 			 }
 			 else
 			 {
 				 Assets.music.stop();
 				 //Scrivo sul database e modifico il valore di Assets.musicActive
-				 ComodoSettings.setAudio(0, database);
-				 Assets.musicActive=ComodoSettings.getAudio(database); 
+				 Assets.setAudio(0, database);
+				 Assets.musicActive=Assets.getAudio(database); 
 			 }
 		 }
 		                                 });
@@ -77,14 +77,14 @@ public class Setting extends Activity {
 			 
 			 if(checked)
 			 {
-				 ComodoSettings.setSound(1, database);
-				 Assets.soundActive=ComodoSettings.getSound(database);
+				 Assets.setSound(1, database);
+				 Assets.soundActive=Assets.getSound(database);
 				 
 			 }
 			 else
 			 {
-				 ComodoSettings.setSound(0, database);
-				 Assets.soundActive=ComodoSettings.getSound(database);
+				 Assets.setSound(0, database);
+				 Assets.soundActive=Assets.getSound(database);
 			 }
 		 }
 		                                 });

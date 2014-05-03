@@ -1,7 +1,9 @@
 package it.unisa.dodgeholes;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import it.unisa.dodgeholes.framework.Music;
 import it.unisa.dodgeholes.framework.Sound;
@@ -61,14 +63,14 @@ public class Assets {
     public static boolean musicActive;
     public static boolean soundActive;
     
-    private static ComodoSettings settaggi;
-    
+    private static DbLocale database;
+ 
     public static void load(GLGame game)
     {
-    	//Leggi dal database e imposta il valore a musicActive e soundActive
-    	settaggi=new ComodoSettings();
-    	musicActive=ComodoSettings.getAudio(new DbLocale(settaggi));;
-    	soundActive=ComodoSettings.getSound(new DbLocale(settaggi));;
+    	database= new DbLocale(game.getApplicationContext());
+    	
+    	musicActive=Assets.getAudio(database);
+    	soundActive=Assets.getSound(database);
     	
         backgroundMenu = new Texture(game, "backgroundMenu.png");
         backgroundMenuRegion = new TextureRegion(backgroundMenu, 0, 0, 480, 320);
@@ -143,4 +145,64 @@ public class Assets {
             sound.play(1);
     	
     }
+    
+    public static boolean getAudio(DbLocale database)
+	 {
+	        SQLiteDatabase db = database.getReadableDatabase();
+	        Cursor c = db.rawQuery("SELECT * FROM setting",null);
+	        c.moveToFirst();
+	        db.close();
+	        if(c.getInt(0)==1)
+	        	return true;
+	        else
+	        	return false;
+	 }
+    
+    public static boolean getSound(DbLocale database)
+	 {
+		 SQLiteDatabase db = database.getReadableDatabase();
+	        Cursor c = db.rawQuery("SELECT * FROM setting",null);
+	        c.moveToFirst();
+	        db.close();
+	        if(c.getInt(1)==1)
+	        	return true;
+	        else
+	        	return false;
+	 }
+    
+    public static void setSound(int valore,DbLocale database)
+	 {
+		//Chiedo l'accesso al database in scrittura
+		 SQLiteDatabase db = database.getWritableDatabase();
+		 
+		 /*
+		  * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
+		  */
+		 ContentValues valori = new ContentValues();
+
+		 valori.put("sound",valore);  
+
+		 /*
+		  * Il metodo update restituisce il numero di righe aggiornate
+		  */
+		 int id = db.update("setting", valori, null,null);
+	 }
+	 
+	 public static void setAudio(int valore,DbLocale database)
+	 {
+		//Chiedo l'accesso al database in scrittura
+		 SQLiteDatabase db = database.getWritableDatabase();
+		 
+		 /*
+		  * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
+		  */
+		 ContentValues valori = new ContentValues();
+
+		 valori.put("audio",valore);  
+
+		 /*
+		  * Il metodo update restituisce il numero di righe aggiornate
+		  */
+		 int id = db.update("setting", valori, null,null);
+	 }
 }
