@@ -19,7 +19,8 @@ public class Setting extends Activity {
 	private DbLocale database=null;
 	
 	@Override
-	public void onCreate(Bundle icicle) {
+	public void onCreate(Bundle icicle)
+	{
 		super.onCreate(icicle);
 		
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
@@ -30,7 +31,7 @@ public class Setting extends Activity {
 		
 		bM = (ToggleButton) findViewById(R.id.buttMsc);
 		
-		bM.setChecked(Assets.musicActive);
+		bM.setChecked(Assets.getAudio(database));
 		/*
 		if(Assets.musicActive && !bM.isChecked())
 			bM.setChecked(true);
@@ -62,7 +63,7 @@ public class Setting extends Activity {
 		                                 });
 		 bS = (ToggleButton) findViewById(R.id.buttSnd);
 		 
-		 bS.setChecked(Assets.musicActive);
+		 bS.setChecked(Assets.getSound(database));
 		 /*
 		if(Assets.soundActive && !bS.isChecked())
 			bS.setChecked(true);
