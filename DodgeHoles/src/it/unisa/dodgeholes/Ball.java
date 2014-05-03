@@ -4,7 +4,9 @@ import it.unisa.dodgeholes.framework.DynamicGameObject;
 
 public class Ball extends DynamicGameObject{
     public static final int BALL_STATE_MOVING=0;
-    public static final int BALL_STATE_HIT_OBST =1;   
+    public static final int BALL_STATE_HIT_OBST_H =1;
+    public static final int BALL_STATE_HIT_OBST_V =2;
+    
     public static final float BALL_MOVE_VELOCITY = 20;
     public static final float BALL_WIDTH = 0.8f;
     public static final float BALL_HEIGHT = 0.8f;
@@ -41,10 +43,17 @@ public class Ball extends DynamicGameObject{
         stateTime += deltaTime;
     }
     
-   public void hitObstacle()
+   public void hitObstacleH()
    {
 	  
-	   state=BALL_STATE_HIT_OBST;
+	   state=BALL_STATE_HIT_OBST_H;
+	   stateTime=0;
+   }
+   
+   public void hitObstacleV()
+   {
+	  
+	   state=BALL_STATE_HIT_OBST_V;
 	   stateTime=0;
    }
     

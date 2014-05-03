@@ -37,19 +37,29 @@ public class Level2 implements Level {
 	private ArrayList<ObstacleH> generateObstaclesH()
 	{
 		ArrayList<ObstacleH> o=new ArrayList<ObstacleH>();
-		ObstacleH o1=new ObstacleH(2f,7.5f);
+		ObstacleH o1=new ObstacleH(2.5f,7.7f);
+		ObstacleH o2=new ObstacleH(4.6f,7.7f);
+		ObstacleH o3=new ObstacleH(6.7f,7.7f);
+		ObstacleH o4=new ObstacleH(8.8f,7.7f);
+		ObstacleH o5=new ObstacleH(10.9f,7.7f);
 		
 		o.add(o1);
+		o.add(o2);
+		o.add(o3);
+		o.add(o4);
+		o.add(o5);
 		
 		return o;
 	}
 	
 	private ArrayList<ObstacleV> generateObstaclesV()
 	{
-		ArrayList<ObstacleV> o=new ArrayList<ObstacleV>();
+		ArrayList<ObstacleV> ov=new ArrayList<ObstacleV>();
+		ObstacleV ov1=new ObstacleV(1.70f,6.3f);
 		
+		ov.add(ov1);
 		
-		return o;
+		return ov;
 	}
 	
 	private ArrayList<Life> generateLifes()

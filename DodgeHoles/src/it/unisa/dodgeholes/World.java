@@ -133,15 +133,17 @@ private void updateBall(float deltaTime, float accelX, float accelY) {
 
 private void checkObstacleHCollisions() 
 {
+	Circle cb=new Circle(ball.position.x,ball.position.y,0.4f);
 	for (int i=0;i<obstaclesH.size();i++)
 	{
-		if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
+		//if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
+		if(OverlapTester.overlapCircleRectangle(cb, obstaclesH.get(i).bounds))
 		{
 			Log.d("coll", "collisione");
 			
 			if(ball.position.y>obstaclesH.get(i).position.y)
 			{
-				ball.hitObstacle();
+				ball.hitObstacleH();
 				ball.position.y=obstaclesH.get(i).position.y+0.64f;
 				break;
 				
@@ -149,27 +151,32 @@ private void checkObstacleHCollisions()
 				
 			if(ball.position.y<obstaclesH.get(i).position.y)
 			{
-				ball.hitObstacle();
+				ball.hitObstacleH();
 				ball.position.y=obstaclesH.get(i).position.y-0.64f;
 				break;
 			}
 		}
 		else
-			ball.state=ball.BALL_STATE_MOVING;
+		{
+			if(ball.state==ball.BALL_STATE_HIT_OBST_H)
+				ball.state=ball.BALL_STATE_MOVING;
+		}
 	}
 }
 
 private void checkObstacleVCollisions() 
 {
+	Circle cb=new Circle(ball.position.x,ball.position.y,0.4f);
 	for (int i=0;i<obstaclesV.size();i++)
 	{
-		if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds)) 
+		//if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds))
+		if(OverlapTester.overlapCircleRectangle(cb, obstaclesV.get(i).bounds))
 		{
 			Log.d("coll", "collisioneV");
 			
 			if(ball.position.x>obstaclesV.get(i).position.x)
 			{
-				ball.hitObstacle();
+				ball.hitObstacleV();
 				ball.position.x=obstaclesV.get(i).position.x+0.64f;
 				break;
 				
@@ -177,13 +184,16 @@ private void checkObstacleVCollisions()
 				
 			if(ball.position.x<obstaclesV.get(i).position.x)
 			{
-				ball.hitObstacle();
+				ball.hitObstacleV();
 				ball.position.x=obstaclesV.get(i).position.x-0.64f;
 				break;
 			}
 		}
 		else
-			ball.state=ball.BALL_STATE_MOVING;
+		{
+			if(ball.state==ball.BALL_STATE_HIT_OBST_V)
+				ball.state=ball.BALL_STATE_MOVING;
+		}
 	}
 }
 
