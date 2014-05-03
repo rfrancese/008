@@ -60,16 +60,11 @@ public class DbLocale extends SQLiteOpenHelper {
 		sql+="sound int default 1)";
 		db.execSQL(sql);
 		
-		addSetting();
+		addSetting(db);
 	}
 
-	private void addSetting()
+	private void addSetting(SQLiteDatabase database)
 	{
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		/*
-		 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
-		 */
 		
 		//Carico il database 
 		ContentValues valori = new ContentValues();
@@ -85,9 +80,7 @@ public class DbLocale extends SQLiteOpenHelper {
 		 * valori tutti null
 		 * terzo parametro,la mappa dei valori da inserire
 		 */
-		long id = db.insert("setting", null, valori);
-		
-		db.close();
+		long id = database.insert("setting", null, valori);
 	}
 	
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
