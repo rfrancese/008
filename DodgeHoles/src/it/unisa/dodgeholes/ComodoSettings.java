@@ -4,9 +4,38 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.WindowManager;
 
 public class ComodoSettings extends Activity
 {
+	
+	public void onCreate(Bundle icicle)
+	{
+		super.onCreate(icicle);
+		
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+	
+	public void onResume()
+	{
+		super.onResume();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		if ((keyCode == KeyEvent.KEYCODE_BACK))
+		{
+			//Log.d("back", "entro !");
+		    this.finish(); 
+		}
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	
 	 public static boolean getAudio(DbLocale database)
 	 {
 	        SQLiteDatabase db = database.getReadableDatabase();

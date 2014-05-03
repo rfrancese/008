@@ -1,5 +1,7 @@
 package it.unisa.dodgeholes;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.database.sqlite.SQLiteDatabase;
 import it.unisa.dodgeholes.framework.Music;
 import it.unisa.dodgeholes.framework.Sound;
@@ -65,7 +67,6 @@ public class Assets {
     {
     	//Leggi dal database e imposta il valore a musicActive e soundActive
     	settaggi=new ComodoSettings();
-    	
     	musicActive=ComodoSettings.getAudio(new DbLocale(settaggi));;
     	soundActive=ComodoSettings.getSound(new DbLocale(settaggi));;
     	
