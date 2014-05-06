@@ -381,6 +381,7 @@ public class GameScreen extends GLScreen{
 	
 	 public void scriviPunteggioInLocale()
 	 {
+		 /*
 		 SQLiteDatabase db = this.database.getReadableDatabase();
 			String sql = "SELECT * FROM punteggi where livello=\"Livello"+numLevel+"\"";
 			Cursor c = db.rawQuery(sql, null);
@@ -405,6 +406,7 @@ public class GameScreen extends GLScreen{
 						 * Per ogni campo che ho scritto nella varabile whereClause devo specificare, in whereArgs
 						 * il valori a cui sono condizionati.
 						 */
+		 /*
 						String li="Livello"+numLevel;
 						
 						String[] whereArgs = {li};
@@ -412,6 +414,7 @@ public class GameScreen extends GLScreen{
 						 /*
 						  * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
 						  */
+		 /*
 						 ContentValues valori = new ContentValues();
 
 						 valori.put("punteggio",punteggio_attuale);  
@@ -419,6 +422,7 @@ public class GameScreen extends GLScreen{
 						 /*
 						  * Il metodo update restituisce il numero di righe aggiornate
 						  */
+		 /*
 						 int id = db.update("punteggi", valori, whereClause,whereArgs);
 					}
 				}
@@ -431,6 +435,7 @@ public class GameScreen extends GLScreen{
 					 */
 					
 					//Carico il database 
+		 /*
 					ContentValues valori = new ContentValues();
 					 
 					int punteggio_attuale=(int)this.counter;
@@ -446,9 +451,12 @@ public class GameScreen extends GLScreen{
 					 * valori tutti null
 					 * terzo parametro,la mappa dei valori da inserire
 					 */
+		 /*
 					long id = db.insert("punteggi", null, valori);
 			}
 			db.close();
+			*/
+		 Log.d("Messaggio","Entro in scriviPunteggioInLocale");
 		}
 		
 	 
