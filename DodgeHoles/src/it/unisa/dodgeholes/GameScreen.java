@@ -359,17 +359,17 @@ public class GameScreen extends GLScreen{
 		 scriviPunteggioInLocale();
 		 if(leggiDati())
 		 { 
-			/* new AlertDialog.Builder(view.getContext())
-				.setTitle("Notice")
-				.setMessage("To transmit the data to the web address www.dodge.it you need to register.We've saved your score locally. See to it to register")
-				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dlg, int sumthin)
-					{
-							
-					}
-				})
-				.show();
-				*/
+			 /* new AlertDialog.Builder(view.getContext())
+						.setTitle("Notice")
+						.setMessage("To transmit the data to the web address www.dodge.it you need to register.We've saved your score locally. See to it to register")
+						.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dlg, int sumthin)
+							{
+									
+							}
+						})
+						.show();
+			*/
 			 Log.d("Messaggio","Non hai connessione,punteggi");
 		 }
 		 else
@@ -547,6 +547,7 @@ public class GameScreen extends GLScreen{
 	            {
 	                nDialog.dismiss();
 	                
+	                /*
 	                new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
 					.setTitle("Warning")
 					.setMessage("Network error. The score will be saved on the local")
@@ -557,6 +558,8 @@ public class GameScreen extends GLScreen{
 						}
 					})
 					.show();
+					*/
+	                Log.d("Messaggio","Network error. The score will be saved on the local");
 	            }
 	        }
 	    }
@@ -620,6 +623,7 @@ public class GameScreen extends GLScreen{
 		                             pDialog.dismiss();
 		                             
 		                             //Non sono convinto di mettere gli AlertDialog
+		                             /*
 		                             new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
 		         					.setTitle("Congratulation")
 		         					.setMessage("You have improved his personal record")
@@ -630,6 +634,8 @@ public class GameScreen extends GLScreen{
 		         						}
 		         					})
 		         					.show();
+		         					*/
+		                             Log.d("Messaggi","You have improved his personal record");
 		                         }
 		                         if(Integer.parseInt(res) == 2)
 		                         {
@@ -641,6 +647,7 @@ public class GameScreen extends GLScreen{
 		                     else
 		                     {
 		                         pDialog.dismiss();
+		                         /*
 		                         new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
 		         					.setTitle("Attention")
 		         					.setMessage("There has been a problem in the transmission of data")
@@ -651,6 +658,8 @@ public class GameScreen extends GLScreen{
 		         						}
 		         					})
 		         					.show();
+		         					*/
+		                         Log.d("Messaggio","Errore nel trattamento dei dati");
 		                         //Errore nel trasmettere i dati
 		                     }
 
