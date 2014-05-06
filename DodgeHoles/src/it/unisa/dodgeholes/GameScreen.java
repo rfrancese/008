@@ -341,7 +341,8 @@ public class GameScreen extends GLScreen{
 		
 		
 		
-		NetAsync(glGame.getCurrentFocus());	 
+		//NetAsync(glGame.getCurrentFocus());	 
+		NetAsync();	
 	}
 	
 	
@@ -351,7 +352,7 @@ public class GameScreen extends GLScreen{
 	/*Devi controllare questo codice
 	 * 
 	 */
-	 public void NetAsync(View view)
+	 public void NetAsync()
 	 {
 		 //Se precedentemente mi sono registrato
 		 //Se c'è un nickname registrato in locale allora posso trasmettere i dati
@@ -486,20 +487,20 @@ public class GameScreen extends GLScreen{
 	     **/
 	 private class NetCheck extends AsyncTask<String,String,Boolean>
 	    {
-	        private ProgressDialog nDialog;
+	       // private ProgressDialog nDialog;
 	      
 	       
 			@Override
 	        protected void onPreExecute()
 	        {
 	            super.onPreExecute();
-	           
+	           /*
 	            nDialog = new ProgressDialog(glGame);
 	            nDialog.setMessage("Loading..");
 	            nDialog.setTitle("Checking Network");
 	            nDialog.setIndeterminate(false);
 	            nDialog.setCancelable(true);
-	            nDialog.show();
+	            nDialog.show();*/
 	        }
 
 	        @Override
@@ -540,12 +541,13 @@ public class GameScreen extends GLScreen{
 	        {
 	            if(th == true)
 	            {
-	                nDialog.dismiss();
+	               // nDialog.dismiss();
+	            	Log.d("Messaggio","Richiamo la classe per salvare i punteggi");
 	                new ProcessRegister().execute();
 	            }
 	            else
 	            {
-	                nDialog.dismiss();
+	               // nDialog.dismiss();
 	                
 	                /*
 	                new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
@@ -566,13 +568,13 @@ public class GameScreen extends GLScreen{
 	 
 	 
 	 
-	 protected class ProcessRegister extends AsyncTask<String, String, JSONObject>
+	 private class ProcessRegister extends AsyncTask<String, String, JSONObject>
 	 {
 
 		 /**
 		  * Defining Process dialog
 		  **/
-		         private ProgressDialog pDialog;
+		        // private ProgressDialog pDialog;
 
 		         private String nickname;
 		         private String livello;
@@ -584,13 +586,13 @@ public class GameScreen extends GLScreen{
 		             this.livello="Livello"+numLevel;
 			         this.nickname=recuperaNickname();
 			         this.punteggio=(int)counter;
-		             
+		           /*  
 		             pDialog = new ProgressDialog(glGame);
 		             pDialog.setTitle("Contacting Servers");
 		             pDialog.setMessage("Registering ...");
 		             pDialog.setIndeterminate(false);
 		             pDialog.setCancelable(true);
-		             pDialog.show();
+		             pDialog.show();*/
 		         }
 
 		         @Override
@@ -620,7 +622,7 @@ public class GameScreen extends GLScreen{
 		                         {
 		                        	 //Miglior punteggio registrato
 		                        	 
-		                             pDialog.dismiss();
+		                            // pDialog.dismiss();
 		                             
 		                             //Non sono convinto di mettere gli AlertDialog
 		                             /*
@@ -640,13 +642,14 @@ public class GameScreen extends GLScreen{
 		                         if(Integer.parseInt(res) == 2)
 		                         {
 		                            //Punteggio inferiore al tuo record personale
-		                             pDialog.dismiss();
+		                            // pDialog.dismiss();
+		                        	 Log.d("Messaggio","Punteggio inferiore al tuo record personale");
 		                         
 		                         }
 		                     }
 		                     else
 		                     {
-		                         pDialog.dismiss();
+		                         //pDialog.dismiss();
 		                         /*
 		                         new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
 		         					.setTitle("Attention")
