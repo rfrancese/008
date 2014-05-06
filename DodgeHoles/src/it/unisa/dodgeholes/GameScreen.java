@@ -340,9 +340,9 @@ public class GameScreen extends GLScreen{
 		batcher.drawSprite(240, 160-45, 109, 38, Assets.quit);
 		
 		
-		
+		Log.d("PresentLevelEnd","Entro");
 		//NetAsync(glGame.getCurrentFocus());	 
-		NetAsync();	
+		//NetAsync();	
 	}
 	
 	
