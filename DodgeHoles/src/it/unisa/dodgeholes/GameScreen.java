@@ -619,6 +619,8 @@ public class GameScreen extends GLScreen{
 		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
 			         UserFunctions userFunction = new UserFunctions();
 			         JSONObject json = userFunction.salvoPunteggio(nickname,livello,punteggio);
+			         if(json==null)
+			        	 Log.d("doInBackground","Json null");
 			         return json;
 		         }
 
