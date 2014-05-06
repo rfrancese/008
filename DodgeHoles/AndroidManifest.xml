@@ -39,9 +39,6 @@
             
 		</activity>
 		
-		<service android:name=".ScoresService" >
-		    
-        </service>
 
     </application>
     <uses-permission android:name="android.permission.WAKE_LOCK" />

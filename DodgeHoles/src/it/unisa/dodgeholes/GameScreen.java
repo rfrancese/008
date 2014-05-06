@@ -343,12 +343,8 @@ public class GameScreen extends GLScreen{
 		
 		if(!flag)
 		{
-		/*NetAsync();*/
-			Intent myIntent = new Intent(this.glGame, ScoresService.class);
-        	SingletonParametersBridge.getInstance().addParameter("punti",(int)counter);
-        	SingletonParametersBridge.getInstance().addParameter("nickname",this.recuperaNickname());
-        	SingletonParametersBridge.getInstance().addParameter("numerolev","Livello"+numLevel);
-        	this.glGame.startService(myIntent);
+		NetAsync(glGame.getCurrentFocus());
+			
 			this.flag=true;
 			Log.d("PresentLevelEnd","Entro");
 		}
@@ -360,12 +356,10 @@ public class GameScreen extends GLScreen{
 	
 	
 	
-	
-	
 	/*Devi controllare questo codice
 	 * 
 	 */
-	 public void NetAsync()
+	 public void NetAsync(View v)
 	 {
 		 //Se precedentemente mi sono registrato
 		 //Se c'e' un nickname registrato in locale allora posso trasmettere i dati
@@ -473,20 +467,7 @@ public class GameScreen extends GLScreen{
 		}
 		
 	 
-	 public String recuperaNickname()
-	 {
-		 SQLiteDatabase db = this.database.getReadableDatabase();
-			final String sql = "SELECT * FROM access";
-			 
-			 Cursor c = db.rawQuery(sql, null);
-			 String nick=null;
-			 
-			 if(c.moveToFirst())
-				 nick=c.getString(0);
-			 Log.d("Messaggio",nick);
-			 //db.close();
-			 return nick;
-	 }
+	 
 	 
 	//Controllo se e' presente un record nella tabella access
 		public boolean leggiDati()
@@ -531,7 +512,7 @@ public class GameScreen extends GLScreen{
 	/**
 	 * Gets current device state and checks for working internet connection by trying Google.
 	 **/
-	        	ConnectivityManager cm = (ConnectivityManager) glGame.getSystemService(Context.CONNECTIVITY_SERVICE);
+	        	ConnectivityManager cm = (ConnectivityManager)glGame.getSystemService(Context.CONNECTIVITY_SERVICE);
 	            NetworkInfo netInfo = cm.getActiveNetworkInfo();
 	            if (netInfo != null && netInfo.isConnected())
 	            {
@@ -670,6 +651,29 @@ public class GameScreen extends GLScreen{
 		        	 Log.d("SoPigl", "Peppe domina");
 		         }
 	 }
+	
+	
+	
+	
+	
+	public String recuperaNickname()
+	 {
+		 SQLiteDatabase db = this.database.getReadableDatabase();
+			final String sql = "SELECT * FROM access";
+			 
+			 Cursor c = db.rawQuery(sql, null);
+			 String nick=null;
+			 
+			 if(c.moveToFirst())
+				 nick=c.getString(0);
+			 Log.d("Messaggio",nick);
+			 //db.close();
+			 return nick;
+	 }
+	
+	
+	
+	
 	
 	
 	
