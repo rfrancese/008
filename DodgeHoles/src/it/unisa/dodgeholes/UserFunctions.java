@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
 
 public class UserFunctions {
@@ -51,6 +52,7 @@ public class UserFunctions {
 	        params.add(new BasicNameValuePair("punteggio",""+punteggio));
 	        
 	        JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+	        System.out.println("Valore oggetto json:"+json);
 	        return json;
 	}
 
