@@ -586,6 +586,8 @@ public class GameScreen extends GLScreen{
 		             this.livello="Livello"+numLevel;
 			         this.nickname=recuperaNickname();
 			         this.punteggio=(int)counter;
+			         
+			         Log.d("Messaggio",""+this.nickname+" "+this.livello+" "+this.punteggio);
 		           /*  
 		             pDialog = new ProgressDialog(glGame);
 		             pDialog.setTitle("Contacting Servers");
