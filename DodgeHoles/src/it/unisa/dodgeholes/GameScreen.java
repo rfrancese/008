@@ -520,7 +520,7 @@ public class GameScreen extends GLScreen{
 	        }
 
 	        @Override
-	        public Boolean doInBackground(String... args)
+	        protected Boolean doInBackground(String... args)
 	        {
 	/**
 	 * Gets current device state and checks for working internet connection by trying Google.
