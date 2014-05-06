@@ -1,16 +1,12 @@
 package it.unisa.dodgeholes;
 
-/**
- * Author :Raj Amal
- * Email  :raj.amalw@learn2crack.com
- * Website:www.learn2crack.com
- **/
-
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
+
 import android.content.Context;
 
 
@@ -21,6 +17,7 @@ public class UserFunctions {
     private static String registerURL = "http://www.depiano.it/DodgeHoles/";
 
     private static String register_tag = "register";
+    private static String insert_tag = "inserisci_punteggio";
    
     // constructor
     public UserFunctions(){
@@ -40,6 +37,22 @@ public class UserFunctions {
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
         return json;
     }
+
+
+
+	public JSONObject salvoPunteggio(String nickname, String livello,int punteggio)
+	{
+		 List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("tag",insert_tag ));
+	        params.add(new BasicNameValuePair("nickname",nickname));
+
+	        params.add(new BasicNameValuePair("livello",livello));
+
+	        params.add(new BasicNameValuePair("punteggio",""+punteggio));
+	        
+	        JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+	        return json;
+	}
 
 }
 

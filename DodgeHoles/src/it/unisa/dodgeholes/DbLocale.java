@@ -44,11 +44,8 @@ public class DbLocale extends SQLiteOpenHelper {
 		
 		sql=null;
 		sql="CREATE TABLE punteggi ";
-		sql+="(nickname VARCHAR(20),";
-		sql+="punteggio int,";
-		sql+="livello varchar(20),";
-		sql+="foreign key(nickname) references access(nickname),";
-		sql+="primary key(nickname,livello))";
+		sql+="(punteggio int,";
+		sql+="livello varchar(20) primary key)";
 		//Eseguiamo la query
 		db.execSQL(sql);
 		
