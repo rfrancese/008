@@ -471,7 +471,7 @@ public class GameScreen extends GLScreen{
 			 if(c.moveToFirst())
 				 nick=c.getString(0);
 			 Log.d("Messaggio",nick);
-			 db.close();
+			 //db.close();
 			 return nick;
 	 }
 	 
@@ -484,7 +484,7 @@ public class GameScreen extends GLScreen{
 			 Cursor c = db.rawQuery(sql, null);
 			 
 			 int numeroRighe = c.getCount();
-			 db.close();
+			// db.close();
 			 Log.d("DB LOCALE",""+numeroRighe);
 			 if(numeroRighe==0)
 				 return true;
