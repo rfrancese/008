@@ -13,8 +13,11 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 
 
 public class MainMenuScreen extends GLScreen {
@@ -42,9 +45,14 @@ public class MainMenuScreen extends GLScreen {
         scoresBounds = new Rectangle(240+109-54, 150-19, 109, 38);
         
         
-        touchPoint = new Vector2();               
-    }       
-
+        touchPoint = new Vector2();
+        
+        //recupero imei dispositivo
+        TelephonyManager tManager = (TelephonyManager)glGame.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceIMEI = tManager.getDeviceId();
+        Log.d("imeiAndr", deviceIMEI);
+    }
+    
     @Override
     public void update(float deltaTime) {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();

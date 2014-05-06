@@ -70,6 +70,15 @@ public class World {
     		case 2:
     			l=new Level2();
     			break;
+    		case 3:
+    			l=new Level3();
+    			break;
+    		case 4:
+    			l=new Level4();
+    			break;
+    		case 5:
+    			l=new Level5();
+    			break;
     		/*default:
     			l=new Level1();*/
     	}
@@ -206,8 +215,8 @@ private void checkHolesCollisions()
 			if(OverlapTester.overlapCircleRectangle(c, ball.bounds))
 			{
 				listener.hitHole();
-				ball.position.x=0.95f;
-				ball.position.y=10-1.5f;
+				ball.position.x=Ball.ballPosXInit;
+				ball.position.y=Ball.ballPosYInit;
 				if (this.lifes.size()>1)
 					this.lifes.remove(lifes.size()-1);
 				else

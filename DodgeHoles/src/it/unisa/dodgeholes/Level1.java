@@ -15,6 +15,8 @@ public class Level1 implements Level {
 	public Level1()
 	{
 		ball=new Ball(0.95f, 10-1.5f);
+		Ball.ballPosXInit=0.95f;
+		Ball.ballPosYInit=10-1.5f;
 		holes=generateHoles();
 		obstaclesH=generateObstaclesH();
 		obstaclesV=generateObstaclesV();
@@ -25,16 +27,38 @@ public class Level1 implements Level {
 	private ArrayList<Hole> generateHoles()
 	{
 		ArrayList<Hole> h=new ArrayList<Hole>();
-		Hole h1=new Hole(1f,6f);
+		Hole h1=new Hole(2.2f,6f);
 		Hole h2=new Hole(3f,1.9f);
 		Hole h3=new Hole(7.5f,7.5f);
 		Hole h4=new Hole(12f,1.9f);
+		Hole h5=new Hole(3.8f,4.3f);
+		Hole h6=new Hole(4.8f,4.3f);
+		Hole h7=new Hole(6.8f,4.3f);
+		Hole h8=new Hole(8.3f,4.3f);
+		Hole h9=new Hole(9.3f,4.3f);
+		Hole h10=new Hole(11.3f,4.3f);
+		Hole h11=new Hole(10.3f,2.5f);
+		Hole h12=new Hole(14.1f,0.95f);
+		Hole h13=new Hole(14.1f,2.95f);
+		Hole h14=new Hole(12.8f,8f);
+		Hole h15=new Hole(14.1f,6.6f);
 		
 		
 		h.add(h1);
 		h.add(h2);
 		h.add(h3);
 		h.add(h4);
+		h.add(h5);
+		h.add(h6);
+		h.add(h7);
+		h.add(h8);
+		h.add(h9);
+		h.add(h10);
+		h.add(h11);
+		h.add(h12);
+		h.add(h13);
+		h.add(h14);
+		h.add(h15);
 		
 		return h;
 	}

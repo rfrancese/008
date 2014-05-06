@@ -11,12 +11,17 @@ public class Ball extends DynamicGameObject{
     public static final float BALL_WIDTH = 0.8f;
     public static final float BALL_HEIGHT = 0.8f;
     
+    public static float ballPosXInit;
+    public static float ballPosYInit;
+    
     int state;
     float stateTime;    
 
     public Ball(float x, float y) {
         super(x, y, BALL_WIDTH, BALL_HEIGHT);
         state = BALL_STATE_MOVING;
+        ballPosXInit=0f;
+        ballPosYInit=0f;
         stateTime = 0;        
     }
 

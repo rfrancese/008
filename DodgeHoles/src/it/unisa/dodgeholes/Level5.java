@@ -2,7 +2,7 @@ package it.unisa.dodgeholes;
 
 import java.util.ArrayList;
 
-public class Level2 implements Level {
+public class Level5 implements Level {
 	
 	private ArrayList<Hole> holes;
 	private ArrayList<ObstacleH> obstaclesH;
@@ -12,37 +12,32 @@ public class Level2 implements Level {
 	private EndHole endHole;
 	
 	
-	public Level2()
+	public Level5()
 	{
-		ball=new Ball(5.355f,3.9f);
-		Ball.ballPosXInit=5.355f;
-		Ball.ballPosYInit=3.9f;
+		ball=new Ball(13.9f,1.45f);
+		Ball.ballPosXInit=13.9f;
+		Ball.ballPosYInit=1.45f;
 		holes=generateHoles();
 		obstaclesH=generateObstaclesH();
 		obstaclesV=generateObstaclesV();
 		lifes=generateLifes();
-		endHole=new EndHole(9.55f,3.7f);
+		endHole=new EndHole(1.10f,8.4f);
 	}
 	
 	private ArrayList<Hole> generateHoles()
 	{
 		ArrayList<Hole> h=new ArrayList<Hole>();
-		Hole h1=new Hole(9.55f,5f);
-		Hole h2=new Hole(5.355f,5f);
-		Hole h3=new Hole(1.8f,2.95f);
-		Hole h4=new Hole(1.8f,7.7f);
-		Hole h5=new Hole(13.15f,2.95f);
-		Hole h6=new Hole(13.15f,7.7f);
-		Hole h7=new Hole(6.85f,0.95f);
-		Hole h8=new Hole(8.15f,0.95f);
-		Hole h9=new Hole(3.3f,7f);
-		Hole h10=new Hole(11.65f,7f);
-		Hole h11=new Hole(11.65f,3.8f);
-		Hole h12=new Hole(8.25f,7f);
-		Hole h13=new Hole(14.1f,5f);
-		Hole h14=new Hole(14.1f,0.95f);
-		Hole h15=new Hole(10.7f,1.5f);
-		Hole h16=new Hole(5.2f,2.2f);
+		Hole h1=new Hole(3.20f,8.4f);
+		Hole h2=new Hole(3.20f,6.6f);
+		Hole h3=new Hole(4.3f,5f);
+		Hole h4=new Hole(4.3f,4f);
+		Hole h5=new Hole(1.89f,3f);
+		Hole h6=new Hole(1.15f,0.95f);
+		Hole h7=new Hole(6.75f,2.5f);
+		Hole h8=new Hole(8.45f,0.95f);
+		Hole h9=new Hole(6.75f,8.4f);
+		//Hole h10=new Hole(2.5f,3f);
+		
 		
 		h.add(h1);
 		h.add(h2);
@@ -53,14 +48,9 @@ public class Level2 implements Level {
 		h.add(h7);
 		h.add(h8);
 		h.add(h9);
-		h.add(h10);
-		h.add(h11);
-		h.add(h12);
-		h.add(h12);
-		h.add(h13);
-		h.add(h14);
-		h.add(h15);
-		h.add(h16);
+		//h.add(h10);
+		
+		
 		
 		return h;
 	}
@@ -68,16 +58,16 @@ public class Level2 implements Level {
 	private ArrayList<ObstacleH> generateObstaclesH()
 	{
 		ArrayList<ObstacleH> o=new ArrayList<ObstacleH>();
-		ObstacleH o1=new ObstacleH(3.25f,7.7f);
-		ObstacleH o2=new ObstacleH(5.35f,7.7f);
-		ObstacleH o3=new ObstacleH(7.45f,7.7f);
-		ObstacleH o4=new ObstacleH(9.55f,7.7f);
-		ObstacleH o5=new ObstacleH(11.65f,7.7f);//4
+		ObstacleH o1=new ObstacleH(1.65f,5.75f);
+		ObstacleH o2=new ObstacleH(3.75f,5.75f);
+		ObstacleH o3=new ObstacleH(3.05f,2.25f);
+		ObstacleH o4=new ObstacleH(5.15f,2.25f);
+		ObstacleH o5=new ObstacleH(13.5f,2.25f);
+		ObstacleH o6=new ObstacleH(11.4f,2.25f);
+		ObstacleH o7=new ObstacleH(10f,7.1f);
+		ObstacleH o8=new ObstacleH(12.1f,7.1f);
 		
-		ObstacleH o6=new ObstacleH(11.65f,2.95f);
-		ObstacleH o7=new ObstacleH(9.55f,2.95f);
-		ObstacleH o8=new ObstacleH(3.25f,2.95f);
-		ObstacleH o9=new ObstacleH(5.35f,2.95f);
+		
 		
 		o.add(o1);
 		o.add(o2);
@@ -87,7 +77,8 @@ public class Level2 implements Level {
 		o.add(o6);
 		o.add(o7);
 		o.add(o8);
-		o.add(o9);
+		
+		
 		
 		return o;
 	}
@@ -95,27 +86,20 @@ public class Level2 implements Level {
 	private ArrayList<ObstacleV> generateObstaclesV()
 	{
 		ArrayList<ObstacleV> o=new ArrayList<ObstacleV>();
-		ObstacleV o1=new ObstacleV(2.5f,6.4f);
-		
-		ObstacleV o2=new ObstacleV(12.35f,6.4f);
-		ObstacleV o3=new ObstacleV(12.35f,4.3f);
-		ObstacleV o4=new ObstacleV(8.8f,4.3f);
-		ObstacleV o5=new ObstacleV(2.5f,4.3f);
-		ObstacleV o6=new ObstacleV(6.1f,4.3f);
-		ObstacleV o7=new ObstacleV(7.45f,6.4f);
-		ObstacleV o8=new ObstacleV(7.45f,4.3f);
-		ObstacleV o9=new ObstacleV(7.45f,2.2f);
+		ObstacleV o1=new ObstacleV(5.9f,3.65f);
+		ObstacleV o2=new ObstacleV(5.9f,5.75f);
+		ObstacleV o3=new ObstacleV(5.9f,7.85f);
+		ObstacleV o4=new ObstacleV(9.25f,1.55f);
+		ObstacleV o5=new ObstacleV(9.25f,3.65f);
+		ObstacleV o6=new ObstacleV(9.25f,5.75f);
 		
 		o.add(o1);
 		o.add(o2);
 		o.add(o3);
+		o.add(o3);
 		o.add(o4);
 		o.add(o5);
 		o.add(o6);
-		o.add(o7);
-		o.add(o8);
-		o.add(o9);
-	
 		
 		return o;
 	}
@@ -161,6 +145,5 @@ public class Level2 implements Level {
 	{
 		return this.endHole;
 	}
-	
 
 }
