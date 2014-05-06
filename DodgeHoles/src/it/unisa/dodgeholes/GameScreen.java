@@ -462,6 +462,7 @@ public class GameScreen extends GLScreen{
 			 
 			 if(c.moveToFirst())
 				 nick=c.getString(0);
+			 Log.d("Messaggio",nick);
 			 db.close();
 			 return nick;
 	 }
