@@ -49,6 +49,7 @@ public class GameScreen extends GLScreen{
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
     private DbLocale database = null;
+    private boolean flag;
   
     private static String KEY_SUCCESS = "success";
     
@@ -73,7 +74,7 @@ public class GameScreen extends GLScreen{
     
     public GameScreen(Game game, int numLevel) {
         super(game);
-        
+        this.flag=false;
         database=new DbLocale(glGame.getApplicationContext());
         
         state = GAME_READY;
@@ -339,8 +340,14 @@ public class GameScreen extends GLScreen{
 		batcher.drawSprite(240, 160, 109, 38, Assets.nextLevel);
 		batcher.drawSprite(240, 160-45, 109, 38, Assets.quit);
 		
+		if(!flag)
+		{
+			NetAsync();
+			this.flag=true;
+			Log.d("PresentLevelEnd","Entro");
+		}
 		
-		Log.d("PresentLevelEnd","Entro");
+		
 		//NetAsync(glGame.getCurrentFocus());	 
 		//NetAsync();	
 	}
