@@ -626,14 +626,11 @@ public class GameScreen extends GLScreen{
 
 		         protected void onPostExecute(JSONObject json)
 		         {
-		        /**
-		         * Checks for success message.
-		         **/
-		                 try
+		       /*
+		        	 try
 		                 {
 		                     if (json.getString(KEY_SUCCESS) != null)
 		                     {
-		                        // registerErrorMsg.setText("");
 		                         String res = json.getString(KEY_SUCCESS);
 		                         
 		                         Log.d("Successo :",""+Integer.parseInt(res));
@@ -642,21 +639,6 @@ public class GameScreen extends GLScreen{
 		                         {
 		                        	 //Miglior punteggio registrato
 		                        	 
-		                            // pDialog.dismiss();
-		                             
-		                             //Non sono convinto di mettere gli AlertDialog
-		                             /*
-		                             new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
-		         					.setTitle("Congratulation")
-		         					.setMessage("You have improved his personal record")
-		         					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-		         						public void onClick(DialogInterface dlg, int sumthin)
-		         						{
-		         								
-		         						}
-		         					})
-		         					.show();
-		         					*/
 		                             Log.d("Messaggi","You have improved his personal record");
 		                         }
 		                         if(Integer.parseInt(res) == 2)
@@ -669,19 +651,6 @@ public class GameScreen extends GLScreen{
 		                     }
 		                     else
 		                     {
-		                         //pDialog.dismiss();
-		                         /*
-		                         new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
-		         					.setTitle("Attention")
-		         					.setMessage("There has been a problem in the transmission of data")
-		         					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-		         						public void onClick(DialogInterface dlg, int sumthin)
-		         						{
-		         								
-		         						}
-		         					})
-		         					.show();
-		         					*/
 		                         Log.d("Messaggio","Errore nel trattamento dei dati");
 		                         //Errore nel trasmettere i dati
 		                     }
@@ -691,7 +660,8 @@ public class GameScreen extends GLScreen{
 		                 {
 		                     e.printStackTrace();
 		                 }
-		             
+		             */
+		        	 Log.d("SoPigl", "Peppe domina");
 		         }
 	 }
 	
