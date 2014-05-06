@@ -29,6 +29,7 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
@@ -342,7 +343,12 @@ public class GameScreen extends GLScreen{
 		
 		if(!flag)
 		{
-			NetAsync();
+		/*NetAsync();*/
+			Intent myIntent = new Intent(this.glGame, ScoresService.class);
+        	SingletonParametersBridge.getInstance().addParameter("punti",(int)counter);
+        	SingletonParametersBridge.getInstance().addParameter("nickname",this.recuperaNickname());
+        	SingletonParametersBridge.getInstance().addParameter("numerolev","Livello"+numLevel);
+        	this.glGame.startService(myIntent);
 			this.flag=true;
 			Log.d("PresentLevelEnd","Entro");
 		}
@@ -362,7 +368,7 @@ public class GameScreen extends GLScreen{
 	 public void NetAsync()
 	 {
 		 //Se precedentemente mi sono registrato
-		 //Se c'è un nickname registrato in locale allora posso trasmettere i dati
+		 //Se c'e' un nickname registrato in locale allora posso trasmettere i dati
 		 //sul server altrimenti memorizzo in locale
 		 scriviPunteggioInLocale();
 		 if(leggiDati())
@@ -454,7 +460,7 @@ public class GameScreen extends GLScreen{
 					 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
 					 * altrimenti restituisce -1
 					 * primo parametro nome della tabella in cui fare l'inserimento
-					 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+					 * secondo parametro (NULL) perche' utile quando si vuole inserire un record con 
 					 * valori tutti null
 					 * terzo parametro,la mappa dei valori da inserire
 					 */
