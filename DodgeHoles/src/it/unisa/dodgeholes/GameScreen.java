@@ -359,7 +359,7 @@ public class GameScreen extends GLScreen{
 		 scriviPunteggioInLocale();
 		 if(leggiDati())
 		 { 
-			 new AlertDialog.Builder(view.getContext())
+			/* new AlertDialog.Builder(view.getContext())
 				.setTitle("Notice")
 				.setMessage("To transmit the data to the web address www.dodge.it you need to register.We've saved your score locally. See to it to register")
 				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -369,6 +369,8 @@ public class GameScreen extends GLScreen{
 					}
 				})
 				.show();
+				*/
+			 Log.d("Messaggio","Non hai connessione,punteggi");
 		 }
 		 else
 		 {
