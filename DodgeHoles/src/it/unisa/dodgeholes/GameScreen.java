@@ -343,19 +343,12 @@ public class GameScreen extends GLScreen{
 		
 		if(!flag)
 		{
-		NetAsync(glGame.getCurrentFocus());
-			
+			NetAsync(glGame.getCurrentFocus());
 			this.flag=true;
 			Log.d("PresentLevelEnd","Entro");
 		}
-		
-		
-		//NetAsync(glGame.getCurrentFocus());	 
-		//NetAsync();	
 	}
-	
-	
-	
+
 	/*Devi controllare questo codice
 	 * 
 	 */
@@ -367,18 +360,7 @@ public class GameScreen extends GLScreen{
 		 scriviPunteggioInLocale();
 		 if(leggiDati())
 		 { 
-			 /* new AlertDialog.Builder(view.getContext())
-						.setTitle("Notice")
-						.setMessage("To transmit the data to the web address www.dodge.it you need to register.We've saved your score locally. See to it to register")
-						.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dlg, int sumthin)
-							{
-									
-							}
-						})
-						.show();
-			*/
-			 Log.d("Messaggio","Non hai connessione,punteggi");
+			 Log.d("Messaggio","L'utente non e' registrao e quindi non posso trasmettere il punteggio in rete");
 		 }
 		 else
 		 {
@@ -388,13 +370,12 @@ public class GameScreen extends GLScreen{
 	
 	 public void scriviPunteggioInLocale()
 	 {
-		 /*
 		 SQLiteDatabase db = this.database.getReadableDatabase();
 			String sql = "SELECT * FROM punteggi where livello=\"Livello"+numLevel+"\"";
 			Cursor c = db.rawQuery(sql, null);
 			int numeroRighe = c.getCount();
 			
-			db=database.getWritableDatabase();
+			db=this.database.getWritableDatabase();
 			
 			if(numeroRighe>0)
 			{
@@ -413,7 +394,6 @@ public class GameScreen extends GLScreen{
 						 * Per ogni campo che ho scritto nella varabile whereClause devo specificare, in whereArgs
 						 * il valori a cui sono condizionati.
 						 */
-		 /*
 						String li="Livello"+numLevel;
 						
 						String[] whereArgs = {li};
@@ -421,7 +401,7 @@ public class GameScreen extends GLScreen{
 						 /*
 						  * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
 						  */
-		 /*
+						
 						 ContentValues valori = new ContentValues();
 
 						 valori.put("punteggio",punteggio_attuale);  
@@ -429,7 +409,7 @@ public class GameScreen extends GLScreen{
 						 /*
 						  * Il metodo update restituisce il numero di righe aggiornate
 						  */
-		 /*
+		
 						 int id = db.update("punteggi", valori, whereClause,whereArgs);
 					}
 				}
@@ -442,7 +422,7 @@ public class GameScreen extends GLScreen{
 					 */
 					
 					//Carico il database 
-		 /*
+		
 					ContentValues valori = new ContentValues();
 					 
 					int punteggio_attuale=(int)this.counter;
@@ -458,11 +438,10 @@ public class GameScreen extends GLScreen{
 					 * valori tutti null
 					 * terzo parametro,la mappa dei valori da inserire
 					 */
-		 /*
+		 
 					long id = db.insert("punteggi", null, valori);
 			}
 			db.close();
-			*/
 		 Log.d("Messaggio","Entro in scriviPunteggioInLocale");
 		}
 		
@@ -478,7 +457,7 @@ public class GameScreen extends GLScreen{
 			 Cursor c = db.rawQuery(sql, null);
 			 
 			 int numeroRighe = c.getCount();
-			// db.close();
+			 db.close();
 			 Log.d("DB LOCALE",""+numeroRighe);
 			 if(numeroRighe==0)
 				 return true;
@@ -490,20 +469,10 @@ public class GameScreen extends GLScreen{
 	     **/
 	 private class NetCheck extends AsyncTask<String,String,Boolean>
 	    {
-	       // private ProgressDialog nDialog;
 	      
-	       
-			@Override
 	        protected void onPreExecute()
 	        {
 	            super.onPreExecute();
-	           /*
-	            nDialog = new ProgressDialog(glGame);
-	            nDialog.setMessage("Loading..");
-	            nDialog.setTitle("Checking Network");
-	            nDialog.setIndeterminate(false);
-	            nDialog.setCancelable(true);
-	            nDialog.show();*/
 	        }
 
 	        @Override
@@ -543,27 +512,12 @@ public class GameScreen extends GLScreen{
 			protected void onPostExecute(Boolean th)
 	        {
 	            if(th == true)
-	            {
-	               // nDialog.dismiss();
+	            {  
 	            	Log.d("Messaggio","Richiamo la classe per salvare i punteggi");
 	                new ProcessRegister().execute();
 	            }
 	            else
 	            {
-	               // nDialog.dismiss();
-	                
-	                /*
-	                new AlertDialog.Builder(glGame.getCurrentFocus().getContext())
-					.setTitle("Warning")
-					.setMessage("Network error. The score will be saved on the local")
-					.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dlg, int sumthin)
-						{
-								
-						}
-					})
-					.show();
-					*/
 	                Log.d("Messaggio","Network error. The score will be saved on the local");
 	            }
 	        }
@@ -577,8 +531,6 @@ public class GameScreen extends GLScreen{
 		 /**
 		  * Defining Process dialog
 		  **/
-		        // private ProgressDialog pDialog;
-
 		         private String nickname;
 		         private String livello;
 		         private int punteggio;
@@ -590,21 +542,12 @@ public class GameScreen extends GLScreen{
 			         this.nickname=recuperaNickname();
 			         this.punteggio=(int)counter;
 			         
-			         Log.d("Messaggio",""+this.nickname+" "+this.livello+" "+this.punteggio);
-		           /*  
-		             pDialog = new ProgressDialog(glGame);
-		             pDialog.setTitle("Contacting Servers");
-		             pDialog.setMessage("Registering ...");
-		             pDialog.setIndeterminate(false);
-		             pDialog.setCancelable(true);
-		             pDialog.show();*/
+			         Log.d("Dati da inviare al parser:",""+this.nickname+" "+this.livello+" "+this.punteggio);
 		         }
 
-		         @Override
 		         protected JSONObject doInBackground(String... args)
 		         {
-		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
-			         UserFunctions userFunction = new UserFunctions();
+		        	 UserFunctions userFunction = new UserFunctions();
 			         JSONObject json = userFunction.salvoPunteggio(nickname,livello,punteggio);
 			         if(json==null)
 			        	 Log.d("doInBackground","Json null");
@@ -613,8 +556,7 @@ public class GameScreen extends GLScreen{
 
 		         protected void onPostExecute(JSONObject json)
 		         {
-		       /*
-		        	 try
+		        	 	try
 		                 {
 		                     if (json.getString(KEY_SUCCESS) != null)
 		                     {
@@ -631,8 +573,7 @@ public class GameScreen extends GLScreen{
 		                         if(Integer.parseInt(res) == 2)
 		                         {
 		                            //Punteggio inferiore al tuo record personale
-		                            // pDialog.dismiss();
-		                        	 Log.d("Messaggio","Punteggio inferiore al tuo record personale");
+		                            Log.d("Messaggio","Punteggio inferiore al tuo record personale");
 		                         
 		                         }
 		                     }
@@ -647,14 +588,8 @@ public class GameScreen extends GLScreen{
 		                 {
 		                     e.printStackTrace();
 		                 }
-		             */
-		        	 Log.d("SoPigl", "Peppe domina");
 		         }
 	 }
-	
-	
-	
-	
 	
 	public String recuperaNickname()
 	 {
@@ -667,15 +602,9 @@ public class GameScreen extends GLScreen{
 			 if(c.moveToFirst())
 				 nick=c.getString(0);
 			 Log.d("Messaggio",nick);
-			 //db.close();
+			 db.close();
 			 return nick;
 	 }
-	
-	
-	
-	
-	
-	
 	
 	private void presentGameOver() 
 	{
