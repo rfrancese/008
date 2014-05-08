@@ -71,6 +71,8 @@ public class GameScreen extends GLScreen{
     
     float counter, timeCounter;
     private int numLevel;
+    private int appCounter;
+    private int appLevel;
     
     
     public GameScreen(Game game, int numLevel) {
@@ -280,6 +282,7 @@ public class GameScreen extends GLScreen{
 	    switch(state) {
 	    case GAME_READY:
 	        presentReady();
+	        this.flag=false;
 	        break;
 	    case GAME_RUNNING:
 	        presentRunning();
@@ -343,6 +346,9 @@ public class GameScreen extends GLScreen{
 		
 		if(!flag)
 		{
+			appCounter=(int)counter;
+			this.appLevel=this.numLevel;
+			this.numLevel++;
 			NetAsync(glGame.getCurrentFocus());
 			this.flag=true;
 			Log.d("PresentLevelEnd","Entro");
@@ -371,7 +377,7 @@ public class GameScreen extends GLScreen{
 	 public void scriviPunteggioInLocale()
 	 {
 		 SQLiteDatabase db = this.database.getReadableDatabase();
-			String sql = "SELECT * FROM punteggi where livello=\"Livello"+numLevel+"\"";
+			String sql = "SELECT * FROM punteggi where livello=\"Livello"+appLevel+"\"";
 			Cursor c = db.rawQuery(sql, null);
 			int numeroRighe = c.getCount();
 			
@@ -384,7 +390,7 @@ public class GameScreen extends GLScreen{
 				{
 					
 					int punteggio_salvato=c.getInt(0);
-					int punteggio_attuale=(int)this.counter;
+					int punteggio_attuale=this.appCounter;
 					
 					if(punteggio_attuale<punteggio_salvato)
 					{
@@ -394,7 +400,7 @@ public class GameScreen extends GLScreen{
 						 * Per ogni campo che ho scritto nella varabile whereClause devo specificare, in whereArgs
 						 * il valori a cui sono condizionati.
 						 */
-						String li="Livello"+numLevel;
+						String li="Livello"+appLevel;
 						
 						String[] whereArgs = {li};
 						
@@ -425,10 +431,10 @@ public class GameScreen extends GLScreen{
 		
 					ContentValues valori = new ContentValues();
 					 
-					int punteggio_attuale=(int)this.counter;
+					int punteggio_attuale=this.appCounter;
 					 
 					valori.put("punteggio", punteggio_attuale);
-					valori.put("livello","Livello"+numLevel);
+					valori.put("livello","Livello"+appLevel);
 					
 					/*
 					 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
@@ -538,9 +544,9 @@ public class GameScreen extends GLScreen{
 		         protected void onPreExecute()
 		         {
 		             super.onPreExecute();
-		             this.livello="Livello"+numLevel;
+		             this.livello="Livello"+appLevel;
 			         this.nickname=recuperaNickname();
-			         this.punteggio=(int)counter;
+			         this.punteggio=appCounter;
 			         
 			         Log.d("Dati da inviare al parser:",""+this.nickname+" "+this.livello+" "+this.punteggio);
 		         }
