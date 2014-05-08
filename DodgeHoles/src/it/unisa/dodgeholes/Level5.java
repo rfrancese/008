@@ -48,6 +48,7 @@ public class Level5 implements Level {
 		Hole h19=new Hole(14.05f,8.4f);
 		Hole h20=new Hole(4.2f,7.1f);
 		Hole h21=new Hole(1.15f,7.35f);
+		Hole h22=new Hole(7.65f,3.6f);
 		
 		h.add(h1);
 		h.add(h2);
@@ -70,6 +71,7 @@ public class Level5 implements Level {
 		h.add(h19);
 		h.add(h20);
 		h.add(h21);
+		h.add(h22);
 		
 		return h;
 	}
