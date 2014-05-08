@@ -36,8 +36,18 @@ public class Level5 implements Level {
 		Hole h7=new Hole(6.75f,2.5f);
 		Hole h8=new Hole(8.45f,0.95f);
 		Hole h9=new Hole(6.75f,8.4f);
-		//Hole h10=new Hole(2.5f,3f);
-		
+		Hole h10=new Hole(6.75f,5f);
+		Hole h11=new Hole(8.55f,5f);
+		Hole h12=new Hole(8.45f,6.8f);
+		Hole h13=new Hole(10.75f,3f);
+		Hole h14=new Hole(10.75f,4f);
+		Hole h15=new Hole(10.75f,5f);
+		Hole h16=new Hole(11.85f,4.5f);
+		Hole h17=new Hole(11.95f,6.3f);
+		Hole h18=new Hole(14.05f,5f);
+		Hole h19=new Hole(14.05f,8.4f);
+		Hole h20=new Hole(4.2f,7.1f);
+		Hole h21=new Hole(1.15f,7.35f);
 		
 		h.add(h1);
 		h.add(h2);
@@ -48,9 +58,18 @@ public class Level5 implements Level {
 		h.add(h7);
 		h.add(h8);
 		h.add(h9);
-		//h.add(h10);
-		
-		
+		h.add(h10);
+		h.add(h11);
+		h.add(h12);
+		h.add(h13);
+		h.add(h14);
+		h.add(h15);
+		h.add(h16);
+		h.add(h17);
+		h.add(h18);
+		h.add(h19);
+		h.add(h20);
+		h.add(h21);
 		
 		return h;
 	}
@@ -66,9 +85,7 @@ public class Level5 implements Level {
 		ObstacleH o6=new ObstacleH(11.4f,2.25f);
 		ObstacleH o7=new ObstacleH(10f,7.1f);
 		ObstacleH o8=new ObstacleH(12.1f,7.1f);
-		
-		
-		
+
 		o.add(o1);
 		o.add(o2);
 		o.add(o3);
@@ -77,9 +94,7 @@ public class Level5 implements Level {
 		o.add(o6);
 		o.add(o7);
 		o.add(o8);
-		
-		
-		
+
 		return o;
 	}
 	
