@@ -9,15 +9,32 @@ import it.unisa.dodgeholes.framework.math.OverlapTester;
 import it.unisa.dodgeholes.framework.math.Rectangle;
 import it.unisa.dodgeholes.framework.math.Vector2;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 
 public class MainMenuScreen extends GLScreen {
@@ -30,8 +47,10 @@ public class MainMenuScreen extends GLScreen {
     Rectangle registerBounds;
     Rectangle scoresBounds;
     Vector2 touchPoint;
-    
-    
+    private static String KEY_SUCCESS = "success";
+    private static String KEY_ERROR = "error";
+
+	private DbLocale database = null;
 
     public MainMenuScreen(Game game) {
         super(game);
@@ -43,17 +62,151 @@ public class MainMenuScreen extends GLScreen {
         settingBounds = new Rectangle(240-109-54, 150-76-19, 109, 38);
         registerBounds = new Rectangle(240+109-54, 150-76-19, 109, 38);
         scoresBounds = new Rectangle(240+109-54, 150-19, 109, 38);
-        
+        database = new DbLocale(glGame.getApplicationContext());
         
         touchPoint = new Vector2();
-        
-        //recupero imei dispositivo
-        TelephonyManager tManager = (TelephonyManager)glGame.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
-        String deviceIMEI = tManager.getDeviceId();
-        Log.d("imeiAndr", deviceIMEI);
+       
+        new NetCheck().execute();
     }
+   
+	    /**
+	     * Async Task to check whether internet connection is working
+	     **/
+	 private class NetCheck extends AsyncTask<String,String,Boolean>
+	    {
+	      
+	        protected void onPreExecute()
+	        {
+	            super.onPreExecute();
+	        }
+
+	        @Override
+	        protected Boolean doInBackground(String... args)
+	        {
+	/**
+	 * Gets current device state and checks for working internet connection by trying Google.
+	 **/
+	            ConnectivityManager cm = (ConnectivityManager) glGame.getSystemService(Context.CONNECTIVITY_SERVICE);
+	            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+	            if (netInfo != null && netInfo.isConnected())
+	            {
+	                try
+	                {
+	                    URL url = new URL("http://www.google.com");
+	                    HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+	                    urlc.setConnectTimeout(3000);
+	                    urlc.connect();
+	                    if (urlc.getResponseCode() == 200)
+	                    {
+	                        return true;
+	                    }
+	                }
+	                catch (MalformedURLException e1)
+	                {
+	                    e1.printStackTrace();
+	                }
+	                catch (IOException e)
+	                {
+	                    e.printStackTrace();
+	                }
+	            }
+	            return false;
+
+	        }
+	        
+	        protected void onPostExecute(Boolean th)
+	        {
+	            if(th == true)
+	            {
+	                new ProcessRegister().execute();
+	            }
+	            //se non c'e connessione non faccio nulla,perche' non posso recuperare i dati dal server
+	        }
+	    }
+	 
+	 
+	 
+	 private class ProcessRegister extends AsyncTask<String, String, JSONObject>
+	 {
+
+		         private String deviceIMEI;
+		         
+		         protected void onPreExecute()
+		         {
+		             super.onPreExecute();
+		             //Ricavo l'IMEI
+		             TelephonyManager tManager = (TelephonyManager)glGame.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+		            this.deviceIMEI = tManager.getDeviceId();
+		         }
+
+		         @Override
+		         protected JSONObject doInBackground(String... args)
+		         {
+		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
+			         UserFunctions userFunction = new UserFunctions();
+			         JSONObject json = userFunction.controllaIMEI(deviceIMEI);
+			         return json;
+		         }
+
+		         protected void onPostExecute(JSONObject json)
+		         {
+		        /**
+		         * Checks for success message.
+		         **/
+		                 try
+		                 {
+		                     if (json.getString(KEY_SUCCESS) != null)
+		                     {
+		                         String res = json.getString(KEY_SUCCESS);
+
+		                         String red = json.getString(KEY_ERROR);
+		                         
+		                         Log.d("Successo :",""+Integer.parseInt(res));
+		                         if(Integer.parseInt(res) == 1)
+		                         {
+		                        	 //Non faccio nulla! Imei non ancora registrato
+		                         }
+
+		                         else if (Integer.parseInt(red) ==2)
+		                         {
+		                            //Inserisci nickname in locale con quello scaricare dal server tramite JSON
+		                        	 registraUtenteInLocale(json.getString("dati"));
+		                         }
+		                     }
+
+		                 } catch (JSONException e)
+		                 {
+		                     e.printStackTrace();
+		                 }
+		             }}
+	 
+	private void registraUtenteInLocale(String nickname)
+	{
+		SQLiteDatabase db = this.database.getWritableDatabase();
+		
+		/*
+		 * Utlizziamo l'oggetto ContentValues per creare una mappa dei nostri valori
+		 */
+		
+		//Carico il database 
+		ContentValues valori = new ContentValues();
+		 
+		valori.put("nickname", nickname); 
+		
+		/*
+		 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
+		 * altrimenti restituisce -1
+		 * primo parametro nome della tabella in cui fare l'inserimento
+		 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+		 * valori tutti null
+		 * terzo parametro,la mappa dei valori da inserire
+		 */
+		long id = db.insert("access", null, valori);
+		
+		db.close();
+	}
+
     
-    @Override
     public void update(float deltaTime) {
         List<TouchEvent> touchEvents = game.getInput().getTouchEvents();
         game.getInput().getKeyEvents();

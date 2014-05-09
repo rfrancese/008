@@ -36,6 +36,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -199,12 +200,16 @@ public class Register extends Activity implements View.OnClickListener {
 		         private ProgressDialog pDialog;
 
 		         private String nickname;
+		         private String deviceIMEI;
 		         
 		         protected void onPreExecute()
 		         {
 		             super.onPreExecute();
 		             nick = (EditText) findViewById(R.id.nickname);
 		             nickname=nick.getText().toString();
+		             
+		             TelephonyManager tManager = (TelephonyManager) getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+			         this.deviceIMEI = tManager.getDeviceId();
 		             
 		             pDialog = new ProgressDialog(Register.this);
 		             pDialog.setTitle("Contacting Servers");
@@ -219,7 +224,7 @@ public class Register extends Activity implements View.OnClickListener {
 		         {
 		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
 			         UserFunctions userFunction = new UserFunctions();
-			         JSONObject json = userFunction.registerUser(nickname);
+			         JSONObject json = userFunction.registerUser(nickname,this.deviceIMEI);
 			         return json;
 		         }
 
@@ -263,7 +268,7 @@ public class Register extends Activity implements View.OnClickListener {
 		                         else if (Integer.parseInt(red) ==2)
 		                         {
 		                             pDialog.dismiss();
-		                             registerErrorMsg.setText("User already exists");
+		                             registerErrorMsg.setText("User already exists or you're already registered with this application");
 		                         }
 		                     }
 		                     else

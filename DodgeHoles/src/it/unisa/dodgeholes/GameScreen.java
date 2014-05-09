@@ -351,7 +351,6 @@ public class GameScreen extends GLScreen{
 			this.numLevel++;
 			NetAsync(glGame.getCurrentFocus());
 			this.flag=true;
-			Log.d("PresentLevelEnd","Entro");
 		}
 	}
 
