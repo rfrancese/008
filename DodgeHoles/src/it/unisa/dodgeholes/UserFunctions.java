@@ -62,7 +62,7 @@ public class UserFunctions {
 	public JSONObject controllaIMEI(String deviceIMEI) 
 	{
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("tag",insert_tag ));
+        params.add(new BasicNameValuePair("tag",imei_tag ));
         params.add(new BasicNameValuePair("imei",deviceIMEI));
 
         JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
