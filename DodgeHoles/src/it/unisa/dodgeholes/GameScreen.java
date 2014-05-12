@@ -49,6 +49,7 @@ public class GameScreen extends GLScreen{
     static final int GAME_PAUSED = 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
+    static final int NUMBER_TOTAL_LEVEL=5;
     private DbLocale database = null;
     private boolean flag;
   
@@ -223,10 +224,18 @@ public class GameScreen extends GLScreen{
 	        
 	        if(OverlapTester.pointInRectangle(nextLevelBounds, touchPoint)) {
 	            
-	        	this.counter=0;
-		        world = new World(worldListener,world.getNumLevel()+1);
-		        renderer = new WorldRenderer(glGraphics, batcher, world);
-		        state = GAME_READY;
+	        	if(numLevel<=NUMBER_TOTAL_LEVEL)
+	        	{
+		        	this.counter=0;
+			        world = new World(worldListener,world.getNumLevel()+1);
+			        renderer = new WorldRenderer(glGraphics, batcher, world);
+			        state = GAME_READY;
+	        	}
+	        	else
+	        	{
+	        		game.setScreen(new MainMenuScreen(game));
+	        	}
+	        	
 	            return;
 	        }
 	        
@@ -627,14 +636,14 @@ public class GameScreen extends GLScreen{
     public void pause() {
         if(state == GAME_RUNNING)
             state = GAME_PAUSED;
-        if(Assets.musicActive)
-        	Assets.music.stop();
+        /*if(Assets.musicActive)
+        	Assets.music.pause();*/
     }
 
     @Override
     public void resume() {
-    	if(Assets.musicActive)
-    		Assets.music.play();
+    	/*if(Assets.musicActive)
+    		Assets.music.play();*/
     }
 
     @Override

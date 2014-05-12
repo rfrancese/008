@@ -151,7 +151,7 @@ public class MainMenuScreen extends GLScreen {
 
 		         private void caricaLivelliUtenteEpunteggi()
 		         {
-		        	 //Dovrei usare una mappa per essere più efficiente !
+		        	 //Dovrei usare una mappa per essere piu' efficiente !
 		        	SQLiteDatabase db = database.getReadableDatabase();
 		     		final String sql = "SELECT * FROM punteggi";
 		     		 
@@ -253,7 +253,7 @@ public class MainMenuScreen extends GLScreen {
 		 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
 		 * altrimenti restituisce -1
 		 * primo parametro nome della tabella in cui fare l'inserimento
-		 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+		 * secondo parametro (NULL) perche' utile quando si vuole inserire un record con 
 		 * valori tutti null
 		 * terzo parametro,la mappa dei valori da inserire
 		 */
@@ -358,14 +358,14 @@ public class MainMenuScreen extends GLScreen {
     @Override
     public void pause() {        
         //Save.save(game.getFileIO());
-    	if(Assets.musicActive)
-    		Assets.music.stop();
+    	/*if(Assets.musicActive)
+    		Assets.music.stop();*/
     }
 
     @Override
     public void resume() {
-    	if(Assets.musicActive)
-    		Assets.music.play();
+    	/*if(Assets.musicActive)
+    		Assets.music.play();*/
     }       
 
     @Override

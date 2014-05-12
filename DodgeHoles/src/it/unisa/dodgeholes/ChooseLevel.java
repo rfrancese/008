@@ -2,24 +2,29 @@ package it.unisa.dodgeholes;
 
 
 
+import android.app.Activity;
 import android.app.ListActivity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import it.unisa.dodgeholes.framework.Game;
 
-public class ChooseLevel extends ListActivity {
+public class ChooseLevel extends Activity {
 	
 	
 	
-	private TextView selection;
-	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5","Level 6"};
+	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"};
 	private SingletonParametersBridge bridge;
 	private Game game;
+	private ListView list;
+	
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -33,22 +38,37 @@ public class ChooseLevel extends ListActivity {
 		bridge.removeParameter("game");
 		
 		setContentView(R.layout.choose_lev);
-		setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items));
-		//selection=(TextView)findViewById(R.id.selection);
+	
+		
+		//setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items));
+		//setListAdapter(new ArrayAdapter<String>(this,R.id.list_liv,items));
+		list=(ListView)findViewById(R.id.list_liv);
+		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this,items,"font.ttf");
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
+                {
+                	game.setScreen(new GameScreen(game,position+1));
+            		finish();
+                }
+            });
+		
+		
 	}
 	
-	public void onListItemClick(ListView parent, View v, int position,
+	/*public void onListItemClick(ListView parent, View v, int position,
 																long id) {
-	 	//selection.setText(items[position]);
+
 		game.setScreen(new GameScreen(game,position+1));
 		finish();
-	}
+	}*/
 	
 	public void onPause()
 	{
 		super.onPause();
 		if(Assets.musicActive)
-			Assets.music.stop();
+			Assets.music.pause();
 	}
 	
 	public void onResume()
@@ -60,6 +80,7 @@ public class ChooseLevel extends ListActivity {
 		}
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if ((keyCode == KeyEvent.KEYCODE_BACK))
@@ -69,6 +90,21 @@ public class ChooseLevel extends ListActivity {
 		}
 		
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) 
+		{
+
+			case android.R.id.home:
+				this.finish();
+			    onBackPressed();
+			    return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 }

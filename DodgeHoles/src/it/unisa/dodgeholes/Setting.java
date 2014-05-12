@@ -4,12 +4,15 @@ package it.unisa.dodgeholes;
 
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -17,6 +20,8 @@ public class Setting extends Activity {
 	
 	private ToggleButton bM,bS;
 	private DbLocale database=null;
+	private TextView tx1,tx2;
+	private Typeface font;
 	
 	@Override
 	public void onCreate(Bundle icicle)
@@ -28,6 +33,13 @@ public class Setting extends Activity {
 		
 		setContentView(R.layout.setting);
 		database=new DbLocale(getApplicationContext());
+		
+		
+		font = Typeface.createFromAsset(getAssets(), "font.ttf");
+		tx1 = (TextView) findViewById(R.id.labelMusic);
+		tx1.setTypeface(font);
+		tx2 = (TextView) findViewById(R.id.labelSound);
+		tx2.setTypeface(font);
 		
 		bM = (ToggleButton) findViewById(R.id.buttMsc);
 		
@@ -96,7 +108,7 @@ public class Setting extends Activity {
 	{
 		super.onPause();
 		if(bM.isChecked())
-			Assets.music.stop();
+			Assets.music.pause();
 		if(Assets.musicActive)
 		{
 			//
@@ -120,6 +132,21 @@ public class Setting extends Activity {
 		}
 		
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) 
+		{
+
+			case android.R.id.home:
+				this.finish();
+			    onBackPressed();
+			    return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 	
 	  

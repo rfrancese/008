@@ -3,6 +3,7 @@ package it.unisa.dodgeholes;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.WindowManager;
 import android.webkit.WebView;
 
@@ -25,7 +26,7 @@ public class Scores extends Activity {
 	{
 		super.onPause();
 		if(Assets.musicActive)
-			Assets.music.stop();
+			Assets.music.pause();
 	}
 	
 	public void onResume()
@@ -37,6 +38,7 @@ public class Scores extends Activity {
 		}
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if ((keyCode == KeyEvent.KEYCODE_BACK))
@@ -45,5 +47,20 @@ public class Scores extends Activity {
 		}
 		
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) 
+		{
+
+			case android.R.id.home:
+				this.finish();
+			    onBackPressed();
+			    return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 }

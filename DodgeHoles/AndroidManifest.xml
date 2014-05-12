@@ -3,7 +3,7 @@
       package="it.unisa.dodgeholes"
       android:versionCode="1"
       android:versionName="1.0">
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@style/AppTheme">
         <activity android:name="it.unisa.dodgeholes.StartGame"
                   android:label="@string/app_name"
                   android:screenOrientation="landscape"
@@ -15,27 +15,50 @@
         </activity>
         
         <activity android:name=".ChooseLevel"
+            android:icon="@drawable/ico_lev"
             android:label="@string/label_level"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName="it.unisa.dodgeholes.StartGame" >
             
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unisa.dodgeholes.StartGame" />
+         
 		</activity>
 		
         <activity android:name=".Setting"
             android:icon="@drawable/ico_sett"
             android:label="@string/label_setting"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName="it.unisa.dodgeholes.StartGame" >
+            
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unisa.dodgeholes.StartGame" />
             
 		</activity>
 		
         <activity android:name=".Register"
+            android:icon="@drawable/ico_reg"
             android:label="@string/label_register"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName="it.unisa.dodgeholes.StartGame" >
+            
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unisa.dodgeholes.StartGame" />
             
 		</activity>
 		
         <activity android:name=".Scores"
+            android:icon="@drawable/ico_sco"
             android:label="@string/label_scores"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:parentActivityName="it.unisa.dodgeholes.StartGame" >
+            
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.unisa.dodgeholes.StartGame" />
             
 		</activity>
 		
@@ -50,6 +73,6 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="12"/>
+    <uses-sdk android:minSdkVersion="11" android:targetSdkVersion="12"/>
 
 </manifest>

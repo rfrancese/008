@@ -33,5 +33,8 @@ public class StartGame extends GLGame {
         super.onPause();
         /*if(Save.soundEnabled)
             Assets.music.pause();*/
+        if(Assets.musicActive)
+        	Assets.music.pause();
+        	
     }
 }

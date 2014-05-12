@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -53,6 +55,8 @@ public class Register extends Activity implements View.OnClickListener {
 	private String sv="";
 	private DbLocale database = null;
 	private TextView registerErrorMsg;
+	private TextView tr;
+	private Typeface font;
 	
 	
 
@@ -68,6 +72,10 @@ public class Register extends Activity implements View.OnClickListener {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView(R.layout.register);
+		
+		tr = (TextView) findViewById(R.id.lReg);
+		font = Typeface.createFromAsset(getAssets(), "font.ttf");
+		tr.setTypeface(font);
 		
 		buttReg=(Button)findViewById(R.id.buttReg);
 		buttReg.setOnClickListener(this);
@@ -300,7 +308,7 @@ public class Register extends Activity implements View.OnClickListener {
 		 * Il metodo insert restituisce l'ID della riga appena creata, in caso di successo,
 		 * altrimenti restituisce -1
 		 * primo parametro nome della tabella in cui fare l'inserimento
-		 * secondo parametro (NULL) perchè utile quando si vuole inserire un record con 
+		 * secondo parametro (NULL) perche' utile quando si vuole inserire un record con 
 		 * valori tutti null
 		 * terzo parametro,la mappa dei valori da inserire
 		 */
@@ -313,7 +321,7 @@ public class Register extends Activity implements View.OnClickListener {
 	{
 		super.onPause();
 		if(Assets.musicActive)
-			Assets.music.stop();
+			Assets.music.pause();
 	}
 	
 	public void onResume()
@@ -341,6 +349,7 @@ public class Register extends Activity implements View.OnClickListener {
 		return false;
 	}
 	
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
 		if ((keyCode == KeyEvent.KEYCODE_BACK))
@@ -350,6 +359,21 @@ public class Register extends Activity implements View.OnClickListener {
 		}
 		
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) 
+		{
+
+			case android.R.id.home:
+				this.finish();
+			    onBackPressed();
+			    return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 }

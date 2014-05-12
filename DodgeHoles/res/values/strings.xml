@@ -7,4 +7,10 @@
     <string name="label_setting">Modify Setting</string>
     <string name="label_register">Register</string>
     <string name="label_scores">Scores</string>
+    <string name="placeholder_edit_reg">Insert a nickname. . .</string>
+    <string name="label_button_reg">Register</string>
+    <string name="label_nick">Nickname: </string>
+    <string name="label_msc_sett">Music</string>
+    <string name="label_snd_sett">Sound</string>
+    
 </resources>

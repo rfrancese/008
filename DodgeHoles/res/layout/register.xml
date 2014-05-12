@@ -4,32 +4,46 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="match_parent"
-  android:layout_height="match_parent">
+  android:layout_height="match_parent"
+  android:padding="10dip">
    
-  <TextView android:id="@+id/lReg"
-      		android:layout_width="fill_parent" 
-      		android:layout_height="wrap_content"
-            android:text="Insert your nickname:" 
-            android:padding="5dip"/>
+  
   
   <TextView android:id="@+id/msgerror"
       		android:layout_width="fill_parent" 
       		android:layout_height="wrap_content"
             android:text="" 
             android:padding="5dip"/>
+  
+  <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="100"
+          >
+          
+  <TextView android:id="@+id/lReg"
+      		android:layout_width="wrap_content" 
+      		android:layout_height="wrap_content"
+            android:text="@string/label_nick"
+            android:textSize="18sp"/>
              
   <EditText android:id="@+id/nickname"
-      		android:layout_width="fill_parent" 
+      		android:layout_weight="80"
+      		android:layout_width="0px" 
       		android:layout_height="wrap_content"
             android:layout_marginBottom="10dip"
             android:inputType="text"
             android:text=""
+            android:hint="@string/placeholder_edit_reg"
             android:imeOptions="flagNoExtractUi"/>            
    
   <Button android:id="@+id/buttReg"
-      	  android:layout_width="fill_parent" 
+      	  android:layout_width="wrap_content" 
       	  android:layout_height="wrap_content"
-          android:text="Register"/>
+          android:text="@string/label_button_reg"
+          android:background="@color/sel_button_selector"/>
+  </LinearLayout>
 
      
 </LinearLayout>
