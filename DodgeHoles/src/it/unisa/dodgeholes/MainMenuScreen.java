@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -26,6 +27,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -125,11 +127,14 @@ public class MainMenuScreen extends GLScreen {
 	    }
 	 
 	 
-	 
 	 private class ProcessRegister extends AsyncTask<String, String, JSONObject>
 	 {
 
 		         private String deviceIMEI;
+		        
+		         private ArrayList<String> livelli;
+		         
+		         private ArrayList<Integer> livello_punteggio;
 		         
 		         protected void onPreExecute()
 		         {
@@ -137,13 +142,64 @@ public class MainMenuScreen extends GLScreen {
 		             //Ricavo l'IMEI
 		             TelephonyManager tManager = (TelephonyManager)glGame.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
 		            this.deviceIMEI = tManager.getDeviceId();
+		            livelli=new ArrayList<String>();
+		            
+		            livello_punteggio=new ArrayList<Integer>();
+		            
+		            caricaLivelliUtenteEpunteggi();
 		         }
 
+		         private void caricaLivelliUtenteEpunteggi()
+		         {
+		        	 //Dovrei usare una mappa per essere più efficiente !
+		        	SQLiteDatabase db = database.getReadableDatabase();
+		     		final String sql = "SELECT * FROM punteggi";
+		     		 
+		     		 Cursor c = db.rawQuery(sql, null);
+		     		 //Scorri la query e riempi gli array
+		     		 String liv[]=new String[5];
+		     		 for(int i=0;i<liv.length;i++)
+		     		 {
+		     			 liv[i]="Livello"+(i+1);
+		     		 }
+		     		 
+		     		 
+		     		 
+		     		while(c.moveToNext())
+		     		{
+		     			livelli.add(c.getString(1));
+		     			livello_punteggio.add(c.getInt(0));
+		     		}
+		     		
+		     		int f=0;
+		     		
+		     		for(int j=0;j<liv.length;j++)
+	     			{
+		     			f=0;
+			     		for(int i=0;i<livelli.size();i++)
+			     		{
+			     			if(liv[j].equals(livelli.get(i)))
+			     			{
+			     				f=1;
+			     			}
+			     		}
+			     		if(f==0)
+			     		{
+			     			livelli.add("Livello"+(j+1));
+			     			livello_punteggio.add(0);
+			     		}
+	     			}
+		     		
+		     		 db.close();
+		         }
+		        
+		         
 		         @Override
 		         protected JSONObject doInBackground(String... args)
 		         {
 		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
 			         UserFunctions userFunction = new UserFunctions();
+			         JSONObject json1 = userFunction.caricaPunteggi(livelli,livello_punteggio,deviceIMEI);
 			         JSONObject json = userFunction.controllaIMEI(deviceIMEI);
 			         return json;
 		         }
