@@ -20,6 +20,8 @@ public class UserFunctions {
     private static String register_tag = "register";
     private static String insert_tag = "inserisci_punteggio";
     private static String imei_tag = "controlla_imei";
+    private static String aggiorna_tag="carica_tutto";
+    
    
     // constructor
     public UserFunctions(){
@@ -69,6 +71,22 @@ public class UserFunctions {
         System.out.println("Valore oggetto json:"+json);
         return json;
 	}
+
+
+
+	public JSONObject caricaPunteggi(ArrayList<String> livelli,ArrayList<Integer> livello_punteggio,String imei)
+	{
+		 List<NameValuePair> params = new ArrayList<NameValuePair>();
+		 params.add(new BasicNameValuePair("tag", aggiorna_tag));
+		 for(int i=0;i<livelli.size();i++)
+		 {
+			 params.add(new BasicNameValuePair(livelli.get(i),""+livello_punteggio.get(i)));
+		 }
+		 params.add(new BasicNameValuePair("imei",imei));
+	     JSONObject json = jsonParser.getJSONFromUrl(registerURL,params);
+	     return json;
+	}
+
 
 }
 
