@@ -51,7 +51,7 @@ public class MainMenuScreen extends GLScreen {
     Vector2 touchPoint;
     private static String KEY_SUCCESS = "success";
     private static String KEY_ERROR = "error";
-
+    private int flag=0;
 	private DbLocale database = null;
 
     public MainMenuScreen(Game game) {
@@ -68,7 +68,11 @@ public class MainMenuScreen extends GLScreen {
         
         touchPoint = new Vector2();
        
-        new NetCheck().execute();
+        if(flag==0)
+        {
+        	flag=1;
+        	new NetCheck().execute();
+        }
     }
    
 	    /**
