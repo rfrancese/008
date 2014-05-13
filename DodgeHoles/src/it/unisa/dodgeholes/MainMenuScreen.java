@@ -51,7 +51,6 @@ public class MainMenuScreen extends GLScreen {
     Vector2 touchPoint;
     private static String KEY_SUCCESS = "success";
     private static String KEY_ERROR = "error";
-    private int flag=0;
 	private DbLocale database = null;
 
     public MainMenuScreen(Game game) {
@@ -68,12 +67,11 @@ public class MainMenuScreen extends GLScreen {
         
         touchPoint = new Vector2();
        
-        if(flag==0)
-        {
-        	flag=1;
+      //Devi fare questo se il database dei nickname e' vuoto
+        //altrimenti nn fare nnt 
+        if(leggiDati())
         	new NetCheck().execute();
-        }
-    }
+       }
    
 	    /**
 	     * Async Task to check whether internet connection is working
@@ -360,6 +358,21 @@ public class MainMenuScreen extends GLScreen {
         
         gl.glDisable(GL10.GL_BLEND);
     }
+    
+    public boolean leggiDati()
+	{
+		SQLiteDatabase db = this.database.getReadableDatabase();
+		final String sql = "SELECT * FROM access";
+		 
+		 Cursor c = db.rawQuery(sql, null);
+		 
+		 int numeroRighe = c.getCount();
+		 db.close();
+		 Log.d("DB LOCALE",""+numeroRighe);
+		 if(numeroRighe==0)
+			 return true;
+		return false;
+	}
     
     @Override
     public void pause() {        
