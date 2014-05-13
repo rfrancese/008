@@ -199,7 +199,7 @@ public class MainMenuScreen extends GLScreen {
 		         {
 		        	 //Qui controlla prima se l'utente non ha effettuato una registrazione in locale
 			         UserFunctions userFunction = new UserFunctions();
-			         JSONObject json1 = userFunction.caricaPunteggi(livelli,livello_punteggio,deviceIMEI);
+			         //JSONObject json1 = userFunction.caricaPunteggi(livelli,livello_punteggio,deviceIMEI);
 			         JSONObject json = userFunction.controllaIMEI(deviceIMEI);
 			         return json;
 		         }
