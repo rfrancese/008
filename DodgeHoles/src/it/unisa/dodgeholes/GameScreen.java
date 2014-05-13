@@ -374,7 +374,7 @@ public class GameScreen extends GLScreen{
 		 scriviPunteggioInLocale();
 		 if(leggiDati())
 		 { 
-			 Log.d("Messaggio","L'utente non e' registrao e quindi non posso trasmettere il punteggio in rete");
+			 Log.d("Messaggio","L'utente non e' registrato e quindi non posso trasmettere il punteggio in rete");
 		 }
 		 else
 		 {
