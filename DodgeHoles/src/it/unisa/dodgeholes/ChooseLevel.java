@@ -20,7 +20,15 @@ public class ChooseLevel extends Activity {
 	
 	
 	
-	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5","Level 6","Level 7"};
+	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5"};
+	private static final Integer[] imageId = {
+		      R.drawable.liv1,
+		      R.drawable.liv2,
+		      R.drawable.liv3,
+		      R.drawable.liv4,
+		      R.drawable.liv5
+		  
+		  };
 	private SingletonParametersBridge bridge;
 	private Game game;
 	private ListView list;
@@ -43,7 +51,7 @@ public class ChooseLevel extends Activity {
 		//setListAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,items));
 		//setListAdapter(new ArrayAdapter<String>(this,R.id.list_liv,items));
 		list=(ListView)findViewById(R.id.list_liv);
-		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this,items,"font.ttf");
+		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this,items,imageId,"font.ttf");
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

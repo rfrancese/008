@@ -5,7 +5,8 @@
   android:orientation="vertical"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:padding="10dip">
+  android:padding="10dip"
+  android:background="@color/colBackground">
    
   
   
@@ -26,7 +27,8 @@
       		android:layout_width="wrap_content" 
       		android:layout_height="wrap_content"
             android:text="@string/label_nick"
-            android:textSize="18sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/yellowTitle"/>
              
   <EditText android:id="@+id/nickname"
       		android:layout_weight="80"
@@ -42,7 +44,10 @@
       	  android:layout_width="wrap_content" 
       	  android:layout_height="wrap_content"
           android:text="@string/label_button_reg"
-          android:background="@color/sel_button_selector"/>
+          android:background="@color/sel_button_selector"
+          android:textColor="@color/yellowTitle"
+          android:textStyle="bold"
+          android:padding="5dip"/>
   </LinearLayout>
 
      

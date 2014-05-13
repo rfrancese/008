@@ -24,12 +24,12 @@
    
     
 	<style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">#c79c73</item>
+        <item name="android:background">@color/colActionBar</item>
         <item name="android:titleTextStyle">@style/titleStyle</item>
     </style>
     
 	 <style name="titleStyle" parent="@style/TextAppearance.AppCompat.Widget.Base.ActionBar.Title">
-        <item name="android:textColor">#fbc430</item>
+        <item name="android:textColor">@color/yellowTitle</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
         

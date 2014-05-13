@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <resources>
-	<color name="body">#c79c73</color>
+	<color name="colActionBar">#c79c73</color>
 	<color name="grey">#b4b4b4</color>
-	<color name="white">#ffffff</color>
+	<color name="yellowTitle">#fbc430</color>
+	<color name="colBackground">#F5F5DC</color>
 </resources>
