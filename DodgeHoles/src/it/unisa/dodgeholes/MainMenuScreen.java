@@ -218,6 +218,8 @@ public class MainMenuScreen extends GLScreen {
 		                         String red = json.getString(KEY_ERROR);
 		                         
 		                         Log.d("Successo :",""+Integer.parseInt(res));
+		                         Log.d("dati :",""+json.getString("dati"));
+		                         
 		                         if(Integer.parseInt(res) == 1)
 		                         {
 		                        	 //Non faccio nulla! Imei non ancora registrato
