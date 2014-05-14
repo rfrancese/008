@@ -371,7 +371,6 @@ public class GameScreen extends GLScreen{
 		 //Se precedentemente mi sono registrato
 		 //Se c'e' un nickname registrato in locale allora posso trasmettere i dati
 		 //sul server altrimenti memorizzo in locale
-		 scriviPunteggioInLocale();
 		 if(leggiDati())
 		 { 
 			 Log.d("Messaggio","L'utente non e' registrato e quindi non posso trasmettere il punteggio in rete");
@@ -527,7 +526,10 @@ public class GameScreen extends GLScreen{
 	        {
 	            if(th == true)
 	            {  
-	            	Log.d("Messaggio","Richiamo la classe per salvare i punteggi");
+	            	Log.d("Messaggio","Richiamo la classe per salvare i punteggi,salvo sia in locale che sul server");
+	            	
+	            	scriviPunteggioInLocale();
+	            	
 	                new ProcessRegister().execute();
 	            }
 	            else

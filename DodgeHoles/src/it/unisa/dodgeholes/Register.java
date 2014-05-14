@@ -91,7 +91,7 @@ public class Register extends Activity implements View.OnClickListener {
 		// TODO Auto-generated method stub
 		if(nick.getText().toString().matches(""))
 		{
-			new AlertDialog.Builder(this)
+			/*new AlertDialog.Builder(this)
 			.setTitle("Error")
 			.setMessage("Insert a nickname!")
 			.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -100,7 +100,9 @@ public class Register extends Activity implements View.OnClickListener {
 						
 				}
 			})
-			.show();
+			.show();*/
+			
+			registerErrorMsg.setText("Please insert a nickname!");
 		}
 		else
 		{
@@ -116,7 +118,7 @@ public class Register extends Activity implements View.OnClickListener {
 		 }
 		 else
 		 {
-			 new AlertDialog.Builder(this)
+			/* new AlertDialog.Builder(this)
 				.setTitle("Notice")
 				.setMessage("You're already registered with this application")
 				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
@@ -126,6 +128,8 @@ public class Register extends Activity implements View.OnClickListener {
 					}
 				})
 				.show();
+				*/
+			 registerErrorMsg.setText("You're already registered with this application");
 		 }
      }
 	
@@ -256,7 +260,7 @@ public class Register extends Activity implements View.OnClickListener {
 		                            // pDialog.setTitle("Getting Data");
 		                            // pDialog.setMessage("Loading Info");
 
-		                             registerErrorMsg.setText("Successfully Registered");
+		                            // registerErrorMsg.setText("Successfully Registered");
 		                             
 		                             registraUtenteInLocale();
 		                            
