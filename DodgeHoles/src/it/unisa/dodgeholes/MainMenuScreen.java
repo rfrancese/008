@@ -157,6 +157,8 @@ public class MainMenuScreen extends GLScreen {
 		        /**
 		         * Checks for success message.
 		         **/
+		        	if(json!=null)
+		        	 {
 		                 try
 		                 {
 		                     if (json.getString(KEY_SUCCESS) != null)
@@ -184,7 +186,9 @@ public class MainMenuScreen extends GLScreen {
 		                 {
 		                     e.printStackTrace();
 		                 }
-		             }}
+		         	  }
+		           }
+		}
 	 
 	private void registraUtenteInLocale(String nickname)
 	{

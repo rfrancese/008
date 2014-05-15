@@ -236,6 +236,9 @@ public class GameScreen extends GLScreen{
 	        		game.setScreen(new MainMenuScreen(game));
 	        	}
 	        	
+	        	Intent myIntent = new Intent(this.glGame, Advertise.class);
+            	this.glGame.startActivity(myIntent);
+	        	
 	            return;
 	        }
 	        
@@ -572,6 +575,9 @@ public class GameScreen extends GLScreen{
 
 		         protected void onPostExecute(JSONObject json)
 		         {
+		        	 
+		        	 if(json!=null)
+		        	 {
 		        	 	try
 		                 {
 		                     if (json.getString(KEY_SUCCESS) != null)
@@ -604,7 +610,11 @@ public class GameScreen extends GLScreen{
 		                 {
 		                     e.printStackTrace();
 		                 }
+		        	 }
+		        	 else
+		        		System.out.println("Sono andato a null!!!!");
 		         }
+		        	 
 	 }
 	
 	public String recuperaNickname()
