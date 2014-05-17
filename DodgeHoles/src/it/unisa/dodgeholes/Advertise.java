@@ -3,6 +3,7 @@ package it.unisa.dodgeholes;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 
 import android.os.Bundle;
 
@@ -20,6 +21,8 @@ public class Advertise extends Activity implements AdListener {
 	private RelativeLayout layout;
 	private AdView mAdView;
 	private AdManager mManager;
+	
+	private ProgressDialog progressDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,7 @@ public class Advertise extends Activity implements AdListener {
 		setContentView(R.layout.advertise);
 		layout = (RelativeLayout) findViewById(R.id.adsdkContent);
 		mManager = new AdManager(this,"http://my.mobfox.com/request.php",
-				"80187188f458cfde788d961b6882fd53", true);
+				"64a7a0c22dcc6535379daf17bebea662", true);
 		
 		mManager.setInterstitialAdsEnabled(true); //enabled by default. Allows the SDK to request static interstitial ads.
 		mManager.setVideoAdsEnabled(true); //disabled by default. Allows the SDK to request video fullscreen ads.
@@ -42,6 +45,8 @@ public class Advertise extends Activity implements AdListener {
 		*/
 		mManager.setListener(this);
 		mManager.requestAd();
+		
+		progressDialog = ProgressDialog.show(Advertise.this, "", "Loading...");
 	}
 
 
@@ -56,6 +61,7 @@ public class Advertise extends Activity implements AdListener {
 
 	@Override
 	public void adClosed(Ad arg0, boolean arg1) {
+		progressDialog.dismiss();
 		this.finish();
 		
 	}

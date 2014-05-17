@@ -66,7 +66,7 @@ public class Setting extends Activity {
 			 }
 			 else
 			 {
-				 Assets.music.stop();
+				 Assets.music.pause();
 				 //Scrivo sul database e modifico il valore di Assets.musicActive
 				 Assets.setAudio(0, database);
 				 Assets.musicActive=Assets.getAudio(database); 

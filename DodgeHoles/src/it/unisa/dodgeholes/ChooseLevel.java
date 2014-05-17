@@ -4,6 +4,7 @@ package it.unisa.dodgeholes;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -58,6 +59,10 @@ public class ChooseLevel extends Activity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) 
                 {
                 	game.setScreen(new GameScreen(game,position+1));
+                	
+                	Intent myIntent = new Intent(getApplication(), Advertise.class);
+                	startActivity(myIntent);
+                	
             		finish();
                 }
             });

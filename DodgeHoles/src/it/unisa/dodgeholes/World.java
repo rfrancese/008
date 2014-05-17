@@ -148,7 +148,7 @@ private void checkObstacleHCollisions()
 	{
 		if (OverlapTester.overlapRectangles(obstaclesH.get(i).bounds,ball.bounds)) 
 		{
-			Log.d("coll", "collisione");
+			//Log.d("coll", "collisione");
 			
 			if(ball.position.y>obstaclesH.get(i).position.y)
 			{
@@ -180,7 +180,7 @@ private void checkObstacleVCollisions()
 		if (OverlapTester.overlapRectangles(obstaclesV.get(i).bounds,ball.bounds))
 		//if(OverlapTester.overlapCircleRectangle(cb, obstaclesV.get(i).bounds))
 		{
-			Log.d("coll", "collisioneV");
+			//Log.d("coll", "collisioneV");
 			
 			if(ball.position.x>obstaclesV.get(i).position.x)
 			{

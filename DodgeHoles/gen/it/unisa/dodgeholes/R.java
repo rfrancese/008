@@ -15,6 +15,8 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040003;
         public static final int abc_slide_out_bottom=0x7f040004;
         public static final int abc_slide_out_top=0x7f040005;
+        public static final int fade_in=0x7f040006;
+        public static final int fade_out=0x7f040007;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -988,18 +990,31 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int color_deselect_button=0x7f020057;
-        public static final int color_select_button=0x7f020058;
-        public static final int ico_lev=0x7f020059;
-        public static final int ico_reg=0x7f02005a;
-        public static final int ico_sco=0x7f02005b;
-        public static final int ico_sett=0x7f02005c;
-        public static final int icon=0x7f02005d;
-        public static final int liv1=0x7f02005e;
-        public static final int liv2=0x7f02005f;
-        public static final int liv3=0x7f020060;
-        public static final int liv4=0x7f020061;
-        public static final int liv5=0x7f020062;
+        public static final int anim_logo=0x7f020057;
+        public static final int color_deselect_button=0x7f020058;
+        public static final int color_select_button=0x7f020059;
+        public static final int ico_lev=0x7f02005a;
+        public static final int ico_reg=0x7f02005b;
+        public static final int ico_sco=0x7f02005c;
+        public static final int ico_sett=0x7f02005d;
+        public static final int icon=0x7f02005e;
+        public static final int img_site=0x7f02005f;
+        public static final int l0=0x7f020060;
+        public static final int l1=0x7f020061;
+        public static final int l10=0x7f020062;
+        public static final int l2=0x7f020063;
+        public static final int l3=0x7f020064;
+        public static final int l4=0x7f020065;
+        public static final int l5=0x7f020066;
+        public static final int l6=0x7f020067;
+        public static final int l7=0x7f020068;
+        public static final int l8=0x7f020069;
+        public static final int l9=0x7f02006a;
+        public static final int liv1=0x7f02006b;
+        public static final int liv2=0x7f02006c;
+        public static final int liv3=0x7f02006d;
+        public static final int liv4=0x7f02006e;
+        public static final int liv5=0x7f02006f;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1013,7 +1028,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_settings=0x7f050049;
+        public static final int action_settings=0x7f05004b;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int adsdkContent=0x7f05003c;
         public static final int always=0x7f05000b;
@@ -1037,6 +1052,8 @@ containing a value of this type.
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
         public static final int img_liv=0x7f05003e;
+        public static final int imganim=0x7f050049;
+        public static final int imgstw=0x7f05004a;
         public static final int lReg=0x7f050041;
         public static final int labelMusic=0x7f050045;
         public static final int labelSound=0x7f050047;
@@ -1132,7 +1149,8 @@ containing a value of this type.
         public static final int register=0x7f03001a;
         public static final int scores=0x7f03001b;
         public static final int setting=0x7f03001c;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
+        public static final int splashscreen=0x7f03001d;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

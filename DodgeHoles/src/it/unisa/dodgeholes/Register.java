@@ -32,6 +32,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -73,14 +74,16 @@ public class Register extends Activity implements View.OnClickListener {
 		
 		setContentView(R.layout.register);
 		
-		tr = (TextView) findViewById(R.id.lReg);
 		font = Typeface.createFromAsset(getAssets(), "font.ttf");
+		
+		tr = (TextView) findViewById(R.id.lReg);
 		tr.setTypeface(font);
 		
 		buttReg=(Button)findViewById(R.id.buttReg);
 		buttReg.setOnClickListener(this);
 		nick=(EditText)findViewById(R.id.nickname);
 		registerErrorMsg=(TextView)findViewById(R.id.msgerror);
+		registerErrorMsg.setTypeface(font);
 		
 		database = new DbLocale(getApplicationContext());
 
@@ -103,6 +106,7 @@ public class Register extends Activity implements View.OnClickListener {
 			.show();*/
 			
 			registerErrorMsg.setText("Please insert a nickname!");
+			registerErrorMsg.setTextColor(Color.RED);
 		}
 		else
 		{
@@ -130,6 +134,7 @@ public class Register extends Activity implements View.OnClickListener {
 				.show();
 				*/
 			 registerErrorMsg.setText("You're already registered with this application");
+			 registerErrorMsg.setTextColor(Color.RED);
 		 }
      }
 	
@@ -197,6 +202,7 @@ public class Register extends Activity implements View.OnClickListener {
 	            {
 	                nDialog.dismiss();
 					registerErrorMsg.setText("Error in Network Connection");
+					registerErrorMsg.setTextColor(Color.RED);
 	            }
 	        }
 	    }
@@ -274,6 +280,7 @@ public class Register extends Activity implements View.OnClickListener {
 		                            // registered.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		                             pDialog.dismiss();
 		                             registerErrorMsg.setText("Successfully Registered");
+		                             registerErrorMsg.setTextColor(Color.parseColor("#62a43c"));
 		                            // startActivity(registered);
 		                             //Forse questo va tolto
 		                            // finish();
@@ -283,12 +290,14 @@ public class Register extends Activity implements View.OnClickListener {
 		                         {
 		                             pDialog.dismiss();
 		                             registerErrorMsg.setText("User already exists or you're already registered with this application");
+		                             registerErrorMsg.setTextColor(Color.RED);
 		                         }
 		                     }
 		                     else
 		                     {
 		                         pDialog.dismiss();
 		                         registerErrorMsg.setText("Error occured in registration");
+		                         registerErrorMsg.setTextColor(Color.RED);
 		                     }
 
 		                 } catch (JSONException e)

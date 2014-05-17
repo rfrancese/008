@@ -268,6 +268,10 @@ public class GameScreen extends GLScreen{
 		        world = new World(worldListener,world.getNumLevel());
 		        renderer = new WorldRenderer(glGraphics, batcher, world);
 		        state = GAME_READY;
+		        
+		        Intent myIntent = new Intent(this.glGame, Advertise.class);
+            	this.glGame.startActivity(myIntent);
+            	
 	            return;
 	        }
 	        

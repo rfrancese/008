@@ -6,6 +6,8 @@ import it.unisa.dodgeholes.framework.impl.GLGame;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.view.KeyEvent;
+
 
 public class StartGame extends GLGame {
     boolean firstTimeCreate = true;
@@ -37,4 +39,10 @@ public class StartGame extends GLGame {
         	Assets.music.pause();
         	
     }
+    
+    @Override
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
+		return false;
+	}
 }

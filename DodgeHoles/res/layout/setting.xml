@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:padding="10dip"
-                android:background="@color/colBackground">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:padding="10dip"
+  android:background="@color/colBackground">
                 
     <TextView android:id="@+id/labelMusic" 
         	  android:layout_width="wrap_content"
               android:layout_height="wrap_content" 
               android:text="@string/label_msc_sett"
-              android:layout_marginTop="15dip" 
               android:textSize="20sp"
-            android:textColor="@color/yellowTitle"/>
+              android:textColor="@color/yellowTitle"
+              android:layout_gravity="center"
+              android:layout_marginTop="10dip"/>
     <ToggleButton
         android:id="@+id/buttMsc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-       android:layout_marginTop="15dip"/>
+        android:layout_gravity="center"
+        android:background="@color/sel_toggle_button_selector"
+        android:textStyle="bold"
+        android:textColor="@color/yellowTitle"/>
     
     <TextView android:id="@+id/labelSound" 
         	  android:layout_width="wrap_content"
               android:layout_height="wrap_content" 
               android:text="@string/label_snd_sett"
-              android:layout_below="@id/labelMusic" 
-              android:layout_marginTop="25dip"
               android:textSize="20sp"
-            android:textColor="@color/yellowTitle"/>
+              android:textColor="@color/yellowTitle"
+              android:layout_gravity="center"
+              android:layout_marginTop="15dip"/>
     <ToggleButton
         android:id="@+id/buttSnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-       	android:layout_below="@id/buttMsc"/>
+        android:layout_gravity="center"
+       	android:background="@color/sel_toggle_button_selector"
+       	android:textStyle="bold"
+       	android:textColor="@color/yellowTitle"/>
     
                 
     
-</RelativeLayout>
+</LinearLayout>
