@@ -15,7 +15,7 @@ public class UserFunctions {
 
     private JSONParser jsonParser;
 
-    private static String registerURL = "http://www.depiano.it/DodgeHoles/";
+    private static String registerURL = "http://www.dodgeholes.com/DodgeHoles/";
 
     private static String register_tag = "register";
     private static String insert_tag = "inserisci_punteggio";
