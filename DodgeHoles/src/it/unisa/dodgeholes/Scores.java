@@ -19,7 +19,7 @@ public class Scores extends Activity {
 		setContentView(R.layout.scores);
 		browser=(WebView)findViewById(R.id.webkit);
 		
-		browser.loadUrl("http://www.google.it");
+		browser.loadUrl("http://www.dodgeholes.com/#toptwenty");
 	}
 	
 	public void onPause()

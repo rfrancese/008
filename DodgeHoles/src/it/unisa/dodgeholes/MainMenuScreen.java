@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -259,8 +260,11 @@ public class MainMenuScreen extends GLScreen {
                 }
                 
                 if(OverlapTester.pointInRectangle(scoresBounds, touchPoint)) {
-                	Intent myIntent = new Intent(this.glGame, Scores.class);
-                	this.glGame.startActivity(myIntent);
+                	/*Intent myIntent = new Intent(this.glGame, Scores.class);
+                	this.glGame.startActivity(myIntent);*/
+                	
+                	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dodgeholes.com/#toptwenty"));
+                	this.glGame.startActivity(browserIntent);
                 	
                     return;
                 }
