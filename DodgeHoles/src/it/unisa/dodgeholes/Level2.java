@@ -14,9 +14,9 @@ public class Level2 implements Level {
 	
 	public Level2()
 	{
-		ball=new Ball(5.355f,3.9f);
-		Ball.ballPosXInit=5.355f;
-		Ball.ballPosYInit=3.9f;
+		ball=new Ball(4.4f,3.7f);
+		Ball.ballPosXInit=4.4f;
+		Ball.ballPosYInit=3.7f;
 		holes=generateHoles();
 		obstaclesH=generateObstaclesH();
 		obstaclesV=generateObstaclesV();
@@ -43,6 +43,7 @@ public class Level2 implements Level {
 		Hole h14=new Hole(14.1f,0.95f);
 		Hole h15=new Hole(10.7f,1.5f);
 		Hole h16=new Hole(5.2f,2.2f);
+		Hole h17=new Hole(5.9f,3.9f);
 		
 		h.add(h1);
 		h.add(h2);
@@ -61,6 +62,7 @@ public class Level2 implements Level {
 		h.add(h14);
 		h.add(h15);
 		h.add(h16);
+		h.add(h17);
 		
 		return h;
 	}
@@ -101,7 +103,7 @@ public class Level2 implements Level {
 		ObstacleV o3=new ObstacleV(12.35f,4.3f);
 		ObstacleV o4=new ObstacleV(8.8f,4.3f);
 		ObstacleV o5=new ObstacleV(2.5f,4.3f);
-		ObstacleV o6=new ObstacleV(6.1f,4.3f);
+		//ObstacleV o6=new ObstacleV(6.1f,4.3f);
 		ObstacleV o7=new ObstacleV(7.45f,6.4f);
 		ObstacleV o8=new ObstacleV(7.45f,4.3f);
 		ObstacleV o9=new ObstacleV(7.45f,2.2f);
@@ -111,7 +113,7 @@ public class Level2 implements Level {
 		o.add(o3);
 		o.add(o4);
 		o.add(o5);
-		o.add(o6);
+		//o.add(o6);
 		o.add(o7);
 		o.add(o8);
 		o.add(o9);
