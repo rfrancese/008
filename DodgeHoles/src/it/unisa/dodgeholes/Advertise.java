@@ -89,6 +89,7 @@ public class Advertise extends Activity implements AdListener {
 	@Override
 	public void noAdFound() {
 		// TODO Auto-generated method stub
+		progressDialog.dismiss();
 		this.finish();
 		
 	}
