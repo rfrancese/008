@@ -49,7 +49,7 @@ public class GameScreen extends GLScreen{
     static final int GAME_PAUSED = 2;
     static final int GAME_LEVEL_END = 3;
     static final int GAME_OVER = 4;
-    static final int NUMBER_TOTAL_LEVEL=5;
+    static final int NUMBER_TOTAL_LEVEL=6;
     private DbLocale database = null;
     private boolean flag;
   

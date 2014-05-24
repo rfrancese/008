@@ -79,6 +79,9 @@ public class World {
     		case 5:
     			l=new Level5();
     			break;
+    		case 6:
+    			l=new Level6();
+    			break;
     		/*default:
     			l=new Level1();*/
     	}

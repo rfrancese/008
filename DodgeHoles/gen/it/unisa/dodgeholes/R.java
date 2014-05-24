@@ -1015,6 +1015,7 @@ containing a value of this type.
         public static final int liv3=0x7f02006d;
         public static final int liv4=0x7f02006e;
         public static final int liv5=0x7f02006f;
+        public static final int liv6=0x7f020070;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;

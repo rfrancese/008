@@ -21,13 +21,14 @@ public class ChooseLevel extends Activity {
 	
 	
 	
-	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5"};
+	private static final String[] items={"Level 1", "Level 2","Level 3","Level 4","Level 5","Level 6"};
 	private static final Integer[] imageId = {
 		      R.drawable.liv1,
 		      R.drawable.liv2,
 		      R.drawable.liv3,
 		      R.drawable.liv4,
-		      R.drawable.liv5
+		      R.drawable.liv5,
+		      R.drawable.liv6
 		  
 		  };
 	private SingletonParametersBridge bridge;
